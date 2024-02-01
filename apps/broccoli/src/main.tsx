@@ -9,6 +9,8 @@ import { SignInPage } from './features/SignInPage';
 import { SignUpPage } from './features/SignUpPage';
 import { ApplicationLayout } from './features/ApplicationLayout';
 import { NotFound } from './features/NotFound';
+import './styles.scss'
+import { Welcome } from './features/Welcome';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,9 +18,12 @@ const root = ReactDOM.createRoot(
 
 const router = createBrowserRouter([
   {
-    path: '/',
     element: <RootLayout />,
     children: [
+      {
+        path: '/',
+        element: <Welcome />
+      },
       {
         path: '/sign-in',
         element: <SignInPage />,
