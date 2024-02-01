@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+$base-color: #1548a6;
+
+#root .app-theme {
+  background-color: $base-color;
+}
+
+#root .app-color {
+  color: $base-color;
+}
+
+html {
+  background-image: url('./assets/root/mui-background.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 1;
+  }
+}
