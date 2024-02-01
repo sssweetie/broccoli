@@ -1,20 +1,20 @@
 import { Button } from '@mui/material';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './welcome.scss';
 
 export const Welcome = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate('/sign-in');
+    setTimeout(() => navigate('/sign-in'), 500);
   };
 
   return (
     <div className="welcome">
       <Button
+        className="welcome__get-started"
         color="inherit"
-        size="large"
         variant="outlined"
         endIcon={<DoubleArrowIcon />}
         onClick={onClick}
