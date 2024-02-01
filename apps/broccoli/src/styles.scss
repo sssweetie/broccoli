@@ -1,3 +1,13 @@
+$base-color: #1548a6;
+
+#root .app-theme {
+  background-color: $base-color;
+}
+
+#root .app-color {
+  color: $base-color;
+}
+
 html {
   background-image: url('./assets/root/mui-background.jpg');
   background-position: center;
@@ -5,7 +15,6 @@ html {
   background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
-  animation: fadeIn 4s;
 }
 
 @keyframes fadeIn {

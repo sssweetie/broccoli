@@ -11,7 +11,7 @@ export const Welcome = () => {
   };
 
   return (
-    <div className="welcome">
+    <div className="welcome app-color">
       <Button
         className="welcome__get-started"
         color="inherit"

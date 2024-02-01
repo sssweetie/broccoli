@@ -15,7 +15,7 @@ export const SignInPage = () => {
 
   return (
     <article className="login">
-      <SignIn afterSignInUrl={'/application'} />
+      <SignIn afterSignInUrl='/application' signUpUrl="/sign-up" />
     </article>
   );
 };

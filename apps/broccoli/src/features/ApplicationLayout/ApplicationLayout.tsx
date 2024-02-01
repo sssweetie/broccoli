@@ -1,7 +1,7 @@
 import { useAuth } from '@clerk/clerk-react';
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { SignOut } from '../SignOut';
+import { NavBar } from '../NavBar';
 
 export const ApplicationLayout = () => {
   const { isLoaded, userId } = useAuth();
@@ -15,7 +15,7 @@ export const ApplicationLayout = () => {
 
   return (
     <>
-      <SignOut />
+      <NavBar />
       <Outlet />
     </>
   );
