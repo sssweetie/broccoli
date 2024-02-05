@@ -14,11 +14,11 @@ export const ApplicationLayout = () => {
   }, [isLoaded]);
 
   return (
-    <div className="app-wrapper">
+    <main className="app-wrapper">
       <NavBar />
       <div className="outlet-wrapper">
         <Outlet />
       </div>
-    </div>
+    </main>
   );
 };
