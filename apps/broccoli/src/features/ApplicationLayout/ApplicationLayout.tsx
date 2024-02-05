@@ -14,9 +14,11 @@ export const ApplicationLayout = () => {
   }, [isLoaded]);
 
   return (
-    <>
+    <div className="app-wrapper">
       <NavBar />
-      <Outlet />
-    </>
+      <div className="outlet-wrapper">
+        <Outlet />
+      </div>
+    </div>
   );
 };

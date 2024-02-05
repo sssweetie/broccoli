@@ -1,5 +1,6 @@
 * {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  margin: 0;
 }
 
 $base-color: #1548a6;
@@ -21,6 +22,14 @@ html {
   height: 100vh;
 }
 
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0.35;
@@ -30,9 +39,24 @@ html {
   }
 }
 
+.app-wrapper {
+  padding: 16px;
+  height: calc(100% - 32px);
+}
+
 .center {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.navbar {
+  margin-bottom: 16px;
+  border-radius: 6px;
+}
+
+.outlet-wrapper {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 6px;
 }

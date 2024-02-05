@@ -78,7 +78,7 @@ export const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" className="app-theme">
+    <AppBar position="static" className="app-theme navbar">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo sx={sxCommon} />
