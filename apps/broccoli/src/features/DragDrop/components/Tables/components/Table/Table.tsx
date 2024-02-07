@@ -1,6 +1,6 @@
 import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
-import { ITable } from '../../../../hooks/useDragDrop';
 import { Tasks } from '../Tasks/Tasks';
+import { ITable } from 'apps/libs/types/src';
 
 interface Props {
   provided: DraggableProvided;
@@ -16,7 +16,7 @@ export const Table = ({ provided, table }: Props) => {
       {...provided.dragHandleProps}
     >
       <h3 className="table__title">{table.title}</h3>
-      <Droppable droppableId={table.id} type="TASK">
+      <Droppable droppableId={table._id} type="TASK">
         {(provided) => (
           <div
             className="table__tasks"

@@ -1,5 +1,5 @@
 import { DraggableProvided } from '@hello-pangea/dnd';
-import { ITask } from 'apps/broccoli/src/features/DragDrop/hooks/useDragDrop';
+import { ITask } from 'apps/libs/types/src';
 
 interface Props {
   provided: DraggableProvided;

@@ -1,6 +1,6 @@
 import { Draggable } from '@hello-pangea/dnd';
-import { ITable } from '../../../../hooks/useDragDrop';
 import { Task } from './components/Task/Task';
+import { ITable } from 'apps/libs/types/src';
 
 interface Props {
   table: ITable;
@@ -8,7 +8,7 @@ interface Props {
 
 export const Tasks = ({ table }: Props) => {
   return table.tasks.map((task, index) => (
-    <Draggable draggableId={task.id} index={index} key={task.id}>
+    <Draggable draggableId={task._id} index={index} key={task._id}>
       {(provided) => <Task provided={provided} task={task} />}
     </Draggable>
   ));
