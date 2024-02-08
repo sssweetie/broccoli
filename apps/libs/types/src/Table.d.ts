@@ -3,6 +3,8 @@ export interface ITable {
   order: number;
   title: string;
   tasks: ITask[];
+  insertTask: (insertIndex: number, taskToInsert: ITask) => void;
+  removeTask: (removeIndex: number) => void;
 }
 
 export interface ITask {
@@ -11,4 +13,3 @@ export interface ITask {
   title?: string;
   description?: string;
 }
-

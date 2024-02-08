@@ -1,212 +1,171 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { DragUpdate } from '@hello-pangea/dnd';
-import { useEffect, useState } from 'react';
 import { DragDropApi } from '../api/dragDropApi';
-import { ITable, RequiredParamsToUpdate } from 'apps/libs/types/src';
+import { ITable } from 'apps/libs/types/src';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Slide, toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { findTable, isTableExist, reorderTable } from 'apps/broccoli/src/utils';
 
 export const useDragDrop = (dragDropApi: DragDropApi) => {
-  const [board, setBoard] = useState<ITable[]>([]);
+  const { data } = useQuery({
+    queryKey: ['board'],
+    queryFn: dragDropApi.read,
+  });
+
+  const mutation = useMutation({
+    mutationFn: dragDropApi.update,
+    onSuccess: () => {
+      toast.info('Order is updated!', {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+        transition: Slide,
+      });
+    },
+
+    onError: () => {
+      setState((prevState) => prevState);
+      toast.error('Something went wrong!:(', {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+        transition: Slide,
+      });
+    },
+  });
+
+  const [state, setState] = useState<ITable[] | undefined>(data);
 
   const createTable = async (table: ITable) => {
     await dragDropApi.create(table);
   };
 
-  const getTables = async () => {
-    try {
-      const tables = await dragDropApi.read();
-      setBoard(tables);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateTable = async (params: RequiredParamsToUpdate) => {
-    try {
-      await dragDropApi.update(params);
-      await getTables();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const onDragEnd = async (dragState: DragUpdate) => {
-    const type = dragState.type.toLowerCase();
-    let subType = 0;
-    const boardState = [...board];
+    const boardState = state ? [...state] : [];
     const updateInformation = {
       subType: 0,
-      type: 'table',
+      type: dragState.type.toLowerCase(),
     };
-    if (type === 'table') {
-      if (dragState.destination) {
-        subType = 0;
-        const sourceIndex = dragState.source.index;
-        const destinationIndex = dragState.destination.index;
-        const source = boardState.splice(sourceIndex, 1);
-        boardState.splice(destinationIndex, 0, source[0]);
-        console.log(boardState);
-        const newBoardState = boardState.map((value, index) => ({
-          _id: value._id,
-          order: index,
-        }));
-        console.log(newBoardState);
-        updateInformation.type = type;
-        updateInformation.subType = subType;
+    
+    const isDragTable = dragState.type.toLowerCase() === 'table';
+    const isDestinationExist = dragState.destination ? true : false;
+    const isSamePosition =
+      dragState.destination?.index === dragState.source.index;
+    const isSameTable =
+      dragState.source.droppableId === dragState.destination?.droppableId;
 
-        await updateTable({ updateInformation, boardToUpdate: newBoardState });
-      }
+    if (isDragTable && isDestinationExist && !isSamePosition) {
+      const sourceIndex = dragState.source.index;
+      const destinationIndex = dragState.destination!.index;
+      const [source] = boardState.splice(sourceIndex, 1);
+      boardState.splice(destinationIndex, 0, source);
+      const newBoardState = boardState.map((table, index) => ({
+        ...table,
+        order: index,
+      }));
+
+      setState(newBoardState);
+
+      mutation.mutateAsync({
+        updateInformation,
+        boardToUpdate: newBoardState,
+      });
     }
 
-    if (type === 'task') {
-      if (dragState.source.droppableId === dragState.destination?.droppableId) {
-        subType = 0;
+    if (!isDragTable && isSameTable) {
+      const sourceTable = findTable(boardState, dragState.source.droppableId);
 
-        const sourceTable: ITable | undefined = boardState.find(
-          (table) => table._id === dragState.source.droppableId
-        );
-
-        if (sourceTable && sourceTable.tasks) {
-          const sourceTask = sourceTable.tasks[dragState.source.index];
-
-          sourceTable.tasks.splice(dragState.source.index, 1);
-
-          sourceTable?.tasks.splice(dragState.destination.index, 0, sourceTask);
-
-          sourceTable.tasks.forEach(
-            (task, index) =>
-              (sourceTable.tasks[index] = {
-                _id: task._id,
-                order: index,
-              })
-          );
-        }
-
-        updateInformation.subType = subType;
-        updateInformation.type = type;
-
-        await updateTable({ updateInformation, updateTable: sourceTable });
+      if (sourceTable && sourceTable.tasks) {
+        const sourceTask = sourceTable.tasks[dragState.source.index];
+        sourceTable!.removeTask(dragState.source.index);
+        sourceTable.insertTask(dragState.destination!.index, sourceTask);
+        reorderTable(sourceTable);
       }
 
-      if (dragState.source.droppableId !== dragState.destination?.droppableId) {
-        subType = 1;
+      setState((prevState) =>
+        prevState?.map((table) => {
+          if (table._id === sourceTable?._id) {
+            return { ...table, tasks: sourceTable.tasks };
+          }
+          return table;
+        })
+      );
 
-        const sourceTable: ITable | undefined = boardState.find(
-          (table) => table._id === dragState.source.droppableId
-        );
-
-        const destinationTable: ITable | undefined = boardState.find(
-          (table) => table._id === dragState.destination?.droppableId
-        );
-
-        if (
-          sourceTable &&
-          sourceTable.tasks &&
-          destinationTable &&
-          destinationTable.tasks
-        ) {
-          const sourceTask = sourceTable.tasks[dragState.source.index];
-
-          sourceTable.tasks.splice(dragState.source.index, 1);
-
-          destinationTable?.tasks.splice(
-            dragState.destination!.index,
-            0,
-            sourceTask
-          );
-
-          sourceTable.tasks.forEach(
-            (task, index) =>
-              (sourceTable.tasks[index] = {
-                _id: task._id,
-                order: index,
-              })
-          );
-
-          destinationTable.tasks.forEach(
-            (task, index) =>
-              (destinationTable.tasks[index] = {
-                _id: task._id,
-                order: index,
-              })
-          );
-        }
-
-        updateInformation.subType = subType;
-        updateInformation.type = type;
-        const updateBoard = {
-          sourceTable,
-          destinationTable,
-        };
-        await updateTable({ updateInformation, updateBoard });
-      }
+      mutation.mutate({
+        updateInformation,
+        updateTable: sourceTable,
+      });
     }
 
-    // setBoard((prevBoard) => {
-    //   console.log(dragState, prevBoard);
-    //   const boardState = [...prevBoard];
+    if (!isDragTable && isDestinationExist && !isSameTable) {
+      updateInformation.subType = 1;
 
-    //   if (dragState.source.droppableId === 'tables' && !dragState.destination) {
-    //     return prevBoard;
-    //   }
+      const sourceTable = findTable(boardState, dragState.source.droppableId);
+      const destinationTable = findTable(
+        boardState,
+        dragState.destination!.droppableId
+      );
 
-    //   if (dragState.source.droppableId === 'tables' && dragState.destination) {
-    //     const sourceIndex = dragState.source.index;
-    //     const destinationIndex = dragState.destination.index;
-    //     const source = boardState.splice(sourceIndex, 1);
-    //     boardState.splice(destinationIndex, 0, source[0]);
-    //     return boardState;
-    //   }
+      if (isTableExist(sourceTable) && isTableExist(destinationTable)) {
+        const sourceTask = sourceTable!.tasks[dragState.source.index];
+        sourceTable!.removeTask(dragState.source.index);
+        destinationTable!.insertTask(dragState.destination!.index, sourceTask);
 
-    //   if (dragState.source.droppableId !== 'tables' && dragState.destination) {
-    //     const sourceTable: ITable | undefined = boardState.find(
-    //       (table) => table._id === dragState.source.droppableId
-    //     );
+        reorderTable(sourceTable!);
+        reorderTable(destinationTable!);
+      }
 
-    //     const destinationTable: ITable | undefined = boardState.find(
-    //       (table) => table._id === dragState.destination?.droppableId
-    //     );
+      const boardsToUpdate = {
+        sourceTable,
+        destinationTable,
+      };
 
-    //     if (!sourceTable) {
-    //       return prevBoard;
-    //     }
+      setState((prevState) =>
+        prevState?.map((table) => {
+          if (table._id === sourceTable?._id) {
+            return { ...table, tasks: sourceTable.tasks };
+          }
 
-    //     if (!destinationTable) {
-    //       return prevBoard;
-    //     }
+          if (table._id === destinationTable?._id) {
+            return { ...table, tasks: destinationTable.tasks };
+          }
 
-    //     const sourceTask = sourceTable.tasks[dragState.source.index];
+          return table;
+        })
+      );
 
-    //     sourceTable.tasks.splice(dragState.source.index, 1);
-
-    //     destinationTable?.tasks.splice(
-    //       dragState.destination.index,
-    //       0,
-    //       sourceTask
-    //     );
-
-    //     return boardState.map((table) => {
-    //       if (table._id === dragState.source.droppableId) {
-    //         return sourceTable;
-    //       }
-
-    //       if (table._id === dragState.destination?.droppableId) {
-    //         return destinationTable;
-    //       }
-
-    //       return table;
-    //     });
-    //   }
-
-    //   if (!dragState.destination) {
-    //     return prevBoard;
-    //   }
-
-    //   return prevBoard;
-    // });
+      mutation.mutate({ updateInformation, updateBoard: boardsToUpdate });
+    }
   };
 
   useEffect(() => {
-    getTables();
-  }, []);
+    data?.forEach((table) => {
+      table.insertTask = function (insertIndex, taskToInsert) {
+        this.tasks.splice(insertIndex, 0, taskToInsert);
+      };
+      table.removeTask = function (removeIndex) {
+        this.tasks.splice(removeIndex, 1);
+      };
+    });
 
-  return { board, onDragEnd, createTable, updateTable };
+    setState(data);
+  }, [data]);
+
+  return {
+    board: state,
+    onDragEnd,
+    createTable,
+    isDragDisabled: mutation.isPending,
+  };
 };

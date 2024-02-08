@@ -5,9 +5,10 @@ import { ITable } from 'apps/libs/types/src';
 interface Props {
   provided: DraggableProvided;
   table: ITable;
+  isDragDisabled: boolean;
 }
 
-export const Table = ({ provided, table }: Props) => {
+export const Table = ({ provided, table, isDragDisabled }: Props) => {
   return (
     <article
       className="table"
@@ -23,7 +24,7 @@ export const Table = ({ provided, table }: Props) => {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            <Tasks table={table} />
+            <Tasks table={table} isDragDisabled={isDragDisabled} />
             {provided.placeholder}
           </div>
         )}
