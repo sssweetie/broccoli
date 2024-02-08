@@ -1,7 +1,29 @@
+@font-face {
+  font-family: 'SFLight';
+  src: url('./assets/fonts/san-francisco/SFProText-Light.ttf')
+    format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'SFMedium';
+  src: url('./assets/fonts/san-francisco/SFProText-Medium.ttf')
+    format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SFHeavy';
+  src: url('./assets/fonts/san-francisco/SFProText-Heavy.ttf')
+    format('truetype');
+  font-weight: 600;
+}
+
 * {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'SFMedium', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   margin: 0;
   box-sizing: border-box;
+  font-weight: 400;
 }
 
 $base-color: #1548a6;
@@ -61,7 +83,7 @@ body {
 }
 
 .outlet-wrapper {
-  background-color: rgba(0, 0, 0, 0.70);
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 6px;
   flex-grow: 1;
 }

@@ -4,6 +4,7 @@ import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Tables } from './components/Tables';
 import { useDragDrop } from './hooks/useDragDrop';
 import { ToastContainer } from 'react-toastify';
+import { AddTable } from './components/AddTable';
 export const DragDrop = () => {
   const { onDragEnd, board, isDragDisabled } = useDragDrop();
 
@@ -23,6 +24,7 @@ export const DragDrop = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <AddTable />
       <ToastContainer />
     </>
   ) : (
