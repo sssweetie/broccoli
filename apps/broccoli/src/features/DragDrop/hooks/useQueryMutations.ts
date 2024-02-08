@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { DragDropApi } from '../api/dragDropApi';
 import { ITable } from 'apps/libs/types/src';
@@ -11,6 +11,8 @@ export const useQueryMutations = (dragDropApi: DragDropApi) => {
   });
 
   const [state, setState] = useState<ITable[] | undefined>(data);
+
+  const queryClient = useQueryClient();
 
   const onError = () => {
     setState((prevState) => prevState);
@@ -33,7 +35,10 @@ export const useQueryMutations = (dragDropApi: DragDropApi) => {
 
   const createTable = useMutation({
     mutationFn: dragDropApi.create,
-    onSuccess: () => onSuccess('Table is added!'),
+    onSuccess: () => {
+      onSuccess('Table is added!');
+      queryClient.invalidateQueries({ queryKey: ['board'] });
+    },
     onError,
   });
 
@@ -50,5 +55,5 @@ export const useQueryMutations = (dragDropApi: DragDropApi) => {
     setState(data);
   }, [data]);
 
-  return {  setState, state, updateTable, createTable };
+  return { setState, state, updateTable, createTable };
 };

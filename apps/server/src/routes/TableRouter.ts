@@ -14,8 +14,7 @@ tableRouter.get('/read', async (req, res) => {
 
 tableRouter.post('/create', async (req, res) => {
   try {
-    const table = req.body.table;
-    await TableController.create(table);
+    await TableController.create(req.body);
     res.sendStatus(200);
   } catch {
     res.status(400).send('error create data');

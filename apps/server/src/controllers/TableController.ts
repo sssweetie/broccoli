@@ -3,7 +3,10 @@ import { TableModel } from '../models/TableModels';
 import { TaskModel } from '../models/TaskModels';
 
 export const TableController = {
-  create: async (table: ITable) => await TableModel.create(table),
+  create: async (table: Partial<ITable>) => {
+    console.log(table);
+    await TableModel.create(table);
+  },
   read: async () => {
     try {
       TaskModel;
@@ -45,15 +48,15 @@ export const TableController = {
       await TableModel.findByIdAndUpdate(updateBoard.sourceTable._id, {
         tasks: updateBoard.sourceTable.tasks.map((task) => task._id),
       });
-    
+
       await TableModel.findByIdAndUpdate(updateBoard.destinationTable._id, {
         tasks: updateBoard.destinationTable.tasks.map((task) => task._id),
       });
-    
+
       for (const task of updateBoard.sourceTable.tasks) {
         await TaskModel.findByIdAndUpdate(task._id, { order: task.order });
       }
-    
+
       for (const task of updateBoard.destinationTable.tasks) {
         await TaskModel.findByIdAndUpdate(task._id, { order: task.order });
       }

@@ -3,33 +3,34 @@
   flex-wrap: wrap;
   gap: 16px;
   padding: 16px;
+  overflow: hidden;
 }
 
 .table {
-  padding: 8px;
+  padding: 10px 12px;
   border-radius: 4px;
-  min-width: 180px;
-  background-color: rgba(253, 251, 251, 0.801);
+  min-width: 250px;
+  background-color: rgba(253, 251, 251, 0.85);
   cursor: grab;
 
   &__title {
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 8px;
   }
 
   &__tasks {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
 
   &__task {
-    font-size: 8px;
-    background-color: rgba(255, 255, 255, 1);
+    font-size: 11px;
+    background-color: rgba(255, 255, 255, 0.8);
 
     border-radius: 4px;
-    padding: 8px;
-    font-weight: 600;
+    padding: 12px 8px;
+    font-weight: 400;
   }
 }
 

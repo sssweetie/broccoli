@@ -6,7 +6,7 @@ import { useDragDrop } from './hooks/useDragDrop';
 import { ToastContainer } from 'react-toastify';
 import { AddTable } from './components/AddTable';
 export const DragDrop = () => {
-  const { onDragEnd, board, isDragDisabled } = useDragDrop();
+  const { onDragEnd, createTable, board, isDragDisabled } = useDragDrop();
 
   return board ? (
     <>
@@ -20,11 +20,11 @@ export const DragDrop = () => {
             >
               <Tables board={board} isDragDisabled={isDragDisabled} />
               {provided.placeholder}
+              <AddTable elementCount={board.length} createTable={createTable}/>
             </div>
           )}
         </Droppable>
       </DragDropContext>
-      <AddTable />
       <ToastContainer />
     </>
   ) : (
