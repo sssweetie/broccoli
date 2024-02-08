@@ -1,15 +1,11 @@
-import {
-  DragDropContext,
-  Droppable,
-} from '@hello-pangea/dnd';
 import './dragDrop.scss';
+
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Tables } from './components/Tables';
 import { useDragDrop } from './hooks/useDragDrop';
-import { dragDropApi } from './api/dragDropApi';
-import { httpClient } from '../../services/httpClient';
 import { ToastContainer } from 'react-toastify';
 export const DragDrop = () => {
-  const { onDragEnd, board, isDragDisabled } = useDragDrop(dragDropApi(httpClient));
+  const { onDragEnd, board, isDragDisabled } = useDragDrop();
 
   return board ? (
     <>
@@ -21,7 +17,7 @@ export const DragDrop = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <Tables board={board} isDragDisabled={isDragDisabled}/>
+              <Tables board={board} isDragDisabled={isDragDisabled} />
               {provided.placeholder}
             </div>
           )}

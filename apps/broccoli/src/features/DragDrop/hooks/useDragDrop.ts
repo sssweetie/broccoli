@@ -1,75 +1,31 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { DragUpdate } from '@hello-pangea/dnd';
-import { DragDropApi } from '../api/dragDropApi';
-import { ITable } from 'apps/libs/types/src';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { Slide, toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
 import { findTable, isTableExist, reorderTable } from 'apps/broccoli/src/utils';
+import { useQueryMutations } from './useQueryMutations';
+import { dragDropApi } from '../api/dragDropApi';
+import { httpClient } from 'apps/broccoli/src/services/httpClient';
 
-export const useDragDrop = (dragDropApi: DragDropApi) => {
-  const { data } = useQuery({
-    queryKey: ['board'],
-    queryFn: dragDropApi.read,
-  });
+export const useDragDrop = () => {
+  const { state, updateTable, setState, createTable } = useQueryMutations(
+    dragDropApi(httpClient)
+  );
 
-  const mutation = useMutation({
-    mutationFn: dragDropApi.update,
-    onSuccess: () => {
-      toast.info('Order is updated!', {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-        transition: Slide,
-      });
-    },
-
-    onError: () => {
-      setState((prevState) => prevState);
-      toast.error('Something went wrong!:(', {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-        transition: Slide,
-      });
-    },
-  });
-
-  const [state, setState] = useState<ITable[] | undefined>(data);
-
-  const createTable = async (table: ITable) => {
-    await dragDropApi.create(table);
-  };
-
-  const onDragEnd = async (dragState: DragUpdate) => {
+  const onDragEnd = async ({ type, source, destination }: DragUpdate) => {
     const boardState = state ? [...state] : [];
     const updateInformation = {
       subType: 0,
-      type: dragState.type.toLowerCase(),
+      type: type.toLowerCase(),
     };
-    
-    const isDragTable = dragState.type.toLowerCase() === 'table';
-    const isDestinationExist = dragState.destination ? true : false;
-    const isSamePosition =
-      dragState.destination?.index === dragState.source.index;
-    const isSameTable =
-      dragState.source.droppableId === dragState.destination?.droppableId;
+    const isDragTable = type.toLowerCase() === 'table';
+    const isDestinationExist = destination ? true : false;
+    const isSamePosition = destination?.index === source.index;
+    const isSameTable = source.droppableId === destination?.droppableId;
 
     if (isDragTable && isDestinationExist && !isSamePosition) {
-      const sourceIndex = dragState.source.index;
-      const destinationIndex = dragState.destination!.index;
-      const [source] = boardState.splice(sourceIndex, 1);
-      boardState.splice(destinationIndex, 0, source);
+      const [sourceTable] = boardState.splice(source.index, 1);
+
+      boardState.splice(destination!.index, 0, sourceTable);
+
       const newBoardState = boardState.map((table, index) => ({
         ...table,
         order: index,
@@ -77,19 +33,19 @@ export const useDragDrop = (dragDropApi: DragDropApi) => {
 
       setState(newBoardState);
 
-      mutation.mutateAsync({
+      updateTable.mutateAsync({
         updateInformation,
         boardToUpdate: newBoardState,
       });
     }
 
     if (!isDragTable && isSameTable) {
-      const sourceTable = findTable(boardState, dragState.source.droppableId);
+      const sourceTable = findTable(boardState, source.droppableId);
 
       if (sourceTable && sourceTable.tasks) {
-        const sourceTask = sourceTable.tasks[dragState.source.index];
-        sourceTable!.removeTask(dragState.source.index);
-        sourceTable.insertTask(dragState.destination!.index, sourceTask);
+        const sourceTask = sourceTable.tasks[source.index];
+        sourceTable!.removeTask(source.index);
+        sourceTable.insertTask(destination!.index, sourceTask);
         reorderTable(sourceTable);
       }
 
@@ -102,7 +58,7 @@ export const useDragDrop = (dragDropApi: DragDropApi) => {
         })
       );
 
-      mutation.mutate({
+      updateTable.mutate({
         updateInformation,
         updateTable: sourceTable,
       });
@@ -111,61 +67,44 @@ export const useDragDrop = (dragDropApi: DragDropApi) => {
     if (!isDragTable && isDestinationExist && !isSameTable) {
       updateInformation.subType = 1;
 
-      const sourceTable = findTable(boardState, dragState.source.droppableId);
-      const destinationTable = findTable(
-        boardState,
-        dragState.destination!.droppableId
-      );
+      const sourceTable = findTable(boardState, source.droppableId);
+      const destinationTable = findTable(boardState, destination!.droppableId);
 
       if (isTableExist(sourceTable) && isTableExist(destinationTable)) {
-        const sourceTask = sourceTable!.tasks[dragState.source.index];
-        sourceTable!.removeTask(dragState.source.index);
-        destinationTable!.insertTask(dragState.destination!.index, sourceTask);
+        const sourceTask = sourceTable!.tasks[source.index];
+        sourceTable!.removeTask(source.index);
+        destinationTable!.insertTask(destination!.index, sourceTask);
 
         reorderTable(sourceTable!);
         reorderTable(destinationTable!);
       }
-
-      const boardsToUpdate = {
-        sourceTable,
-        destinationTable,
-      };
 
       setState((prevState) =>
         prevState?.map((table) => {
           if (table._id === sourceTable?._id) {
             return { ...table, tasks: sourceTable.tasks };
           }
-
           if (table._id === destinationTable?._id) {
             return { ...table, tasks: destinationTable.tasks };
           }
-
           return table;
         })
       );
 
-      mutation.mutate({ updateInformation, updateBoard: boardsToUpdate });
+      updateTable.mutate({
+        updateInformation,
+        updateBoard: {
+          sourceTable,
+          destinationTable,
+        },
+      });
     }
   };
-
-  useEffect(() => {
-    data?.forEach((table) => {
-      table.insertTask = function (insertIndex, taskToInsert) {
-        this.tasks.splice(insertIndex, 0, taskToInsert);
-      };
-      table.removeTask = function (removeIndex) {
-        this.tasks.splice(removeIndex, 1);
-      };
-    });
-
-    setState(data);
-  }, [data]);
 
   return {
     board: state,
     onDragEnd,
     createTable,
-    isDragDisabled: mutation.isPending,
+    isDragDisabled: updateTable.isPending,
   };
 };
