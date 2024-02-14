@@ -12,7 +12,8 @@
   min-width: 250px;
   background-color: rgba(253, 251, 251, 0.85);
   cursor: grab;
-
+  height: min-content;
+  
   &__title {
     font-size: 14px;
     margin-bottom: 8px;

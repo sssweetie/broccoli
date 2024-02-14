@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { tableRouter } from './TableRouter';
+import { taskRouter } from './TaskRouter';
 
 export const router = Router();
 
-router.use('/dragdrop', tableRouter);
+router.use('/dragdrop/table', tableRouter);
+router.use('/dragdrop/task', taskRouter);

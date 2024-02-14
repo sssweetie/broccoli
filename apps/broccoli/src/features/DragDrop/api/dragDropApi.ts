@@ -10,12 +10,12 @@ export interface DragDropApi {
 
 export const dragDropApi = (httpClient: AxiosInstance): DragDropApi => ({
   create: async (table: Partial<ITable>) =>
-    await httpClient.post('/dragdrop/create', table),
+    await httpClient.post('/dragdrop/table/create', table),
   read: async () => {
-    const res = await httpClient.get('/dragdrop/read');
+    const res = await httpClient.get('/dragdrop/table/read');
     return res.data;
   },
   update: async (params: RequiredParamsToUpdate) =>
-    await httpClient.put('/dragdrop/update', params),
+    await httpClient.put('/dragdrop/table/update', params),
   // delete: async () => (),
 });

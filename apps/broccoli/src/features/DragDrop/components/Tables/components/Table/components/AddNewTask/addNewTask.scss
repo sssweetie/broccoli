@@ -1,0 +1,25 @@
+.add-task {
+  padding: 12px 6px 0 6px;
+  font-size: 14px;
+  color: rgb(111, 111, 111);
+  &:hover {
+    opacity: 75%;
+    cursor: pointer;
+  }
+
+  &__plus {
+    margin-right: 8px;
+  }
+
+  &-edit-mode {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+  }
+
+  &-edit-mode__buttons {
+    display: flex;
+    gap: 8px;
+  }
+}
+

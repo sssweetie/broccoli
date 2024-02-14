@@ -4,7 +4,6 @@ import { TaskModel } from '../models/TaskModels';
 
 export const TableController = {
   create: async (table: Partial<ITable>) => {
-    console.log(table);
     await TableModel.create(table);
   },
   read: async () => {

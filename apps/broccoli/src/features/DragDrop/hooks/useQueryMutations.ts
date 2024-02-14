@@ -42,6 +42,7 @@ export const useQueryMutations = (dragDropApi: DragDropApi) => {
     onError,
   });
 
+
   useEffect(() => {
     data?.forEach((table) => {
       table.insertTask = function (insertIndex, taskToInsert) {
