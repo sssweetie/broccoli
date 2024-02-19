@@ -5,7 +5,7 @@ export interface DragDropApi {
   create: (table: Partial<ITable>) => Promise<void>;
   read: () => Promise<ITable[]>;
   update: (params: RequiredParamsToUpdate) => Promise<void>;
-  // delete: () => Promise<void>
+  delete: (id: string) => Promise<void>;
 }
 
 export const dragDropApi = (httpClient: AxiosInstance): DragDropApi => ({
@@ -17,5 +17,6 @@ export const dragDropApi = (httpClient: AxiosInstance): DragDropApi => ({
   },
   update: async (params: RequiredParamsToUpdate) =>
     await httpClient.put('/dragdrop/table/update', params),
-  // delete: async () => (),
+  delete: async (id: string) =>
+    await httpClient.delete('/dragdrop/table/delete', { params: { id } }),
 });

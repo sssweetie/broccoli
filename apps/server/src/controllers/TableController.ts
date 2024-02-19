@@ -61,5 +61,6 @@ export const TableController = {
       }
     }
   },
-  // delete:  async () => (),
+  
+  delete: async (id: string) => await TableModel.findByIdAndDelete(id),
 };

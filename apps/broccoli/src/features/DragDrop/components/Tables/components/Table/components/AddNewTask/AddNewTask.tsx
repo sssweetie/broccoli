@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import './addNewTask.scss';
 
 import { Button, IconButton, TextField } from '@mui/material';
@@ -34,7 +35,8 @@ export const AddNewTask = ({ createTask, tableId, tasksCount }: Props) => {
       await createTask({ tableId, task });
       setEditMode(false);
     } catch (error) {
-    } 
+      console.error(error);
+    }
   };
 
   const onChange = (e: any) => {

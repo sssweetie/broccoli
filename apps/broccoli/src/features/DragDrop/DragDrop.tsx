@@ -7,7 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import { AddTable } from './components/AddTable';
 import { useTask } from './hooks/useTask';
 export const DragDrop = () => {
-  const { onDragEnd, createTable, board, isDragDisabled } = useDragDrop();
+  const { onDragEnd, createTable, board, isDragDisabled, deleteTable } =
+    useDragDrop();
   const { createTask } = useTask();
   return board ? (
     <>
@@ -23,6 +24,7 @@ export const DragDrop = () => {
                 board={board}
                 isDragDisabled={isDragDisabled}
                 createTask={createTask.mutate}
+                deleteTable={deleteTable.mutate}
               />
               {provided.placeholder}
               <AddTable elementCount={board.length} createTable={createTable} />

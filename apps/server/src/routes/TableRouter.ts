@@ -29,3 +29,12 @@ tableRouter.put('/update', async (req, res) => {
     res.status(400).send('error update data');
   }
 });
+
+tableRouter.delete('/delete', async (req, res) => {
+  try {
+    await TableController.delete(req.query.id as string);
+    res.sendStatus(200);
+  } catch {
+    res.status(400).send('error delete data');
+  }
+});

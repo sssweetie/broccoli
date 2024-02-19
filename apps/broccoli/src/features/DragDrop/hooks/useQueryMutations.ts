@@ -42,6 +42,14 @@ export const useQueryMutations = (dragDropApi: DragDropApi) => {
     onError,
   });
 
+  const deleteTable = useMutation({
+    mutationFn: dragDropApi.delete,
+    onSuccess: () => {
+      onSuccess('Table is deleted!');
+      queryClient.invalidateQueries({ queryKey: ['board'] });
+    },
+    onError,
+  });
 
   useEffect(() => {
     data?.forEach((table) => {
@@ -56,5 +64,5 @@ export const useQueryMutations = (dragDropApi: DragDropApi) => {
     setState(data);
   }, [data]);
 
-  return { setState, state, updateTable, createTable };
+  return { setState, state, updateTable, createTable, deleteTable };
 };

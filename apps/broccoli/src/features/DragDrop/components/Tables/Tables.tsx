@@ -8,9 +8,15 @@ interface Props {
   board: ITable[];
   isDragDisabled: boolean;
   createTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
+  deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Tables = ({ board, isDragDisabled, createTask }: Props) => {
+export const Tables = ({
+  board,
+  isDragDisabled,
+  createTask,
+  deleteTable,
+}: Props) => {
   return board.map((table, index) => (
     <Draggable
       draggableId={table._id}
@@ -20,6 +26,7 @@ export const Tables = ({ board, isDragDisabled, createTask }: Props) => {
     >
       {(provided) => (
         <Table
+          deleteTable={deleteTable}
           createTask={createTask}
           provided={provided}
           table={table}
