@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import './addNewTask.scss';
 
 import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { UpdateTask } from 'apps/broccoli/src/features/DragDrop/api/taskApi';
+import { UpdateTask } from 'apps/libs/types/src';
 
 interface Props {
   createTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
@@ -25,7 +24,7 @@ export const AddNewTask = ({ createTask, tableId, tasksCount }: Props) => {
     setEditMode(false);
   };
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const task = {
@@ -39,7 +38,7 @@ export const AddNewTask = ({ createTask, tableId, tasksCount }: Props) => {
     }
   };
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
 

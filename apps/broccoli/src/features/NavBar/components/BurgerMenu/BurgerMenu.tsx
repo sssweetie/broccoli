@@ -2,7 +2,7 @@ import { MouseEvent } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { Page } from 'apps/broccoli/src/types';
+import { Page } from 'apps/libs/types/src';
 
 interface Props {
   handleOpenNavMenu: (event: MouseEvent<HTMLElement>) => void;
@@ -13,8 +13,8 @@ interface Props {
 
 export const BurgerMenu = ({
   handleOpenNavMenu,
-  anchorElNav,
   handleCloseNavMenu,
+  anchorElNav,
   pages,
 }: Props) => {
   return (
@@ -48,7 +48,10 @@ export const BurgerMenu = ({
         }}
       >
         {pages.map((page) => (
-          <MenuItem key={page.name} onClick={() => handleCloseNavMenu(page.link)}>
+          <MenuItem
+            key={page.name}
+            onClick={() => handleCloseNavMenu(page.link)}
+          >
             <Typography textAlign="center">{page.name}</Typography>
           </MenuItem>
         ))}

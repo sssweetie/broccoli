@@ -1,10 +1,5 @@
-import { ITask } from 'apps/libs/types/src';
+import { UpdateTask } from 'apps/libs/types/src';
 import { AxiosInstance } from 'axios';
-
-export interface UpdateTask {
-  tableId: string;
-  task: Partial<ITask>;
-}
 
 export interface TaskApi {
   create: ({ tableId, task }: UpdateTask) => Promise<void>;

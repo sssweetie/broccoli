@@ -17,3 +17,7 @@ export interface RequiredParamsToUpdate {
   updateTable?: Partial<ITable>;
 }
 
+export interface UpdateTask {
+  tableId: string;
+  task: Partial<ITask>;
+}

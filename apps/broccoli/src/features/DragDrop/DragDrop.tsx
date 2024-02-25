@@ -5,11 +5,9 @@ import { Tables } from './components/Tables';
 import { useDragDrop } from './hooks/useDragDrop';
 import { ToastContainer } from 'react-toastify';
 import { AddTable } from './components/AddTable';
-import { useTask } from './hooks/useTask';
 export const DragDrop = () => {
   const { onDragEnd, createTable, board, isDragDisabled, deleteTable } =
     useDragDrop();
-  const { createTask } = useTask();
   return board ? (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -23,7 +21,6 @@ export const DragDrop = () => {
               <Tables
                 board={board}
                 isDragDisabled={isDragDisabled}
-                createTask={createTask.mutate}
                 deleteTable={deleteTable.mutate}
               />
               {provided.placeholder}

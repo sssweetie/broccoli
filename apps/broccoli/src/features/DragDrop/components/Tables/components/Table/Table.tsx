@@ -5,15 +5,14 @@ import { Tasks } from '../Tasks/Tasks';
 import { ITable } from 'apps/libs/types/src';
 import { AddNewTask } from './components/AddNewTask';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { UpdateTask } from '../../../../api/taskApi';
 import { DropdownMenu } from './components/DropdownMenu';
 import { DeleteTableModal } from './components/DeleteTableModal';
 import { useState } from 'react';
+import { useTask } from '../../../../hooks/useTask';
 interface Props {
   provided: DraggableProvided;
   table: ITable;
   isDragDisabled: boolean;
-  createTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
@@ -21,9 +20,9 @@ export const Table = ({
   provided,
   table,
   isDragDisabled,
-  createTask,
   deleteTable,
 }: Props) => {
+  const { createTask } = useTask();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {

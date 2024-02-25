@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import './addTable.scss';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { UseMutationResult } from '@tanstack/react-query';
@@ -23,9 +22,10 @@ export const AddTable = ({ createTable, elementCount }: Props) => {
     setEditMode(false);
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const title = e.target[0].value;
+    const form = e.target as HTMLFormElement;
+    const title = (form[0] as HTMLInputElement).value;
     createTable.mutate({ order: elementCount, tasks: [], title });
   };
 
