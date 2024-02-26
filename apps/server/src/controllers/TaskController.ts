@@ -1,6 +1,7 @@
-import { TaskModel } from '../models/TaskModels';
-import { TableModel } from '../models/TableModels';
-import { ITask } from 'apps/libs/types/src';
+import { TaskModel } from '../models/TaskModel';
+import { TableModel } from '../models/TableModel';
+import { ITask, UpdateTask } from 'apps/libs/types/src';
+import { AuditController } from './AuditController';
 
 interface AddTask {
   tableId: string;
@@ -13,11 +14,20 @@ export const TaskController = {
       title: task.title,
       order: task.order,
     });
-    
+
     await TableModel.findByIdAndUpdate(tableId, {
       $push: {
         tasks: document._id,
       },
     });
+  },
+  read: async (taskId: string) => {
+    const task = await TaskModel.findById(taskId);
+    const audit = await AuditController.read(taskId);
+    return { task, audit };
+  },
+  update: async ({ task, audit }: UpdateTask) => {
+    await TaskModel.findByIdAndUpdate(task._id, { ...task });
+    await AuditController.create({ audit, taskId: task._id });
   },
 };

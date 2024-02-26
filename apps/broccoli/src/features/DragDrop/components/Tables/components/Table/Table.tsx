@@ -1,7 +1,6 @@
 import './table.scss';
 
 import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
-import { Tasks } from '../Tasks/Tasks';
 import { ITable } from 'apps/libs/types/src';
 import { AddNewTask } from './components/AddNewTask';
 import { UseMutateFunction } from '@tanstack/react-query';
@@ -9,6 +8,9 @@ import { DropdownMenu } from './components/DropdownMenu';
 import { DeleteTableModal } from './components/DeleteTableModal';
 import { useState } from 'react';
 import { useTask } from '../../../../hooks/useTask';
+import { Tasks } from './components/Tasks/Tasks';
+import { taskApi } from '../../../../api/taskApi';
+import { httpClient } from 'apps/broccoli/src/services/httpClient';
 interface Props {
   provided: DraggableProvided;
   table: ITable;
@@ -22,9 +24,8 @@ export const Table = ({
   isDragDisabled,
   deleteTable,
 }: Props) => {
-  const { createTask } = useTask();
+  const { createTask, updateTask } = useTask(taskApi(httpClient));
   const [isModalOpen, setModalOpen] = useState(false);
-
   const openModal = () => {
     setModalOpen(true);
   };
@@ -52,13 +53,18 @@ export const Table = ({
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            <Tasks table={table} isDragDisabled={isDragDisabled} />
+            <Tasks
+              table={table}
+              isDragDisabled={isDragDisabled}
+              updateTask={updateTask.mutate}
+              deleteTable={deleteTable}
+            />
             {provided.placeholder}
           </div>
         )}
       </Droppable>
       <AddNewTask
-        createTask={createTask}
+        createTask={createTask.mutate}
         tableId={table._id}
         tasksCount={table.tasks.length}
       />

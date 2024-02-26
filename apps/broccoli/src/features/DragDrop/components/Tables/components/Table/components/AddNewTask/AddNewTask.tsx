@@ -4,10 +4,10 @@ import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { UpdateTask } from 'apps/libs/types/src';
+import { AddTask } from 'apps/libs/types/src';
 
 interface Props {
-  createTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
+  createTask: UseMutateFunction<void, Error, AddTask, unknown>;
   tableId: string;
   tasksCount: number;
 }

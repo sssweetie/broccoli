@@ -13,6 +13,12 @@ const taskSchema = new Schema<ITask>({
   description: {
     type: String,
   },
+  audits: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'audits',
+    },
+  ],
 });
 
 export const TaskModel = model<ITask>('tasks', taskSchema);

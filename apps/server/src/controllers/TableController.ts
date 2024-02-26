@@ -1,6 +1,6 @@
 import { ITable, RequiredParamsToUpdate } from 'apps/libs/types/src';
-import { TableModel } from '../models/TableModels';
-import { TaskModel } from '../models/TaskModels';
+import { TableModel } from '../models/TableModel';
+import { TaskModel } from '../models/TaskModel';
 
 export const TableController = {
   create: async (table: Partial<ITable>) => {
@@ -61,6 +61,6 @@ export const TableController = {
       }
     }
   },
-  
+
   delete: async (id: string) => await TableModel.findByIdAndDelete(id),
 };
