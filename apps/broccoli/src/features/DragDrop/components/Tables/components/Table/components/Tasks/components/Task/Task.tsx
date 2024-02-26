@@ -11,6 +11,7 @@ interface Props {
   task: ITask;
   updateTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
+  deleteTask: UseMutateFunction<void, Error, string, unknown>;
 }
 
 export const Task = ({
@@ -19,6 +20,7 @@ export const Task = ({
   tableTitle,
   tableId,
   updateTask,
+  deleteTask,
   deleteTable,
 }: Props) => {
   const [isOpen, setOpen] = useState(false);
@@ -45,6 +47,7 @@ export const Task = ({
         isOpen={isOpen}
         closeModal={closeModal}
         updateTask={updateTask}
+        deleteTask={deleteTask}
         deleteTable={deleteTable}
         task={task}
         tableId={tableId}

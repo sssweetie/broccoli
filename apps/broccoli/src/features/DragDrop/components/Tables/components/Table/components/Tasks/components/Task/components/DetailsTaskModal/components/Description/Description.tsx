@@ -1,5 +1,6 @@
 import DescriptionIcon from '@mui/icons-material/Description';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
@@ -8,24 +9,30 @@ import { UseMutateFunction } from '@tanstack/react-query';
 interface Props {
   description: string | undefined;
   tableId: string;
+  taskId: string;
   updateDescription: (description: string) => Promise<void>;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
+  deleteTask: UseMutateFunction<void, Error, string, unknown>;
 }
 
 export const Description = ({
   description,
   tableId,
+  taskId,
   updateDescription,
   deleteTable,
+  deleteTask,
 }: Props) => {
   const [isEdit, setEdit] = useState(false);
   const [value, setValue] = useState(description ? description : '');
+
   const disableEditMode = async () => {
     if (description !== value) {
       await updateDescription(value);
     }
     setEdit(false);
   };
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     disableEditMode();
@@ -42,6 +49,10 @@ export const Description = ({
 
   const handleDeleteTable = async () => {
     await deleteTable(tableId);
+  };
+
+  const handleDeleteTask = async () => {
+    await deleteTask(taskId);
   };
 
   return (
@@ -68,6 +79,10 @@ export const Description = ({
         <button className="button" onClick={handleDeleteTable}>
           <DeleteIcon />
           Delete table
+        </button>
+        <button className="button" onClick={handleDeleteTask}>
+          <ClearIcon />
+          Delete task
         </button>
       </section>
     </form>

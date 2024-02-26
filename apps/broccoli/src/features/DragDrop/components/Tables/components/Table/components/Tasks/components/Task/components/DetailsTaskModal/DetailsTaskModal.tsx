@@ -15,6 +15,7 @@ interface Props {
   tableId: string;
   closeModal: () => void;
   updateTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
+  deleteTask: UseMutateFunction<void, Error, string, unknown>;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
@@ -37,6 +38,7 @@ export const DetailsTaskModal = ({
   tableId,
   closeModal,
   updateTask,
+  deleteTask,
   deleteTable,
 }: Props) => {
   const { user } = useUser();
@@ -90,9 +92,11 @@ export const DetailsTaskModal = ({
         />
         <Description
           tableId={tableId}
+          taskId={task._id}
           description={task.description}
           updateDescription={updateDescription}
           deleteTable={deleteTable}
+          deleteTask={deleteTask}
         />
         {task.audits ? <AuditLogs taskId={task._id} /> : null}
       </Box>

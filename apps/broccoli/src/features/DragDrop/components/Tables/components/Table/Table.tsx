@@ -24,7 +24,7 @@ export const Table = ({
   isDragDisabled,
   deleteTable,
 }: Props) => {
-  const { createTask, updateTask } = useTask(taskApi(httpClient));
+  const { createTask, updateTask, deleteTask } = useTask(taskApi(httpClient));
   const [isModalOpen, setModalOpen] = useState(false);
   const openModal = () => {
     setModalOpen(true);
@@ -57,6 +57,7 @@ export const Table = ({
               table={table}
               isDragDisabled={isDragDisabled}
               updateTask={updateTask.mutate}
+              deleteTask={deleteTask.mutate}
               deleteTable={deleteTable}
             />
             {provided.placeholder}

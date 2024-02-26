@@ -5,6 +5,7 @@ export interface TaskApi {
   create: ({ tableId, task }: AddTask) => Promise<void>;
   read: (taskId: string) => Promise<ITask>;
   update: ({ task, audit }: UpdateTask) => Promise<void>;
+  delete: (taskId: string) => Promise<void>;
 }
 
 export const taskApi = (httpClient: AxiosInstance): TaskApi => ({
@@ -17,5 +18,8 @@ export const taskApi = (httpClient: AxiosInstance): TaskApi => ({
   },
   update: async (updateTask) => {
     await httpClient.put('/dragdrop/task/update', { updateTask });
+  },
+  delete: async (taskId) => {
+    await httpClient.delete(`/dragdrop/task/delete/${taskId}`);
   },
 });

@@ -31,5 +31,13 @@ export const useTask = (taskApi: TaskApi) => {
     },
   });
 
-  return { createTask, updateTask };
+  const deleteTask = useMutation({
+    mutationFn: taskApi.delete,
+    onSuccess: () => {
+      onSuccess('Task is updated successfully!');
+      queryClient.invalidateQueries({ queryKey: ['board'] });
+    },
+  });
+
+  return { createTask, updateTask, deleteTask };
 };

@@ -25,8 +25,9 @@ export const DropdownMenu = ({ openModal }: Props) => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        sx={{ padding: 0 }}
       >
-        <MoreHorizIcon></MoreHorizIcon>
+        <MoreHorizIcon />
       </IconButton>
       <Menu
         id="basic-menu"
