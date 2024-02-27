@@ -1,12 +1,16 @@
 import './detailsTaskModal.scss';
 
+import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/DragDrop/styles';
+
+import { ITask } from 'apps/libs/types/src';
+
 import { Box, Modal } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { ITask, UpdateTask } from 'apps/libs/types/src';
+
 import { AuditLogs } from './components/AuditLogs/AuditLogs';
-import { Title } from './components/Title';
 import { Description } from './components/Description';
-import { useUser } from '@clerk/clerk-react';
+import { Title } from './components/Title';
+import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
 
 interface Props {
   isOpen: boolean;
@@ -14,22 +18,14 @@ interface Props {
   tableTitle: string;
   tableId: string;
   closeModal: () => void;
-  updateTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
-  deleteTask: UseMutateFunction<void, Error, string, unknown>;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+export interface IDescription {
+  tableId: string;
+  taskId: string;
+  text: string | undefined;
+}
 
 export const DetailsTaskModal = ({
   isOpen,
@@ -37,46 +33,16 @@ export const DetailsTaskModal = ({
   tableTitle,
   tableId,
   closeModal,
-  updateTask,
-  deleteTask,
   deleteTable,
 }: Props) => {
-  const { user } = useUser();
+  const { operations } = useDetailsTaskModal({ task });
 
-  const updateTitle = async (title: string) => {
-    const newTask = { ...task, title };
-    const params = {
-      type: 'updateTitle',
-      newName: title,
-    };
-
-    const audit = {
-      userId: user?.id,
-      userName: user?.username,
-      userImg: user?.imageUrl,
-      params: params,
-      date: new Date(),
-    };
-
-    await updateTask({ task: newTask, audit });
+  const description: IDescription = {
+    tableId,
+    taskId: task._id,
+    text: task.description,
   };
 
-  const updateDescription = async (description: string) => {
-    const newTask = { ...task, description };
-    const params = {
-      type: 'updateDescription',
-    };
-
-    const audit = {
-      userId: user?.id,
-      userName: user?.username,
-      userImg: user?.imageUrl,
-      params: params,
-      date: new Date(),
-    };
-
-    await updateTask({ task: newTask, audit });
-  };
   return (
     <Modal
       open={isOpen}
@@ -84,19 +50,17 @@ export const DetailsTaskModal = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} className="task">
+      <Box sx={TASK_MODAL_STYLE.BOX} className="task">
         <Title
           tableTitle={tableTitle}
           title={task.title}
-          updateTitle={updateTitle}
+          updateTitle={operations.updateTitle}
         />
         <Description
-          tableId={tableId}
-          taskId={task._id}
-          description={task.description}
-          updateDescription={updateDescription}
+          description={description}
+          updateDescription={operations.updateDescription}
           deleteTable={deleteTable}
-          deleteTask={deleteTask}
+          deleteTask={operations.deleteTask}
         />
         {task.audits ? <AuditLogs taskId={task._id} /> : null}
       </Box>

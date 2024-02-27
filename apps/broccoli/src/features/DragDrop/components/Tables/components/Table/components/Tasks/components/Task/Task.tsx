@@ -1,5 +1,5 @@
 import { DraggableProvided } from '@hello-pangea/dnd';
-import { ITask, UpdateTask } from 'apps/libs/types/src';
+import { ITask } from 'apps/libs/types/src';
 import { DetailsTaskModal } from './components/DetailsTaskModal';
 import { useState } from 'react';
 import { UseMutateFunction } from '@tanstack/react-query';
@@ -9,9 +9,7 @@ interface Props {
   tableTitle: string;
   tableId: string;
   task: ITask;
-  updateTask: UseMutateFunction<void, Error, UpdateTask, unknown>;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
-  deleteTask: UseMutateFunction<void, Error, string, unknown>;
 }
 
 export const Task = ({
@@ -19,8 +17,6 @@ export const Task = ({
   task,
   tableTitle,
   tableId,
-  updateTask,
-  deleteTask,
   deleteTable,
 }: Props) => {
   const [isOpen, setOpen] = useState(false);
@@ -46,8 +42,6 @@ export const Task = ({
       <DetailsTaskModal
         isOpen={isOpen}
         closeModal={closeModal}
-        updateTask={updateTask}
-        deleteTask={deleteTask}
         deleteTable={deleteTable}
         task={task}
         tableId={tableId}
