@@ -1,13 +1,18 @@
-import './dragDrop.scss';
-
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Tables } from './components/Tables';
 import { useDragDrop } from './hooks/useDragDrop';
 import { ToastContainer } from 'react-toastify';
-import { AddTable } from './components/AddTable';
+import { AddForm } from '../../components/AddForm';
+import { FormEvent } from 'react';
 export const DragDrop = () => {
   const { onDragEnd, createTable, board, isDragDisabled, deleteTable } =
     useDragDrop();
+
+  const mutateTable = async (e: FormEvent<HTMLFormElement>, title: string) => {
+    e.preventDefault();
+    await createTable.mutate({ order: board?.length, tasks: [], title });
+  };
+
   return board ? (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -24,7 +29,7 @@ export const DragDrop = () => {
                 deleteTable={deleteTable.mutate}
               />
               {provided.placeholder}
-              <AddTable elementCount={board.length} createTable={createTable} />
+              <AddForm mutate={mutateTable} title="Create a table" />
             </div>
           )}
         </Droppable>

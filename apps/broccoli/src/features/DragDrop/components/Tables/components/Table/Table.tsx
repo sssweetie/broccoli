@@ -1,16 +1,14 @@
-import './table.scss';
-
 import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
 import { ITable } from 'apps/libs/types/src';
-import { AddNewTask } from './components/AddNewTask';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { DropdownMenu } from './components/DropdownMenu';
 import { DeleteTableModal } from './components/DeleteTableModal';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useTask } from '../../../../hooks/useTask';
 import { Tasks } from './components/Tasks/Tasks';
 import { taskApi } from '../../../../api/taskApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
+import { AddForm } from 'apps/broccoli/src/components/AddForm';
 interface Props {
   provided: DraggableProvided;
   table: ITable;
@@ -32,6 +30,15 @@ export const Table = ({
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const mutateTask = async (e: FormEvent<HTMLFormElement>, title: string) => {
+    e.preventDefault();
+    const task = {
+      title,
+      order: table.tasks.length - 1,
+    };
+    await createTask.mutate({ tableId: table._id, task });
   };
 
   return (
@@ -62,11 +69,7 @@ export const Table = ({
           </div>
         )}
       </Droppable>
-      <AddNewTask
-        createTask={createTask.mutate}
-        tableId={table._id}
-        tasksCount={table.tasks.length}
-      />
+      <AddForm mutate={mutateTask} title='Create a task'/>
       <DeleteTableModal
         isModalOpen={isModalOpen}
         closeModal={closeModal}

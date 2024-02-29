@@ -1,5 +1,3 @@
-import './detailsTaskModal.scss';
-
 import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/DragDrop/styles';
 
 import { ITask } from 'apps/libs/types/src';

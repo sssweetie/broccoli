@@ -1,7 +1,6 @@
 import { SignIn, useAuth } from '@clerk/clerk-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './sign-in-page.scss';
 
 export const SignInPage = () => {
   const { userId, isLoaded } = useAuth();
@@ -15,7 +14,7 @@ export const SignInPage = () => {
 
   return (
     <article className="login">
-      <SignIn afterSignInUrl='/application' signUpUrl="/sign-up" />
+      <SignIn afterSignInUrl="/application" signUpUrl="/sign-up" />
     </article>
   );
 };

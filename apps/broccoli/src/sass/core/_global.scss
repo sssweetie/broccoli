@@ -1,0 +1,37 @@
+@use '../abstracts' as *;
+
+* {
+  font-family: 'SFMedium', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+}
+
+#root .app-theme {
+  background-color: $base-color;
+}
+
+#root .app-color {
+  color: $base-color;
+}
+
+html {
+  background-image: url('../assets/root/mui-background.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+
+
+

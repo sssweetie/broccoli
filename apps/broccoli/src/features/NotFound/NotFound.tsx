@@ -1,9 +1,6 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import './not-found.scss';
-
-
 export const NotFound = () => {
   const navigate = useNavigate();
 

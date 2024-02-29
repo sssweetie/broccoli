@@ -1,5 +1,5 @@
-import './styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import './sass/app.scss';
 
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';

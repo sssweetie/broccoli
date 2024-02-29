@@ -1,5 +1,3 @@
-import './addNewTask.scss';
-
 import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { ChangeEvent, FormEvent, useState } from 'react';

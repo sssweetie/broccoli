@@ -1,16 +1,16 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { UseMutationResult } from '@tanstack/react-query';
-import { ITable } from 'apps/libs/types/src';
-
 interface Props {
-  elementCount: number;
-  createTable: UseMutationResult<void, Error, Partial<ITable>, unknown>;
+  mutate: (e: FormEvent<HTMLFormElement>, inputValue: string) => void;
+  title: string;
 }
 
-export const AddTable = ({ createTable, elementCount }: Props) => {
+export const AddForm = ({ mutate, title }: Props) => {
   const [editMode, setEditMode] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const isTask = title === 'Create a task' ? true : false;
 
   const turnEditModeOn = () => {
     setEditMode(true);
@@ -20,20 +20,28 @@ export const AddTable = ({ createTable, elementCount }: Props) => {
     setEditMode(false);
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const title = (form[0] as HTMLInputElement).value;
-    createTable.mutate({ order: elementCount, tasks: [], title });
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    await mutate(e, inputValue);
+    setEditMode(false);
+    setInputValue('');
   };
 
   return editMode ? (
-    <form className="edit-table" onSubmit={onSubmit}>
+    <form
+      className={isTask ? `edit-table table__add-form` : `edit-table`}
+      onSubmit={onSubmit}
+    >
       <TextField
         id="outlined-basic"
         label="Name"
         variant="outlined"
         size="small"
+        value={inputValue}
+        onChange={onChange}
       />
       <section className="edit-table__buttons">
         <Button
@@ -46,7 +54,7 @@ export const AddTable = ({ createTable, elementCount }: Props) => {
           }}
           type="submit"
         >
-          Create table
+          {title}
         </Button>
         <IconButton sx={{ padding: 0 }} onClick={turnEditModeOff}>
           <CloseRoundedIcon fontSize="small" />
@@ -54,8 +62,9 @@ export const AddTable = ({ createTable, elementCount }: Props) => {
       </section>
     </form>
   ) : (
-    <div className="add-table" onClick={turnEditModeOn}>
-      <span className="add-table__plus">+</span>Create a table
+    <div className={isTask ? `add-task` : 'add-table'} onClick={turnEditModeOn}>
+      <span className="add-task__plus">+</span>
+      {title}
     </div>
   );
 };
