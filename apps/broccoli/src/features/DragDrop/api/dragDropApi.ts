@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 
 export interface DragDropApi {
   create: (table: Partial<ITable>) => Promise<void>;
-  read: () => Promise<ITable[]>;
+  read: (id: string) => Promise<ITable[]>;
   update: (params: RequiredParamsToUpdate) => Promise<void>;
   delete: (id: string) => Promise<void>;
 }
@@ -11,8 +11,8 @@ export interface DragDropApi {
 export const dragDropApi = (httpClient: AxiosInstance): DragDropApi => ({
   create: async (table: Partial<ITable>) =>
     await httpClient.post('/dragdrop/table/create', table),
-  read: async () => {
-    const res = await httpClient.get('/dragdrop/table/read');
+  read: async (id: string) => {
+    const res = await httpClient.get(`/dragdrop/table/read/${id}`);
     return res.data;
   },
   update: async (params: RequiredParamsToUpdate) =>

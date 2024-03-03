@@ -5,9 +5,9 @@ import { useQueryMutations } from './useQueryMutations';
 import { dragDropApi } from '../api/dragDropApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 
-export const useDragDrop = () => {
+export const useDragDrop = (id: string) => {
   const { state, updateTable, setState, createTable, deleteTable } =
-    useQueryMutations(dragDropApi(httpClient));
+    useQueryMutations(dragDropApi(httpClient), id);
 
   const onDragEnd = async ({ type, source, destination }: DragUpdate) => {
     const boardState = state ? [...state] : [];

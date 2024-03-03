@@ -1,15 +1,32 @@
 import { ITable, RequiredParamsToUpdate } from 'apps/libs/types/src';
 import { TableModel } from '../models/TableModel';
 import { TaskModel } from '../models/TaskModel';
+import { BoardModel } from '../models/BoardModel';
+
+interface CreateTable {
+  table: Partial<ITable>;
+  boardId: string;
+}
 
 export const TableController = {
-  create: async (table: Partial<ITable>) => {
-    await TableModel.create(table);
+  create: async ({ table, boardId }: CreateTable) => {
+    BoardModel;
+    const newTable = await TableModel.create(table);
+    await BoardModel.findByIdAndUpdate(boardId, {
+      $push: {
+        tables: newTable._id,
+      },
+    });
   },
-  read: async () => {
+  read: async (id: string) => {
     try {
-      TaskModel;
-      const tables: ITable[] = await TableModel.find().populate('tasks').exec();
+      const board = await BoardModel.findById(id).populate({
+        path: 'tables',
+        populate: {
+          path: 'tasks',
+        },
+      });
+      const tables: ITable[] = board.tables;
       tables.sort((a, b) => a.order - b.order);
       tables.forEach((table) => {
         table.tasks.sort((a, b) => a.order - b.order);

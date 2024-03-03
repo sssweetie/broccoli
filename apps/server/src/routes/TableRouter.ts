@@ -3,9 +3,9 @@ import { TableController } from '../controllers/TableController';
 
 export const tableRouter = Router();
 
-tableRouter.get('/read', async (req, res) => {
+tableRouter.get('/read/:id', async (req, res) => {
   try {
-    const tables = await TableController.read();
+    const tables = await TableController.read(req.params.id as string);
     res.status(200).send(tables);
   } catch {
     res.status(400).send('error fetch data');

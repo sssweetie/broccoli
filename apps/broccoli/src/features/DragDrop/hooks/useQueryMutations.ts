@@ -4,10 +4,10 @@ import { DragDropApi } from '../api/dragDropApi';
 import { ITable } from 'apps/libs/types/src';
 import { toast } from 'react-toastify';
 import { toastConfig } from 'apps/broccoli/src/services/toastConfig';
-export const useQueryMutations = (dragDropApi: DragDropApi) => {
+export const useQueryMutations = (dragDropApi: DragDropApi, id: string) => {
   const { data } = useQuery({
     queryKey: ['board'],
-    queryFn: dragDropApi.read,
+    queryFn: () => dragDropApi.read(id),
   });
 
   const [state, setState] = useState<ITable[] | undefined>(data);

@@ -3,18 +3,24 @@ import { Tables } from './components/Tables';
 import { useDragDrop } from './hooks/useDragDrop';
 import { ToastContainer } from 'react-toastify';
 import { AddForm } from '../../components/AddForm';
-import { FormEvent } from 'react';
+import { FormEvent, createContext } from 'react';
+import { useParams } from 'react-router-dom';
 export const DragDrop = () => {
+  const { id } = useParams();
+
   const { onDragEnd, createTable, board, isDragDisabled, deleteTable } =
-    useDragDrop();
+    useDragDrop(id!);
 
   const mutateTable = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
-    await createTable.mutate({ order: board?.length, tasks: [], title });
+    const table = { order: board?.length, tasks: [], title };
+    await createTable.mutate({ table, boardId: id! });
   };
 
+  const BoardContext = createContext('');
+
   return board ? (
-    <>
+    <BoardContext.Provider value={id!}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="tables" type="TABLE" direction="horizontal">
           {(provided) => (
@@ -35,7 +41,7 @@ export const DragDrop = () => {
         </Droppable>
       </DragDropContext>
       <ToastContainer />
-    </>
+    </BoardContext.Provider>
   ) : (
     <div className="loader"></div>
   );

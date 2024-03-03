@@ -1,1 +1,0 @@
-export { AddTable } from './AddTable';

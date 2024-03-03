@@ -10,12 +10,8 @@ import { useNavigate } from 'react-router-dom';
 
 const pages = [
   {
-    name: 'Dashboard',
-    link: '/application/dashboard',
-  },
-  {
-    name: 'Datatable',
-    link: '/application/datatable',
+    name: 'Boards',
+    link: '/application/boards',
   },
   {
     name: 'Drag&Drop',
