@@ -1,0 +1,15 @@
+@use '../abstracts' as *;
+
+.not-found {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+
+  &__title {
+    color: $color-light-blue;
+    font-size: 48px;
+    margin: 0;
+    font-weight: 400;
+  }
+}

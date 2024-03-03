@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { useNavigate } from 'react-router-dom';
-import './welcome.scss';
 
 export const Welcome = () => {
   const navigate = useNavigate();

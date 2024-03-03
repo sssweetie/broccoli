@@ -16,7 +16,7 @@
         "main": "apps/broccoli/src/main.tsx",
         "tsConfig": "apps/broccoli/tsconfig.app.json",
         "assets": ["apps/broccoli/src/favicon.ico", "apps/broccoli/src/assets"],
-        "styles": ["apps/broccoli/src/styles.scss"],
+        "styles": ["apps/broccoli/src/sass/app.scss"],
         "scripts": [],
         "webpackConfig": "apps/broccoli/webpack.config.js"
       },

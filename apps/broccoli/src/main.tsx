@@ -1,3 +1,6 @@
+import 'react-toastify/dist/ReactToastify.css';
+import './sass/app.scss';
+
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -9,12 +12,15 @@ import { SignInPage } from './features/SignInPage';
 import { SignUpPage } from './features/SignUpPage';
 import { ApplicationLayout } from './features/ApplicationLayout';
 import { NotFound } from './features/NotFound';
-import './styles.scss'
 import { Welcome } from './features/Welcome';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -22,7 +28,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Welcome />
+        element: <Welcome />,
       },
       {
         path: '/sign-in',
@@ -60,6 +66,9 @@ const router = createBrowserRouter([
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   </StrictMode>
 );

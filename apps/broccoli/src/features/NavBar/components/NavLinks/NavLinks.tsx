@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import { Page } from 'apps/broccoli/src/types';
+import { Page } from 'apps/libs/types/src';
 
 interface Props {
   pages: Page[];
