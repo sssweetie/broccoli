@@ -8,7 +8,6 @@ const boardSchema = new Schema<IBoard>({
   },
   access: {
     type: String,
-    required: true,
   },
   tables: [
     {

@@ -1,9 +1,10 @@
 import { BoardModel } from '../models/BoardModel';
-import { IBoard } from 'apps/libs/types/src';
 
 export const BoardController = {
-  create: async (board: IBoard) => {
-    const newBoard = await new BoardModel(board);
+  create: async ({ title }: { title: string }) => {
+    const newBoard = await new BoardModel({ tables: [], title, access: '' });
+    console.log(newBoard);
+
     newBoard.save();
   },
 

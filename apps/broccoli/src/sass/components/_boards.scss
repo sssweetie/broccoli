@@ -1,0 +1,18 @@
+@use '../abstracts' as *;
+
+.board {
+  padding: 12px;
+  border: 1px solid $color-gray;
+  border-radius: 8px;
+  max-width: 250px;
+  height: 120px;
+  width: 100%;
+  cursor: pointer;
+  background-color: $color-light-white;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  @include font('SFMedium', 18px, 400);
+}
