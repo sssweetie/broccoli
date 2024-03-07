@@ -2,10 +2,10 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import { BurgerMenu } from './components/BurgerMenu/BurgerMenu';
-import { Logo } from './components/Logo';
-import { Settings } from './components/Settings';
-import { NavLinks } from './components/NavLinks';
+import { BurgerMenu } from '../BurgerMenu/BurgerMenu';
+import { Logo } from '../Logo';
+import { Settings } from '../Settings';
+import { Links } from '../Links';
 import { useNavigate } from 'react-router-dom';
 import { SX } from '../../constants/Navigation/styles';
 
@@ -59,7 +59,7 @@ export const Navigation = () => {
             pages={pages}
           />
           <Logo sx={SX.Small} />
-          <NavLinks handleCloseNavMenu={handleCloseNavMenu} pages={pages} />
+          <Links handleCloseNavMenu={handleCloseNavMenu} pages={pages} />
           <Settings
             handleOpenUserMenu={handleOpenUserMenu}
             handleCloseUserMenu={handleCloseUserMenu}

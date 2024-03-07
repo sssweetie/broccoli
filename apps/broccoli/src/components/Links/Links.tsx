@@ -6,7 +6,7 @@ interface Props {
   handleCloseNavMenu: (to: string) => void;
 }
 
-export const NavLinks = ({ handleCloseNavMenu, pages }: Props) => {
+export const Links = ({ handleCloseNavMenu, pages }: Props) => {
   return (
     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
       {pages.map((page) => (
