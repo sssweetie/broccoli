@@ -1,21 +1,7 @@
 import { IAudit } from 'apps/libs/types/src';
-import { UPDATE } from '../constants/DragDrop';
-import { AuditLog } from '../features/DragDrop/components/Tables/components/Table/components/Tasks/components/Task/components/DetailsTaskModal/components/AuditLogs/components';
-
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+import { UPDATE } from '../constants/TaskManager/auditLog';
+import { AuditLog } from '../features/ContentLayout/components/Tables/components/Table/components/Tasks/components/Task/components/DetailsTaskModal/components/AuditLogs/components';
+import { months } from '../constants/TaskManager/months';
 
 const getAuditLogText = ({ params, userName }: IAudit) => {
   let auditLogText = '';
