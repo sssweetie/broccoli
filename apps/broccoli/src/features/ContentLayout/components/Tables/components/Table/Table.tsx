@@ -1,7 +1,7 @@
 import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
 import { ITable } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { DropdownMenu } from './components/DropdownMenu';
+import { DropdownMenu } from '../../../../../../components/DropdownMenu';
 import { DeleteTableModal } from './components/DeleteTableModal';
 import { FormEvent, useState } from 'react';
 import { useTask } from '../../../../hooks/useTask';
@@ -9,6 +9,7 @@ import { Tasks } from './components/Tasks/Tasks';
 import { taskApi } from '../../../../api/taskApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { AddForm } from 'apps/broccoli/src/components/AddForm/AddForm';
+import { MenuItem } from '@mui/material';
 interface Props {
   provided: DraggableProvided;
   table: ITable;
@@ -41,6 +42,8 @@ export const Table = ({
     await createTask.mutate({ tableId: table._id, task });
   };
 
+  const items = [<MenuItem onClick={openModal}>Delete table</MenuItem>];
+
   return (
     <article
       className="table"
@@ -50,7 +53,7 @@ export const Table = ({
     >
       <section className="table__header">
         <h3 className="table__title">{table.title}</h3>
-        <DropdownMenu openModal={openModal} />
+        <DropdownMenu items={items} />
       </section>
 
       <Droppable droppableId={table._id} type="TASK">

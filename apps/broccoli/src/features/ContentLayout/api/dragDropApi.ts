@@ -1,9 +1,9 @@
-import { ITable, RequiredParamsToUpdate } from 'apps/libs/types/src';
+import { IBoard, ITable, RequiredParamsToUpdate } from 'apps/libs/types/src';
 import { AxiosInstance } from 'axios';
 
 export interface DragDropApi {
   create: (table: Partial<ITable>) => Promise<void>;
-  read: (id: string) => Promise<ITable[]>;
+  read: (id: string) => Promise<Partial<IBoard>>;
   update: (params: RequiredParamsToUpdate) => Promise<void>;
   delete: (id: string) => Promise<void>;
 }

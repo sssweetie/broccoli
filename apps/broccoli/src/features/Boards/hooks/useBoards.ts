@@ -5,6 +5,9 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 export const useBoards = (boardsApi: BoardsApi) => {
   const [isOpen, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const [selectedImage, setSelectedImage] = useState<HTMLImageElement | null>(
+    null
+  );
   const queryClient = useQueryClient();
 
   const { data } = useQuery({
@@ -30,7 +33,10 @@ export const useBoards = (boardsApi: BoardsApi) => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createBoard.mutate({ title: value });
+    await createBoard.mutate({
+      title: value,
+      backgroundImage: selectedImage?.src ?? '',
+    });
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +48,8 @@ export const useBoards = (boardsApi: BoardsApi) => {
     createBoard,
     isOpen,
     value,
+    selectedImage,
+    setSelectedImage,
     closeModal,
     openModal,
     onChange,

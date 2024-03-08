@@ -10,8 +10,14 @@ import { CircularProgress } from '@mui/material';
 export const ContentLayout = () => {
   const { id } = useParams();
 
-  const { onDragEnd, createTable, board, isDragDisabled, deleteTable } =
-    useDragDrop(id!);
+  const {
+    onDragEnd,
+    createTable,
+    board,
+    isDragDisabled,
+    deleteTable,
+    backgroundImage,
+  } = useDragDrop(id!);
 
   const mutateTable = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
@@ -29,6 +35,13 @@ export const ContentLayout = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
+              {backgroundImage ? (
+                <img
+                  alt="table background"
+                  src={backgroundImage}
+                  className="table-background"
+                />
+              ) : null}
               <Tables
                 board={board}
                 isDragDisabled={isDragDisabled}

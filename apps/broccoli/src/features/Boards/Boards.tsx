@@ -3,32 +3,30 @@ import { useBoards } from './hooks/useBoards';
 import { httpClient } from '../../services/httpClient';
 import { boardsApi } from './api/boardsApi';
 import { useNavigate } from 'react-router-dom';
-import { Box, Modal } from '@mui/material';
+import { ModalCreateBoard } from '../../components/ModalCreateBoard';
+import { DropdownMenu } from '../../components/DropdownMenu';
 
 export const Boards = () => {
-  const { boards, isOpen, value, closeModal, openModal, onChange, onSubmit } =
-    useBoards(boardsApi(httpClient));
+  const {
+    boards,
+    isOpen,
+    value,
+    selectedImage,
+    setSelectedImage,
+    closeModal,
+    openModal,
+    onChange,
+    onSubmit,
+  } = useBoards(boardsApi(httpClient));
+
   const navigate = useNavigate();
 
   const onClick = async () => {
     openModal();
-    // await createBoard();
   };
 
   const redirect = (id: string) => {
     navigate(`/application/dragdrop/${id}`);
-  };
-
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
   };
 
   return (
@@ -37,30 +35,37 @@ export const Boards = () => {
         <BackupTableIcon />
         Your boards
       </h1>
-      <div className="table-wrapper">
+      <div className="board-wrapper">
         {boards
           ? boards.map((board) => (
               <article onClick={() => redirect(board._id)} className="board">
-                {board.title}
+                {board.backgroundImage ? (
+                  <img
+                    src={board.backgroundImage}
+                    className="board-background"
+                    alt="board background"
+                    key={board._id}
+                  />
+                ) : null}
+                <section className="board__title">
+                  <h4>{board.title}</h4>
+                  <DropdownMenu />
+                </section>
               </article>
             ))
           : null}
         <button onClick={onClick} className="board">
           Create a new board
         </button>
-        <Modal
-          open={isOpen}
-          onClose={closeModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <form onSubmit={onSubmit}>
-              <input value={value} onChange={onChange} />
-              <button>submit</button>
-            </form>
-          </Box>
-        </Modal>
+        <ModalCreateBoard
+          isOpen={isOpen}
+          value={value}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+          closeModal={closeModal}
+          onSubmit={onSubmit}
+          onChange={onChange}
+        />
       </div>
     </>
   );

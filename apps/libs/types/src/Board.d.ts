@@ -5,4 +5,5 @@ export interface IBoard {
   title: string;
   tables: ITable[];
   access: string;
+  backgroundImage: string;
 }

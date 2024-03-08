@@ -1,5 +1,3 @@
-import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/TaskManager/styles';
-
 import { ITask } from 'apps/libs/types/src';
 
 import { Box, Modal } from '@mui/material';
@@ -9,6 +7,7 @@ import { AuditLogs } from './components/AuditLogs/AuditLogs';
 import { Description } from './components/Description';
 import { Title } from './components/Title';
 import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
+import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/TaskManager/styles/taskModal';
 
 interface Props {
   isOpen: boolean;

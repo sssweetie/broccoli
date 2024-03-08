@@ -9,6 +9,9 @@ const boardSchema = new Schema<IBoard>({
   access: {
     type: String,
   },
+  backgroundImage: {
+    type: String,
+  },
   tables: [
     {
       type: Schema.Types.ObjectId,

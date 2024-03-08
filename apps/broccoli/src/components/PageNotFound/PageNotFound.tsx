@@ -5,7 +5,7 @@ export const PageNotFound = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate('/application');
+    navigate('/application/boards');
   };
 
   return (

@@ -5,18 +5,24 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { IconButton } from '@mui/material';
 
 interface Props {
-  openModal: () => void;
+  items?: JSX.Element[];
 }
 
-export const DropdownMenu = ({ openModal }: Props) => {
+export const DropdownMenu: React.FC<Props> = ({ items }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleClose = (event: React.MouseEvent<HTMLLIElement>) => {
+    event.stopPropagation();
     setAnchorEl(null);
   };
+
   return (
     <>
       <IconButton
@@ -37,8 +43,8 @@ export const DropdownMenu = ({ openModal }: Props) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Details</MenuItem>
-        <MenuItem onClick={openModal}>Delete table</MenuItem>
+        {items ? items : null}
+        <MenuItem onClick={handleClose}>Close</MenuItem>
       </Menu>
     </>
   );

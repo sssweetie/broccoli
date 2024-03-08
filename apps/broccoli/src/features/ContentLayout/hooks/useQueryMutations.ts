@@ -11,7 +11,7 @@ export const useQueryMutations = (dragDropApi: DragDropApi, id: string) => {
     queryFn: () => dragDropApi.read(id),
   });
 
-  const [state, setState] = useState<ITable[] | undefined>(data);
+  const [state, setState] = useState<ITable[] | undefined>(data?.tables);
 
   const queryClient = useQueryClient();
 
@@ -47,7 +47,7 @@ export const useQueryMutations = (dragDropApi: DragDropApi, id: string) => {
   });
 
   useEffect(() => {
-    data?.forEach((table) => {
+    data?.tables?.forEach((table) => {
       table.insertTask = function (insertIndex, taskToInsert) {
         this.tasks.splice(insertIndex, 0, taskToInsert);
       };
@@ -56,8 +56,15 @@ export const useQueryMutations = (dragDropApi: DragDropApi, id: string) => {
       };
     });
 
-    setState(data);
+    setState(data?.tables);
   }, [data]);
 
-  return { setState, state, updateTable, createTable, deleteTable };
+  return {
+    setState,
+    state,
+    backgroundImage: data?.backgroundImage,
+    updateTable,
+    createTable,
+    deleteTable,
+  };
 };

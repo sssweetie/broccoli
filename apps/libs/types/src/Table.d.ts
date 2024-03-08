@@ -6,6 +6,7 @@ export interface ITable {
   insertTask: (insertIndex: number, taskToInsert: ITask) => void;
   removeTask: (removeIndex: number) => void;
 }
+
 export interface UpdateInformation {
   type: string;
   subType: number;

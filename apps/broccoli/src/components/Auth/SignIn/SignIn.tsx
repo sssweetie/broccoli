@@ -8,7 +8,7 @@ export const SignIn = () => {
 
   useEffect(() => {
     if (isLoaded && userId) {
-      navigate('/application');
+      navigate('/application/boards');
     }
   }, [isLoaded, userId]);
 
