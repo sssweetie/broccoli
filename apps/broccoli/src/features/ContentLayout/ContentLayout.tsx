@@ -2,22 +2,31 @@ import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Tables } from './components/Tables';
 import { useDragDrop } from './hooks/useDragDrop';
 import { AddForm } from '../../components/AddForm/AddForm';
-import { FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import { useBoards } from '../Boards/hooks/useBoards';
+import { boardsApi } from '../Boards/api/boardsApi';
+import { httpClient } from '../../services/httpClient';
 
 export const ContentLayout = () => {
   const { id } = useParams();
 
   const {
+    setEdit,
     onDragEnd,
+    isEdit,
     createTable,
     board,
     isDragDisabled,
     deleteTable,
-    backgroundImage,
+    boardInfo,
   } = useDragDrop(id!);
+
+  const { updateBoard } = useBoards(boardsApi(httpClient));
+
+  const [inputValue, setInputValue] = useState(boardInfo.title);
 
   const mutateTable = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
@@ -25,16 +34,42 @@ export const ContentLayout = () => {
     await createTable.mutate({ table, boardId: id! });
   };
 
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const onBlur = () => {
+    updateBoard.mutate({ _id: id, title: inputValue });
+    setEdit(false);
+  };
+
+  const onClick = () => {
+    setEdit(true);
+  };
+
   return board ? (
     <>
+      <section className="board-title">
+        {!isEdit ? (
+          <h4 onClick={onClick}>{boardInfo.title}</h4>
+        ) : (
+          <input
+            className="board-title--input"
+            value={inputValue}
+            onChange={onChange}
+            onBlur={onBlur}
+            autoFocus
+          />
+        )}
+      </section>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="tables" type="TABLE" direction="horizontal">
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              {backgroundImage ? (
+              {boardInfo.backgroundImage ? (
                 <img
                   alt="table background"
-                  src={backgroundImage}
+                  src={boardInfo.backgroundImage}
                   className="table-background"
                 />
               ) : null}

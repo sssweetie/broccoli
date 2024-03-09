@@ -4,16 +4,13 @@ import { findTable, isTableExist, reorderTable } from 'apps/broccoli/src/utils';
 import { useQueryMutations } from './useQueryMutations';
 import { dragDropApi } from '../api/dragDropApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
+import { useState } from 'react';
 
 export const useDragDrop = (id: string) => {
-  const {
-    state,
-    updateTable,
-    backgroundImage,
-    setState,
-    createTable,
-    deleteTable,
-  } = useQueryMutations(dragDropApi(httpClient), id);
+  const { state, boardInfo, createTable, deleteTable, updateTable, setState } =
+    useQueryMutations(dragDropApi(httpClient), id);
+
+  const [isEdit, setEdit] = useState(false);
 
   const onDragEnd = async ({ type, source, destination }: DragUpdate) => {
     const boardState = state ? [...state] : [];
@@ -89,9 +86,11 @@ export const useDragDrop = (id: string) => {
           if (table._id === sourceTable?._id) {
             return { ...table, tasks: sourceTable.tasks };
           }
+
           if (table._id === destinationTable?._id) {
             return { ...table, tasks: destinationTable.tasks };
           }
+
           return table;
         })
       );
@@ -107,11 +106,13 @@ export const useDragDrop = (id: string) => {
   };
 
   return {
-    board: state,
     onDragEnd,
+    setEdit,
+    board: state,
     createTable,
     deleteTable,
     isDragDisabled: updateTable.isPending,
-    backgroundImage,
+    boardInfo,
+    isEdit,
   };
 };

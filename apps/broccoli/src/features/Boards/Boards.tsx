@@ -38,7 +38,11 @@ export const Boards: React.FC = () => {
       <div className="board-wrapper">
         {boards
           ? boards.map((board) => (
-              <article onClick={() => redirect(board._id)} className="board">
+              <article
+                onClick={() => redirect(board._id)}
+                className="board"
+                key={board._id}
+              >
                 {board.backgroundImage ? (
                   <img
                     src={board.backgroundImage}

@@ -1,3 +1,4 @@
+import { IBoard } from 'apps/libs/types/src';
 import { BoardModel } from '../models/BoardModel';
 
 export const BoardController = {
@@ -16,9 +17,11 @@ export const BoardController = {
     });
     newBoard.save();
   },
-
   read: async () => {
     const boards = await BoardModel.find();
     return boards;
+  },
+  update: async (board: Partial<IBoard>) => {
+    await BoardModel.findByIdAndUpdate(board._id, { ...board });
   },
 };

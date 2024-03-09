@@ -10,10 +10,12 @@ export const useQueryMutations = (dragDropApi: DragDropApi, id: string) => {
     queryKey: ['board'],
     queryFn: () => dragDropApi.read(id),
   });
-
   const [state, setState] = useState<ITable[] | undefined>(data?.tables);
-
   const queryClient = useQueryClient();
+  const boardInfo = {
+    title: data?.title,
+    backgroundImage: data?.backgroundImage,
+  };
 
   const onError = () => {
     setState((prevState) => prevState);
@@ -62,7 +64,7 @@ export const useQueryMutations = (dragDropApi: DragDropApi, id: string) => {
   return {
     setState,
     state,
-    backgroundImage: data?.backgroundImage,
+    boardInfo,
     updateTable,
     createTable,
     deleteTable,

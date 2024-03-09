@@ -23,6 +23,13 @@ export const useBoards = (boardsApi: BoardsApi) => {
     },
   });
 
+  const updateBoard = useMutation({
+    mutationFn: boardsApi.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['board'] });
+    },
+  });
+
   const closeModal = () => {
     setOpen(false);
   };
@@ -46,6 +53,7 @@ export const useBoards = (boardsApi: BoardsApi) => {
   return {
     boards: data,
     createBoard,
+    updateBoard,
     isOpen,
     value,
     selectedImage,

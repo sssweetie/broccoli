@@ -32,9 +32,9 @@ export const TableController = {
         table.tasks.sort((a, b) => a.order - b.order);
       });
 
-      const backgroundImage = board.backgroundImage;
+      const { backgroundImage, title } = board;
 
-      return { tables, backgroundImage };
+      return { tables, backgroundImage, title };
     } catch (errors) {
       console.log(errors);
     }

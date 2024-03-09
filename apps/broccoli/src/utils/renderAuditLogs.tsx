@@ -22,7 +22,6 @@ export const renderAuditLogs = (data: IAudit[] | undefined) => {
     return data.map((auditLog) => {
       const logDate = new Date(auditLog.date);
       const auditLogText = getAuditLogText(auditLog);
-
       const date = `${logDate.getDate()} ${months[logDate.getMonth()]}, ${
         logDate.toTimeString().split(' ')[0]
       }`;
@@ -32,6 +31,7 @@ export const renderAuditLogs = (data: IAudit[] | undefined) => {
           date={date}
           auditLogText={auditLogText}
           userImg={auditLog.userImg}
+          key={auditLog.date.toString()}
         />
       );
     });
