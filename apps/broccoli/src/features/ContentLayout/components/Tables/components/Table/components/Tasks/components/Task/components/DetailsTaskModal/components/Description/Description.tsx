@@ -12,12 +12,12 @@ interface Props {
   deleteTask: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Description = ({
+export const Description: React.FC<Props> = ({
   description,
   updateDescription,
   deleteTable,
   deleteTask,
-}: Props) => {
+}) => {
   const mutations = { updateDescription, deleteTable, deleteTask };
   const { models, operations } = useDescription({
     description,

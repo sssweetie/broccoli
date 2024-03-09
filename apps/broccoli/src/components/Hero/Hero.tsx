@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { useNavigate } from 'react-router-dom';
 
-export const Hero = () => {
+export const Hero: React.FC = () => {
   const navigate = useNavigate();
 
   const onClick = () => {

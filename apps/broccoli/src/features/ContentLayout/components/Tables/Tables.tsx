@@ -9,7 +9,11 @@ interface Props {
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Tables = ({ board, isDragDisabled, deleteTable }: Props) => {
+export const Tables: React.FC<Props> = ({
+  board,
+  isDragDisabled,
+  deleteTable,
+}) => {
   return board.map((table, index) => (
     <Draggable
       draggableId={table._id}

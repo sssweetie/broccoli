@@ -24,14 +24,14 @@ export interface IDescription {
   text: string | undefined;
 }
 
-export const DetailsTaskModal = ({
+export const DetailsTaskModal: React.FC<Props> = ({
   isOpen,
   task,
   tableTitle,
   tableId,
   closeModal,
   deleteTable,
-}: Props) => {
+}) => {
   const { operations } = useDetailsTaskModal({ task });
 
   const description: IDescription = {

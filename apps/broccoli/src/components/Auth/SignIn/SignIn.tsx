@@ -2,7 +2,7 @@ import { SignIn as ClerkSignIn, useAuth } from '@clerk/clerk-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const SignIn = () => {
+export const SignIn: React.FC = () => {
   const { userId, isLoaded } = useAuth();
   const navigate = useNavigate();
 
@@ -10,7 +10,7 @@ export const SignIn = () => {
     if (isLoaded && userId) {
       navigate('/application/boards');
     }
-  }, [isLoaded, userId]);
+  }, [isLoaded, userId, navigate]);
 
   return (
     <article className="login">

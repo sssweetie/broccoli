@@ -21,6 +21,9 @@ interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
+const max = 12;
+const min = 1;
+
 export const ModalCreateBoard: React.FC<Props> = ({
   isOpen,
   value,
@@ -33,11 +36,7 @@ export const ModalCreateBoard: React.FC<Props> = ({
   const [images, setImages] = useState<string[]>([]);
 
   const fetchData = () => {
-    const max = 12;
-    const min = 1;
-
     const arr = [];
-
     while (arr.length < 6) {
       const randomBackgroundIndex =
         Math.floor(Math.random() * (max - min + 1)) + min;

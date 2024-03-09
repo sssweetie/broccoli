@@ -5,12 +5,16 @@ import { UseMutateFunction } from '@tanstack/react-query';
 import { AddTask } from 'apps/libs/types/src';
 
 interface Props {
-  createTask: UseMutateFunction<void, Error, AddTask, unknown>;
   tableId: string;
   tasksCount: number;
+  createTask: UseMutateFunction<void, Error, AddTask, unknown>;
 }
 
-export const AddNewTask = ({ createTask, tableId, tasksCount }: Props) => {
+export const AddNewTask: React.FC<Props> = ({
+  tableId,
+  tasksCount,
+  createTask,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState('');
 

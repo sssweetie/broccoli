@@ -7,13 +7,14 @@ interface Props {
   taskId: string;
 }
 
-export const AuditLogs = ({ taskId }: Props) => {
+export const AuditLogs: React.FC<Props> = ({ taskId }) => {
   const { data } = useQuery({
     queryKey: ['audit'],
     queryFn: () => auditApi(httpClient).read(taskId),
   });
 
   const auditLogs = renderAuditLogs(data);
+
   return (
     <section className="task__section  task__audit">
       <HistoryIcon />

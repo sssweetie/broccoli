@@ -10,7 +10,7 @@ interface Props {
   sx: sx;
 }
 
-export const Logo = ({ sx }: Props) => {
+export const Logo: React.FC<Props> = ({ sx }) => {
   return (
     <>
       <ForestIcon sx={sx.icon} />

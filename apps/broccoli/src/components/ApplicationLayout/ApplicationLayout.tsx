@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Navigation } from '../../components/Navigation';
 
-export const ApplicationLayout = () => {
+export const ApplicationLayout: React.FC = () => {
   const { isLoaded, userId } = useAuth();
   const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ export const ApplicationLayout = () => {
     if (isLoaded && !userId) {
       navigate('/sign-in');
     }
-  }, [isLoaded]);
+  }, [isLoaded, userId, navigate]);
 
   return (
     <main className="app-wrapper">

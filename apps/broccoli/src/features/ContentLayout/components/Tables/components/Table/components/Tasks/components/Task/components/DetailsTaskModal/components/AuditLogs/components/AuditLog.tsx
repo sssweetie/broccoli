@@ -4,7 +4,7 @@ interface Props {
   date: string;
 }
 
-export const AuditLog = ({ userImg, auditLogText, date }: Props) => {
+export const AuditLog: React.FC<Props> = ({ userImg, auditLogText, date }) => {
   return (
     <article className="audit" key={date}>
       <img src={userImg} alt="person" className="audit__img" />

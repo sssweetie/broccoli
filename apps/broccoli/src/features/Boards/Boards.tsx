@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ModalCreateBoard } from '../../components/ModalCreateBoard';
 import { DropdownMenu } from '../../components/DropdownMenu';
 
-export const Boards = () => {
+export const Boards: React.FC = () => {
   const {
     boards,
     isOpen,

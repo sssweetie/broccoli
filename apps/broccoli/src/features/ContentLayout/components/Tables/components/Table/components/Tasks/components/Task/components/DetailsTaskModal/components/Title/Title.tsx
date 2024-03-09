@@ -7,25 +7,30 @@ interface Props {
   updateTitle: (title: string) => Promise<void>;
 }
 
-export const Title = ({ tableTitle, title, updateTitle }: Props) => {
+export const Title: React.FC<Props> = ({ tableTitle, title, updateTitle }) => {
   const [isEdit, setEdit] = useState(false);
   const [value, setValue] = useState(title ? title : '');
+
   const disableEditMode = () => {
     if (title !== value) {
       updateTitle(value);
     }
     setEdit(false);
   };
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     disableEditMode();
   };
+
   const onBlur = () => {
     disableEditMode();
   };
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+
   const onClick = () => {
     setEdit(true);
   };

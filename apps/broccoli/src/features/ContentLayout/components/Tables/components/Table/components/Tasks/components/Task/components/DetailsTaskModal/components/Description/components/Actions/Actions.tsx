@@ -6,7 +6,10 @@ interface Props {
   handleDeleteTask: () => Promise<void>;
 }
 
-export const Actions = ({ handleDeleteTable, handleDeleteTask }: Props) => {
+export const Actions: React.FC<Props> = ({
+  handleDeleteTable,
+  handleDeleteTask,
+}) => {
   return (
     <section className="task__action">
       <h4>Actions</h4>

@@ -5,18 +5,18 @@ import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { Page } from 'apps/libs/types/src';
 
 interface Props {
-  handleOpenNavMenu: (event: MouseEvent<HTMLElement>) => void;
-  handleCloseNavMenu: (to: string) => void;
   anchorElNav: null | HTMLElement;
   pages: Page[];
+  handleOpenNavMenu: (event: MouseEvent<HTMLElement>) => void;
+  handleCloseNavMenu: (to: string) => void;
 }
 
-export const BurgerMenu = ({
-  handleOpenNavMenu,
-  handleCloseNavMenu,
+export const BurgerMenu: React.FC<Props> = ({
   anchorElNav,
   pages,
-}: Props) => {
+  handleOpenNavMenu,
+  handleCloseNavMenu,
+}) => {
   return (
     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
       <IconButton

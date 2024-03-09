@@ -1,5 +1,6 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
+import { style } from 'apps/broccoli/src/constants/DeleteTableModal/styles';
 
 interface Props {
   isModalOpen: boolean;
@@ -8,24 +9,12 @@ interface Props {
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const DeleteTableModal = ({
+export const DeleteTableModal: React.FC<Props> = ({
   isModalOpen,
+  tableId,
   closeModal,
   deleteTable,
-  tableId,
-}: Props) => {
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
-  };
-
+}) => {
   const handleDeleteTable = async () => {
     await deleteTable(tableId);
   };

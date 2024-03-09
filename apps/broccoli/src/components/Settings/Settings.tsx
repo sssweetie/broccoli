@@ -12,18 +12,18 @@ import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  handleOpenUserMenu: (event: MouseEvent<HTMLElement>) => void;
   anchorElUser: HTMLElement | null;
+  handleOpenUserMenu: (event: MouseEvent<HTMLElement>) => void;
   handleCloseUserMenu: () => void;
 }
 
 const setting = { name: 'Logout', link: '/sign-in' };
 
-export const Settings = ({
+export const Settings: React.FC<Props> = ({
+  anchorElUser,
   handleOpenUserMenu,
   handleCloseUserMenu,
-  anchorElUser,
-}: Props) => {
+}) => {
   const { signOut } = useClerk();
   const navigate = useNavigate();
 

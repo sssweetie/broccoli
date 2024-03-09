@@ -17,12 +17,12 @@ interface Props {
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Table = ({
+export const Table: React.FC<Props> = ({
   provided,
   table,
   isDragDisabled,
   deleteTable,
-}: Props) => {
+}) => {
   const { createTask } = useTask(taskApi(httpClient));
   const [isModalOpen, setModalOpen] = useState(false);
   const openModal = () => {

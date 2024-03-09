@@ -2,11 +2,17 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 interface Props {
-  mutate: (e: FormEvent<HTMLFormElement>, inputValue: string) => void;
   title: string;
+  mutate: (e: FormEvent<HTMLFormElement>, inputValue: string) => void;
 }
 
-export const AddForm = ({ mutate, title }: Props) => {
+const sx = {
+  fontSize: '10px',
+  padding: '6px 8px',
+  fontWeight: '600',
+};
+
+export const AddForm: React.FC<Props> = ({ title, mutate }) => {
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -44,16 +50,7 @@ export const AddForm = ({ mutate, title }: Props) => {
         onChange={onChange}
       />
       <section className="edit-table__buttons">
-        <Button
-          variant="contained"
-          size="small"
-          sx={{
-            fontSize: '10px',
-            padding: '6px 8px',
-            fontWeight: '600',
-          }}
-          type="submit"
-        >
+        <Button variant="contained" size="small" sx={sx} type="submit">
           {title}
         </Button>
         <IconButton sx={{ padding: 0 }} onClick={turnEditModeOff}>

@@ -30,11 +30,7 @@ export const ContentLayout = () => {
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="tables" type="TABLE" direction="horizontal">
           {(provided) => (
-            <div
-              className="table-wrapper"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
+            <div ref={provided.innerRef} {...provided.droppableProps}>
               {backgroundImage ? (
                 <img
                   alt="table background"
@@ -42,13 +38,15 @@ export const ContentLayout = () => {
                   className="table-background"
                 />
               ) : null}
-              <Tables
-                board={board}
-                isDragDisabled={isDragDisabled}
-                deleteTable={deleteTable.mutate}
-              />
-              {provided.placeholder}
-              <AddForm mutate={mutateTable} title="Create a table" />
+              <div className="table-wrapper">
+                <Tables
+                  board={board}
+                  isDragDisabled={isDragDisabled}
+                  deleteTable={deleteTable.mutate}
+                />
+                {provided.placeholder}
+                <AddForm mutate={mutateTable} title="Create a table" />
+              </div>
             </div>
           )}
         </Droppable>

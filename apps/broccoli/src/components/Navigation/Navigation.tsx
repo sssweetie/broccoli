@@ -20,7 +20,7 @@ const pages = [
   },
 ];
 
-export const Navigation = () => {
+export const Navigation: React.FC = () => {
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(

@@ -12,14 +12,15 @@ interface Props {
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Task = ({
+export const Task: React.FC<Props> = ({
   provided,
   task,
   tableTitle,
   tableId,
   deleteTable,
-}: Props) => {
+}) => {
   const [isOpen, setOpen] = useState(false);
+
   const openModal = () => {
     setOpen(true);
   };

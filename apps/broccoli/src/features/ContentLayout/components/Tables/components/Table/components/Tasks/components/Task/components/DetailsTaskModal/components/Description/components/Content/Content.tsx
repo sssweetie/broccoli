@@ -9,13 +9,13 @@ interface Props {
   onClick: () => void;
 }
 
-export const Content = ({
+export const Content: React.FC<Props> = ({
   isEdit,
   value,
   onChange,
   onBlur,
   onClick,
-}: Props) => {
+}) => {
   return (
     <div className="task__content">
       <h3>Description</h3>
