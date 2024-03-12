@@ -14,13 +14,16 @@ export const AuditLogs: React.FC<Props> = ({ taskId }) => {
   });
 
   const auditLogs = renderAuditLogs(data);
-
   return (
     <section className="task__section  task__audit">
       <HistoryIcon />
       <div className="task__content">
         <h3>Activity</h3>
-        <div className="task__audit-list">{auditLogs}</div>
+        <div className="task__audit-list">
+          {auditLogs && auditLogs.length
+            ? auditLogs
+            : 'There is no audit data...'}
+        </div>
       </div>
     </section>
   );

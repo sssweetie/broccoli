@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TaskApi } from '../api/taskApi';
 import { callSuccessToast } from 'apps/broccoli/src/utils';
+import { callErrorToast } from 'apps/broccoli/src/utils';
 
 export const useTask = (taskApi: TaskApi) => {
   const queryClient = useQueryClient();
@@ -8,19 +9,25 @@ export const useTask = (taskApi: TaskApi) => {
   const createTask = useMutation({
     mutationFn: taskApi.create,
     onSuccess: () => {
-      callSuccessToast('Task is created successfully!');
       queryClient.invalidateQueries({ queryKey: ['board'] });
+      callSuccessToast('Task is created successfully!');
+    },
+    onError: () => {
+      callErrorToast('Oops! Something went wrong...');
     },
   });
 
   const updateTask = useMutation({
     mutationFn: taskApi.update,
     onSuccess: () => {
-      callSuccessToast('Task is updated successfully!');
       Promise.all([
         queryClient.invalidateQueries({ queryKey: ['board'] }),
         queryClient.invalidateQueries({ queryKey: ['audit'] }),
       ]);
+      callSuccessToast('Task is updated successfully!');
+    },
+    onError: () => {
+      callErrorToast('Oops! Something went wrong...');
     },
   });
 
@@ -29,6 +36,9 @@ export const useTask = (taskApi: TaskApi) => {
     onSuccess: () => {
       callSuccessToast('Task is deleted successfully!');
       queryClient.invalidateQueries({ queryKey: ['board'] });
+    },
+    onError: () => {
+      callErrorToast('Oops! Something went wrong...');
     },
   });
 

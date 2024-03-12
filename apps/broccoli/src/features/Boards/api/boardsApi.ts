@@ -8,8 +8,9 @@ interface CreateBoard {
 
 export interface BoardsApi {
   create: ({ title, backgroundImage }: CreateBoard) => Promise<void>;
-  update: (board: Partial<IBoard>) => Promise<void>;
   read: () => Promise<IBoard[]>;
+  update: (board: Partial<IBoard>) => Promise<void>;
+  delete: (id: string) => Promise<void>;
 }
 
 export const boardsApi = (httpClient: AxiosInstance): BoardsApi => {
@@ -17,12 +18,15 @@ export const boardsApi = (httpClient: AxiosInstance): BoardsApi => {
     create: async (createBoard) => {
       await httpClient.post('/boards/create', createBoard);
     },
-    update: async (board) => {
-      await httpClient.put('/boards/update', board);
-    },
     read: async () => {
       const boards = await httpClient.get('/boards/read');
       return boards.data;
+    },
+    update: async (board) => {
+      await httpClient.put('/boards/update', board);
+    },
+    delete: async (id) => {
+      await httpClient.delete(`/boards/delete/${id}`);
     },
   };
 };

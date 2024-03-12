@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { BoardsApi } from '../api/boardsApi';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { callSuccessToast } from 'apps/broccoli/src/utils';
+import { callErrorToast } from 'apps/broccoli/src/utils';
 
 export const useBoards = (boardsApi: BoardsApi) => {
   const [isOpen, setOpen] = useState(false);
@@ -20,6 +22,10 @@ export const useBoards = (boardsApi: BoardsApi) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['boards'] });
       closeModal();
+      callSuccessToast('Board is created successful;y!');
+    },
+    onError: () => {
+      callErrorToast('Oops! Something went wrong...');
     },
   });
 
@@ -27,6 +33,21 @@ export const useBoards = (boardsApi: BoardsApi) => {
     mutationFn: boardsApi.update,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['board'] });
+      callSuccessToast('Board is updated successfully!');
+    },
+    onError: () => {
+      callErrorToast('Oops! Something went wrong...');
+    },
+  });
+
+  const deleteBoard = useMutation({
+    mutationFn: boardsApi.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['boards'] });
+      callSuccessToast('Board is deleted successfully!');
+    },
+    onError: () => {
+      callErrorToast('Oops! Something went wrong...');
     },
   });
 
@@ -54,6 +75,7 @@ export const useBoards = (boardsApi: BoardsApi) => {
     boards: data,
     createBoard,
     updateBoard,
+    deleteBoard,
     isOpen,
     value,
     selectedImage,

@@ -6,3 +6,9 @@ export const callSuccessToast = (toastMessage: string) => {
     ...toastConfig,
   });
 };
+
+export const callErrorToast = (toastMessage: string) => {
+  toast.error(toastMessage, {
+    ...toastConfig,
+  });
+};

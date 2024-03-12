@@ -2,7 +2,7 @@ import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Tables } from './components/Tables';
 import { useDragDrop } from './hooks/useDragDrop';
 import { AddForm } from '../../components/AddForm/AddForm';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
@@ -26,20 +26,14 @@ export const ContentLayout = () => {
 
   const { updateBoard } = useBoards(boardsApi(httpClient));
 
-  const [inputValue, setInputValue] = useState(boardInfo.title);
-
   const mutateTable = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
     const table = { order: board?.length, tasks: [], title };
     await createTable.mutate({ table, boardId: id! });
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  const onBlur = () => {
-    updateBoard.mutate({ _id: id, title: inputValue });
+  const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    updateBoard.mutate({ _id: id, title: e.target.value });
     setEdit(false);
   };
 
@@ -55,8 +49,7 @@ export const ContentLayout = () => {
         ) : (
           <input
             className="board-title--input"
-            value={inputValue}
-            onChange={onChange}
+            defaultValue={boardInfo.title}
             onBlur={onBlur}
             autoFocus
           />

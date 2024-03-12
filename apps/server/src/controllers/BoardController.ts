@@ -24,4 +24,7 @@ export const BoardController = {
   update: async (board: Partial<IBoard>) => {
     await BoardModel.findByIdAndUpdate(board._id, { ...board });
   },
+  delete: async (id: string) => {
+    await BoardModel.findByIdAndDelete(id);
+  },
 };

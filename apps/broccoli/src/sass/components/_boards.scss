@@ -2,7 +2,7 @@
 
 .board {
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 6px;
   max-width: 220px;
   height: 125px;
   width: 100%;
@@ -14,7 +14,7 @@
   transition: 0.25s all ease-out;
 
   &:hover {
-    filter: drop-shadow(0 0 0.25rem rgb(20, 70, 220));
+    filter: drop-shadow(0 0 0.25rem rgba($color: $color-main, $alpha: 0.5));
   }
 
   .board__title {
@@ -36,9 +36,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: 8px;
+    border-radius: 6px;
     opacity: 1;
-    filter: blur(0px);
   }
 
   @include font('SFMedium', 18px, 400);

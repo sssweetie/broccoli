@@ -14,6 +14,7 @@ export const TaskController = {
     const document = await TaskModel.create({
       title: task.title,
       order: task.order,
+      description: 'Description placeholder',
     });
 
     await TableModel.findByIdAndUpdate(tableId, {
@@ -33,11 +34,10 @@ export const TaskController = {
   },
   delete: async (taskId: string) => {
     const auditLogIds = await TaskModel.findById(taskId);
-    
-    const promises = auditLogIds.audits.map((id) =>
-      AuditModel.findByIdAndDelete(id)
+
+    Promise.all(
+      auditLogIds.audits.map((id) => AuditModel.findByIdAndDelete(id))
     );
-    Promise.all(promises);
 
     await TaskModel.findByIdAndDelete(taskId);
   },

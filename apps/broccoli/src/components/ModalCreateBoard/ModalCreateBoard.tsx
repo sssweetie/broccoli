@@ -104,7 +104,7 @@ export const ModalCreateBoard: React.FC<Props> = ({
             size="small"
             onChange={onChange}
           />
-          <Button type="button" variant="contained">
+          <Button type="submit" variant="contained">
             submit
           </Button>
         </form>

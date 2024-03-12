@@ -5,6 +5,7 @@ import { boardsApi } from './api/boardsApi';
 import { useNavigate } from 'react-router-dom';
 import { ModalCreateBoard } from '../../components/ModalCreateBoard';
 import { DropdownMenu } from '../../components/DropdownMenu';
+import { MenuItem } from '@mui/material';
 
 export const Boards: React.FC = () => {
   const {
@@ -12,6 +13,7 @@ export const Boards: React.FC = () => {
     isOpen,
     value,
     selectedImage,
+    deleteBoard,
     setSelectedImage,
     closeModal,
     openModal,
@@ -23,6 +25,14 @@ export const Boards: React.FC = () => {
 
   const onClick = async () => {
     openModal();
+  };
+
+  const handleDeleteBoard = async (
+    e: React.MouseEvent<HTMLLIElement>,
+    id: string
+  ) => {
+    e.stopPropagation();
+    await deleteBoard.mutate(id);
   };
 
   const redirect = (id: string) => {
@@ -53,7 +63,15 @@ export const Boards: React.FC = () => {
                 ) : null}
                 <section className="board__title">
                   <h4>{board.title}</h4>
-                  <DropdownMenu />
+                  <DropdownMenu
+                    items={[
+                      <MenuItem
+                        onClick={(e) => handleDeleteBoard(e, board._id)}
+                      >
+                        Delete board
+                      </MenuItem>,
+                    ]}
+                  />
                 </section>
               </article>
             ))
