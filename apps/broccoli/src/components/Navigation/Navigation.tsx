@@ -48,7 +48,13 @@ export const Navigation: React.FC = () => {
   };
 
   return (
-    <AppBar position="static" className="app-theme navbar">
+    <AppBar
+      position="static"
+      className="app-theme navbar"
+      sx={{
+        backgroundColor: '#2D3748',
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo sx={SX.Common} />

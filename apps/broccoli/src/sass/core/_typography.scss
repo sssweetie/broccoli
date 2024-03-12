@@ -23,9 +23,9 @@
 
 .title {
   @include font('SFMedium', 24px, 400);
-  margin-top: 16px;
-  margin-left: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
+  padding-top: 16px;
+  padding-left: 16px;
 }
