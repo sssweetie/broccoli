@@ -1,20 +1,19 @@
 import 'react-toastify/dist/ReactToastify.css';
 import './sass/app.scss';
 
-import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { RootLayout } from './features/RootLayout';
-import { Dashboard } from './features/Dashboard';
-import { DragDrop } from './features/DragDrop';
-import { DataTable } from './features/DataTable';
-import { SignInPage } from './features/SignInPage';
-import { SignUpPage } from './features/SignUpPage';
-import { ApplicationLayout } from './features/ApplicationLayout';
-import { NotFound } from './features/NotFound';
-import { Welcome } from './features/Welcome';
+import { RootLayout } from './components/RootLayout';
+import { ContentLayout } from './features/ContentLayout';
+import { SignIn } from './components/Auth/SignIn';
+import { SignUp } from './components/Auth/SignUp';
+import { ApplicationLayout } from './components/ApplicationLayout';
+import { PageNotFound } from './components/PageNotFound';
+import { Hero } from './components/Hero';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Boards } from './features/Boards';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -28,31 +27,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Welcome />,
+        element: <Hero />,
       },
       {
         path: '/sign-in',
-        element: <SignInPage />,
+        element: <SignIn />,
       },
       {
         path: '/sign-up',
-        element: <SignUpPage />,
+        element: <SignUp />,
       },
       {
         path: '/application',
         element: <ApplicationLayout />,
         children: [
           {
-            path: '/application/dashboard',
-            element: <Dashboard />,
+            path: '/application/boards',
+            element: <Boards />,
           },
           {
-            path: '/application/dragdrop',
-            element: <DragDrop />,
-          },
-          {
-            path: '/application/datatable',
-            element: <DataTable />,
+            path: '/application/dragdrop/:id',
+            element: <ContentLayout />,
           },
         ],
       },
@@ -60,7 +55,7 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <NotFound />,
+    element: <PageNotFound />,
   },
 ]);
 

@@ -1,21 +1,7 @@
 import { IAudit } from 'apps/libs/types/src';
-import { UPDATE } from '../constants/DragDrop';
-import { AuditLog } from '../features/DragDrop/components/Tables/components/Table/components/Tasks/components/Task/components/DetailsTaskModal/components/AuditLogs/components';
-
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+import { UPDATE } from '../constants/TaskManager/auditLog';
+import { AuditLog } from '../features/ContentLayout/components/Tables/components/Table/components/Tasks/components/Task/components/DetailsTaskModal/components/AuditLogs/components';
+import { months } from '../constants/TaskManager/months';
 
 const getAuditLogText = ({ params, userName }: IAudit) => {
   let auditLogText = '';
@@ -36,7 +22,6 @@ export const renderAuditLogs = (data: IAudit[] | undefined) => {
     return data.map((auditLog) => {
       const logDate = new Date(auditLog.date);
       const auditLogText = getAuditLogText(auditLog);
-
       const date = `${logDate.getDate()} ${months[logDate.getMonth()]}, ${
         logDate.toTimeString().split(' ')[0]
       }`;
@@ -46,6 +31,7 @@ export const renderAuditLogs = (data: IAudit[] | undefined) => {
           date={date}
           auditLogText={auditLogText}
           userImg={auditLog.userImg}
+          key={auditLog.date.toString()}
         />
       );
     });

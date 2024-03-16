@@ -1,3 +1,12 @@
-.navbar {
-  border-radius: 6px;
+.burger {
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 8px;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+
+  &--open {
+  }
 }

@@ -1,5 +1,5 @@
 import { UserResource } from '@clerk/types';
-import { UPDATE } from '../constants/DragDrop';
+import { UPDATE } from '../constants/TaskManager/auditLog';
 
 type User = UserResource | null | undefined;
 type Title = string | undefined;

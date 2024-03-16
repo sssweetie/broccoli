@@ -1,3 +1,5 @@
+@use '../abstracts' as *;
+
 @font-face {
   font-family: 'SFLight';
   src: url('../assets/fonts/san-francisco/SFProText-Light.ttf')
@@ -17,4 +19,13 @@
   src: url('../assets/fonts/san-francisco/SFProText-Heavy.ttf')
     format('truetype');
   font-weight: 600;
+}
+
+.title {
+  @include font('SFMedium', 24px, 400);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 16px;
+  padding-left: 16px;
 }
