@@ -7,7 +7,7 @@ export interface ITask {
   title?: string;
   description?: string;
   audits?: IAudit[];
-  subTask?: ISubTask[];
+  subTasks?: ISubTask[];
 }
 
 export interface AddTask {

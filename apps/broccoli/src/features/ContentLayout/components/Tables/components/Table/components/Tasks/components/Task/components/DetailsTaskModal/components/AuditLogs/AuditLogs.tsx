@@ -14,6 +14,7 @@ export const AuditLogs: React.FC<Props> = ({ taskId }) => {
   });
 
   const auditLogs = renderAuditLogs(data);
+  
   return (
     <section className="task__section  task__audit">
       <HistoryIcon />

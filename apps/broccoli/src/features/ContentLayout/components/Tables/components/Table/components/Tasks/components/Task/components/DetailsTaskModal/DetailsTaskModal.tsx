@@ -8,6 +8,7 @@ import { Description } from './components/Description';
 import { Title } from './components/Title';
 import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
 import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/TaskManager/styles/taskModal';
+import { CheckList } from './components/CheckList/CheckList';
 
 interface Props {
   isOpen: boolean;
@@ -59,6 +60,7 @@ export const DetailsTaskModal: React.FC<Props> = ({
           deleteTable={deleteTable}
           deleteTask={operations.deleteTask}
         />
+        {task.subTasks ? <CheckList taskId={task._id} /> : null}
         {task.audits ? <AuditLogs taskId={task._id} /> : null}
       </Box>
     </Modal>

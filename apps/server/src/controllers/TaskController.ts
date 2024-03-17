@@ -25,8 +25,7 @@ export const TaskController = {
   },
   read: async (taskId: string) => {
     const task = await TaskModel.findById(taskId);
-    const audit = await AuditController.read(taskId);
-    return { task, audit };
+    return task;
   },
   update: async ({ task, audit }: UpdateTask) => {
     await TaskModel.findByIdAndUpdate(task._id, { ...task });

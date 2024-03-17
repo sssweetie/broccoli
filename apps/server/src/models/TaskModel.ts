@@ -13,10 +13,10 @@ const taskSchema = new Schema<ITask>({
   description: {
     type: String,
   },
-  subTask: [
+  subTasks: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'subTask',
+      ref: 'subTasks',
     },
   ],
   audits: [

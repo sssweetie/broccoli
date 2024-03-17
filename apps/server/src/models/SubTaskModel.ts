@@ -1,7 +1,7 @@
 import { ISubTask } from 'apps/libs/types/src';
 import { Schema, model } from 'mongoose';
 
-const taskSchema = new Schema<ISubTask>({
+const subTaskSchema = new Schema<ISubTask>({
   title: {
     type: String,
     required: true,
@@ -12,4 +12,4 @@ const taskSchema = new Schema<ISubTask>({
   },
 });
 
-export const TaskModel = model<ISubTask>('tasks', taskSchema);
+export const SubTaskModel = model<ISubTask>('subTasks', subTaskSchema);
