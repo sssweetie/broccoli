@@ -1,4 +1,5 @@
 import { IAudit } from './Audit';
+import { ISubTask } from './SubTask';
 
 export interface ITask {
   _id: string;
@@ -6,6 +7,7 @@ export interface ITask {
   title?: string;
   description?: string;
   audits?: IAudit[];
+  subTask?: ISubTask[];
 }
 
 export interface AddTask {
