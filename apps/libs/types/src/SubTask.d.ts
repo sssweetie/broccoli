@@ -3,3 +3,7 @@ export interface ISubTask {
   title: string;
   isCompleted: boolean;
 }
+export interface ICreateSubTask {
+  subTask: ISubTask;
+  taskId: string;
+}

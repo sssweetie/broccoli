@@ -1,12 +1,16 @@
-import { ISubTask } from 'apps/libs/types/src';
+import { ICreateSubTask, ISubTask } from 'apps/libs/types/src';
 import { AxiosInstance } from 'axios';
 
 export interface ICheckListApi {
+  create: (createSubTask: ICreateSubTask) => Promise<void>;
   read: (id: string) => Promise<ISubTask[]>;
   update: (subTask: ISubTask) => Promise<void>;
 }
 
 export const checkListApi = (httpClient: AxiosInstance): ICheckListApi => ({
+  create: async (createSubTask: ICreateSubTask) => {
+    await httpClient.post(`/dragdrop/subtask/create`, createSubTask);
+  },
   read: async (id) => {
     const response = await httpClient.get(`/dragdrop/subtask/read/${id}`);
     return response.data;

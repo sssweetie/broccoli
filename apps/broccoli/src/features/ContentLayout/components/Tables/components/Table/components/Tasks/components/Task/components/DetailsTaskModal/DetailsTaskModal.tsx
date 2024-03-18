@@ -60,7 +60,7 @@ export const DetailsTaskModal: React.FC<Props> = ({
           deleteTable={deleteTable}
           deleteTask={operations.deleteTask}
         />
-        {task.subTasks ? <CheckList taskId={task._id} /> : null}
+        {task.subTasks && task.subTasks.length ? <CheckList taskId={task._id} /> : null}
         {task.audits ? <AuditLogs taskId={task._id} /> : null}
       </Box>
     </Modal>

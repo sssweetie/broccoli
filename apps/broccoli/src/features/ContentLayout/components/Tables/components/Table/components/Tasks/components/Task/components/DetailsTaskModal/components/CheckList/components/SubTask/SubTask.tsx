@@ -29,12 +29,23 @@ export const SubTask: React.FC<IProps> = ({
   };
 
   return (
-    <div>
-      <Checkbox value={subTask.isCompleted} onChange={onChange} />
+    <div className="subtask subtask_margin">
+      <Checkbox
+        value={subTask.isCompleted}
+        onChange={onChange}
+        sx={{ padding: 0 }}
+      />
       {isEdit ? (
-        <TextField defaultValue="Small" size="small" onBlur={onBlur} />
+        <TextField defaultValue={subTask.title} size="small" onBlur={onBlur} />
       ) : (
-        <h5 onClick={() => setEdit(true)}>{subTask.title}</h5>
+        <h5
+          onClick={() => setEdit(true)}
+          className={`subtask__title ${
+            subTask.isCompleted ? 'subtask__title--completed' : ''
+          }`}
+        >
+          {subTask.title}
+        </h5>
       )}
     </div>
   );

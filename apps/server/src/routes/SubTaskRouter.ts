@@ -14,7 +14,16 @@ subTaskRouter.get('/read/:id', async (req, res) => {
 
 subTaskRouter.put('/update', async (req, res) => {
   try {
-    await SubTaskController.update(req.body.subTask);
+    await SubTaskController.update(req.body);
+    res.sendStatus(200);
+  } catch {
+    res.status(400).send('error update data');
+  }
+});
+
+subTaskRouter.post('/create', async (req, res) => {
+  try {
+    await SubTaskController.create(req.body);
     res.sendStatus(200);
   } catch {
     res.status(400).send('error create data');

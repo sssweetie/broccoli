@@ -13,7 +13,11 @@ const LinearProgressWithLabel: React.FC<LinearProgressProps> = (props) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
+        <LinearProgress
+          variant="determinate"
+          {...props}
+          sx={{ borderRadius: '6px', height: '6px' }}
+        />
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" color="text.secondary">{`${Math.round(
@@ -26,7 +30,7 @@ const LinearProgressWithLabel: React.FC<LinearProgressProps> = (props) => {
 
 export const ProgressBar: React.FC<IProgressBar> = ({ value }) => {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', marginBottom: '16px' }}>
       <LinearProgressWithLabel value={value} />
     </Box>
   );
