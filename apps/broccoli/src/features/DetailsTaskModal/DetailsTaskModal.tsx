@@ -3,12 +3,12 @@ import { ITask } from 'apps/libs/types/src';
 import { Box, Modal } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
 
-import { AuditLogs } from './components/AuditLogs/AuditLogs';
+import { AuditLogs } from '../AuditLogs/AuditLogs';
 import { Description } from './components/Description';
 import { Title } from './components/Title';
 import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
 import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/TaskManager/styles/taskModal';
-import { CheckList } from './components/CheckList/CheckList';
+import { CheckList } from '../CheckList/CheckList';
 
 interface Props {
   isOpen: boolean;
@@ -60,7 +60,7 @@ export const DetailsTaskModal: React.FC<Props> = ({
           deleteTable={deleteTable}
           deleteTask={operations.deleteTask}
         />
-        {task.subTasks && task.subTasks.length ? <CheckList taskId={task._id} /> : null}
+        <CheckList taskId={task._id} />
         {task.audits ? <AuditLogs taskId={task._id} /> : null}
       </Box>
     </Modal>

@@ -1,13 +1,13 @@
 import { FormEvent, useState } from 'react';
 import { ISubTask } from 'apps/libs/types/src';
-import { SubTask } from './components/SubTask';
+import { SubTask } from '../SubTask';
 import { useCheckList } from './hooks/useCheckList';
 import { checkListApi } from './api/checkListApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { ProgressBar } from 'apps/broccoli/src/components/ProgressBar';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 // import { Link } from '@mui/material';
-import { AddForm } from 'apps/broccoli/src/components/AddForm/AddForm';
+import { AddForm } from 'apps/broccoli/src/components/AddForm';
 
 interface IProps {
   taskId: string;

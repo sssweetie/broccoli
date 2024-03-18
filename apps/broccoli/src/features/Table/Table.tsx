@@ -1,12 +1,12 @@
 import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
 import { ITable } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { DropdownMenu } from '../../../../../../components/DropdownMenu';
-import { DeleteTableModal } from './components/DeleteTableModal';
+import { DropdownMenu } from '../../components/DropdownMenu';
+import { DeleteTableModal } from '../ContentLayout/components/DeleteTableModal';
 import { FormEvent, useState } from 'react';
-import { useTask } from '../../../../hooks/useTask';
-import { Tasks } from './components/Tasks/Tasks';
-import { taskApi } from '../../../../api/taskApi';
+import { useTask } from '../../hooks/useTask';
+import { Tasks } from '../Tasks';
+import { taskApi } from '../../api/taskApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { AddForm } from 'apps/broccoli/src/components/AddForm/AddForm';
 import { MenuItem } from '@mui/material';

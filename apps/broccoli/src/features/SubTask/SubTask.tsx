@@ -1,4 +1,4 @@
-import { Checkbox, TextField } from '@mui/material';
+import { Checkbox } from '@mui/material';
 import { ISubTask } from 'apps/libs/types/src';
 import { ChangeEvent, FocusEvent, useState } from 'react';
 
@@ -36,7 +36,12 @@ export const SubTask: React.FC<IProps> = ({
         sx={{ padding: 0 }}
       />
       {isEdit ? (
-        <TextField defaultValue={subTask.title} size="small" onBlur={onBlur} />
+        <input
+          defaultValue={subTask.title}
+          onBlur={onBlur}
+          autoFocus
+          className="input input--borderless"
+        />
       ) : (
         <h5
           onClick={() => setEdit(true)}

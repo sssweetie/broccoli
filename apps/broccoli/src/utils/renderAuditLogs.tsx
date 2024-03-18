@@ -1,6 +1,6 @@
 import { IAudit } from 'apps/libs/types/src';
 import { UPDATE } from '../constants/TaskManager/auditLog';
-import { AuditLog } from '../features/ContentLayout/components/Tables/components/Table/components/Tasks/components/Task/components/DetailsTaskModal/components/AuditLogs/components';
+import { AuditLog } from '../features/AuditLog';
 import { months } from '../constants/TaskManager/months';
 
 const getAuditLogText = ({ params, userName }: IAudit) => {

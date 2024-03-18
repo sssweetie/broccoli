@@ -1,6 +1,6 @@
 import { DraggableProvided } from '@hello-pangea/dnd';
 import { ITask } from 'apps/libs/types/src';
-import { DetailsTaskModal } from './components/DetailsTaskModal';
+import { DetailsTaskModal } from '../DetailsTaskModal';
 import { useState } from 'react';
 import { UseMutateFunction } from '@tanstack/react-query';
 

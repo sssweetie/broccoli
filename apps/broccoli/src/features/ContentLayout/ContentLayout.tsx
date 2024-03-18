@@ -1,6 +1,6 @@
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { Tables } from './components/Tables';
-import { useDragDrop } from './hooks/useDragDrop';
+import { Tables } from '../Tables';
+import { useDragDrop } from '../../hooks/useDragDrop';
 import { AddForm } from '../../components/AddForm/AddForm';
 import { ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';

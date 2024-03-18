@@ -1,6 +1,6 @@
 import HistoryIcon from '@mui/icons-material/History';
 import { useQuery } from '@tanstack/react-query';
-import { auditApi } from 'apps/broccoli/src/features/ContentLayout/api/auditApi';
+import { auditApi } from 'apps/broccoli/src/api/auditApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { renderAuditLogs } from 'apps/broccoli/src/utils';
 interface Props {
@@ -14,7 +14,7 @@ export const AuditLogs: React.FC<Props> = ({ taskId }) => {
   });
 
   const auditLogs = renderAuditLogs(data);
-  
+
   return (
     <section className="task__section  task__audit">
       <HistoryIcon />

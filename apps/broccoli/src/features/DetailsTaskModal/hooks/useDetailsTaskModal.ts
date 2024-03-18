@@ -1,6 +1,6 @@
 import { useUser } from '@clerk/clerk-react';
-import { taskApi } from 'apps/broccoli/src/features/ContentLayout/api/taskApi';
-import { useTask } from 'apps/broccoli/src/features/ContentLayout/hooks/useTask';
+import { taskApi } from 'apps/broccoli/src/api/taskApi';
+import { useTask } from 'apps/broccoli/src/hooks/useTask';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { createAuditLog } from 'apps/broccoli/src/utils';
 import { ITask } from 'apps/libs/types/src';

@@ -1,33 +1,32 @@
 import { Draggable } from '@hello-pangea/dnd';
-import { Task } from './components/Task/Task';
+import { Table } from '../Table/Table';
 import { ITable } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
 
 interface Props {
-  table: ITable;
+  board: ITable[];
   isDragDisabled: boolean;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Tasks: React.FC<Props> = ({
-  table,
+export const Tables: React.FC<Props> = ({
+  board,
   isDragDisabled,
   deleteTable,
 }) => {
-  return table.tasks.map((task, index) => (
+  return board.map((table, index) => (
     <Draggable
-      draggableId={task._id}
+      draggableId={table._id}
       index={index}
-      key={task._id}
+      key={table._id}
       isDragDisabled={isDragDisabled}
     >
       {(provided) => (
-        <Task
+        <Table
           deleteTable={deleteTable}
-          tableTitle={table.title}
-          tableId={table._id}
-          task={task}
           provided={provided}
+          table={table}
+          isDragDisabled={isDragDisabled}
         />
       )}
     </Draggable>
