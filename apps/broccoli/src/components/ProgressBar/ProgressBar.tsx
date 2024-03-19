@@ -30,7 +30,7 @@ const LinearProgressWithLabel: React.FC<LinearProgressProps> = (props) => {
 
 export const ProgressBar: React.FC<IProgressBar> = ({ value }) => {
   return (
-    <Box sx={{ width: '100%', marginBottom: '16px' }}>
+    <Box sx={{ width: '100%', marginBottom: '8px' }}>
       <LinearProgressWithLabel value={value} />
     </Box>
   );

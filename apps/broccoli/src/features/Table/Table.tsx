@@ -72,7 +72,13 @@ export const Table: React.FC<Props> = ({
           </div>
         )}
       </Droppable>
-      <AddForm mutate={mutateTask} title="Create a task" />
+      <AddForm
+        mutate={mutateTask}
+        title="Create a task"
+        formClassName="edit-table table__add-form"
+        addButtonClassName="add-task"
+        inputPlaceholder="Enter a task name..."
+      />
       <DeleteTableModal
         isModalOpen={isModalOpen}
         closeModal={closeModal}

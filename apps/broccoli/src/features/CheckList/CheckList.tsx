@@ -6,9 +6,7 @@ import { checkListApi } from './api/checkListApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { ProgressBar } from 'apps/broccoli/src/components/ProgressBar';
 import ChecklistIcon from '@mui/icons-material/Checklist';
-// import { Link } from '@mui/material';
 import { AddForm } from 'apps/broccoli/src/components/AddForm';
-
 interface IProps {
   taskId: string;
 }
@@ -19,10 +17,6 @@ export const CheckList: React.FC<IProps> = ({ taskId }) => {
     checkListApi(httpClient),
     taskId
   );
-
-  // const onClick = () => {
-
-  // };
 
   const mutateTask = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
@@ -68,13 +62,13 @@ export const CheckList: React.FC<IProps> = ({ taskId }) => {
           <h3>Subtasks</h3>
           <ProgressBar value={progress} />
           {checkList}
-          <AddForm title="Add a subtask" mutate={mutateTask} />
-          {/* <Link
-            onClick={onClick}
-            sx={{ cursor: 'pointer', fontSize: '14px', fontStyle: 'italic' }}
-          >
-            Add item
-          </Link> */}
+          <AddForm
+            title="Create a subtask"
+            mutate={mutateTask}
+            formClassName="edit-table edit-table--subtask"
+            addButtonClassName="add-subtask"
+            inputPlaceholder="Enter a subtask name..."
+          />
         </div>
       </div>
     );

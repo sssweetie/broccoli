@@ -73,7 +73,13 @@ export const ContentLayout = () => {
                   deleteTable={deleteTable.mutate}
                 />
                 {provided.placeholder}
-                <AddForm mutate={mutateTable} title="Create a table" />
+                <AddForm
+                  mutate={mutateTable}
+                  title="Create a table"
+                  formClassName="edit-table edit-table--independent"
+                  addButtonClassName="add-table"
+                  inputPlaceholder="Enter a table name..."
+                />
               </div>
             </div>
           )}

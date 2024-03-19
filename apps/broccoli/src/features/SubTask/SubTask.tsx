@@ -29,7 +29,7 @@ export const SubTask: React.FC<IProps> = ({
   };
 
   return (
-    <div className="subtask subtask_margin">
+    <div className="subtask subtask--margin">
       <Checkbox
         value={subTask.isCompleted}
         onChange={onChange}

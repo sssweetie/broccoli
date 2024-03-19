@@ -154,29 +154,9 @@
   }
 }
 
-.add-table {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  border-radius: 4px;
-  min-width: 250px;
-  height: min-content;
-  background-color: $color-light-white;
-  font-size: 14px;
-  &__plus {
-    margin-right: 8px;
-    margin-bottom: 2px;
-  }
-  &:hover {
-    background-color: $color-gray;
-    cursor: pointer;
-  }
-}
-
 .edit-table {
   display: flex;
   flex-direction: column;
-  padding: 10px 12px;
   border-radius: 4px;
   min-width: 250px;
   height: min-content;
@@ -199,33 +179,12 @@
   }
 }
 
-.table__add-form {
-  margin-top: 12px;
+.edit-table--independent {
+  padding: 10px 12px;
 }
 
-.add-task {
-  padding: 12px 6px 0 6px;
-  font-size: 14px;
-  color: rgb(111, 111, 111);
-  &:hover {
-    opacity: 75%;
-    cursor: pointer;
-  }
-
-  &__plus {
-    margin-right: 8px;
-  }
-
-  &-edit-mode {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  &-edit-mode__buttons {
-    display: flex;
-    gap: 8px;
-  }
+.table__add-form {
+  margin-top: 12px;
 }
 
 .modal__buttons {
@@ -292,6 +251,10 @@
   align-items: center;
   height: 24px;
   gap: 8px;
+}
+
+.subtask--margin {
+  margin-bottom: 4px;
 }
 
 .subtask__title--completed {
