@@ -19,7 +19,7 @@ export const useQueryMutations = (dragDropApi: IDragDropAPI, id: string) => {
 
   const onError = () => {
     setState((prevState) => prevState);
-    toast.error('Something went wrong! :(', {
+    toast.error('Oops! Something went wrong...', {
       ...toastConfig,
     });
   };
