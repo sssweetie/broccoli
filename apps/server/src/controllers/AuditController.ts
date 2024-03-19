@@ -2,10 +2,10 @@
 import { ITask } from 'apps/libs/types/src';
 import { AuditModel } from '../models/AuditModel';
 import { TaskModel } from '../models/TaskModel';
-import { AddAudit } from 'apps/libs/types/src/Audit';
+import { IAddAudit } from 'apps/libs/types/src/Audit';
 
 export const AuditController = {
-  create: async ({ audit, taskId }: AddAudit) => {
+  create: async ({ audit, taskId }: IAddAudit) => {
     TaskModel;
     const auditDoc = await AuditModel.create(audit);
     await TaskModel.findByIdAndUpdate(taskId, {

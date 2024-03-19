@@ -8,12 +8,12 @@ interface Mutations {
   deleteTask: UseMutateFunction<void, Error, string, unknown>;
 }
 
-interface Props {
+interface IProps {
   description: IDescription;
   mutations: Mutations;
 }
 
-export const useDescription = ({ description, mutations }: Props) => {
+export const useDescription = ({ description, mutations }: IProps) => {
   const [isEdit, setEdit] = useState(false);
   const [descriptionState, setDescriptionState] = useState(
     description.text ? description.text : ''

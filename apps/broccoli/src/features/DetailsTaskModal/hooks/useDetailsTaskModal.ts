@@ -5,11 +5,11 @@ import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { createAuditLog } from 'apps/broccoli/src/utils';
 import { ITask } from 'apps/libs/types/src';
 
-interface Data {
+interface IData {
   task: ITask;
 }
 
-export const useDetailsTaskModal = ({ task }: Data) => {
+export const useDetailsTaskModal = ({ task }: IData) => {
   const { updateTask, deleteTask } = useTask(taskApi(httpClient));
   const { user } = useUser();
 

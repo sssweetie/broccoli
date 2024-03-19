@@ -1,16 +1,11 @@
 import { TaskModel } from '../models/TaskModel';
 import { TableModel } from '../models/TableModel';
-import { ITask, UpdateTask } from 'apps/libs/types/src';
+import { IAddTask, IUpdateTask } from 'apps/libs/types/src';
 import { AuditController } from './AuditController';
 import { AuditModel } from '../models/AuditModel';
 
-interface AddTask {
-  tableId: string;
-  task: Partial<ITask>;
-}
-
 export const TaskController = {
-  create: async ({ task, tableId }: AddTask) => {
+  create: async ({ task, tableId }: IAddTask) => {
     const document = await TaskModel.create({
       title: task.title,
       order: task.order,
@@ -27,7 +22,7 @@ export const TaskController = {
     const task = await TaskModel.findById(taskId);
     return task;
   },
-  update: async ({ task, audit }: UpdateTask) => {
+  update: async ({ task, audit }: IUpdateTask) => {
     await TaskModel.findByIdAndUpdate(task._id, { ...task });
     await AuditController.create({ audit, taskId: task._id });
   },

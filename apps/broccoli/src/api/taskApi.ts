@@ -1,14 +1,14 @@
-import { AddTask, ITask, UpdateTask } from 'apps/libs/types/src';
+import { IAddTask, ITask, IUpdateTask } from 'apps/libs/types/src';
 import { AxiosInstance } from 'axios';
 
-export interface TaskApi {
-  create: ({ tableId, task }: AddTask) => Promise<void>;
+export interface ITaskAPI {
+  create: ({ tableId, task }: IAddTask) => Promise<void>;
   read: (taskId: string) => Promise<ITask>;
-  update: ({ task, audit }: UpdateTask) => Promise<void>;
+  update: ({ task, audit }: IUpdateTask) => Promise<void>;
   delete: (taskId: string) => Promise<void>;
 }
 
-export const taskApi = (httpClient: AxiosInstance): TaskApi => ({
+export const taskApi = (httpClient: AxiosInstance): ITaskAPI => ({
   create: async (addTask) => {
     await httpClient.post('/dragdrop/task/create', { addTask });
   },

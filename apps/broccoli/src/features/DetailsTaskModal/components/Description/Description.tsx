@@ -5,14 +5,14 @@ import { Content } from './components/Content';
 import { useDescription } from './hooks/useDescription';
 import { IDescription } from '../../DetailsTaskModal';
 
-interface Props {
+interface IProps {
   description: IDescription;
   updateDescription: (description: string) => Promise<void>;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
   deleteTask: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Description: React.FC<Props> = ({
+export const Description: React.FC<IProps> = ({
   description,
   updateDescription,
   deleteTable,

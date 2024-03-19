@@ -6,14 +6,14 @@ interface CreateBoard {
   backgroundImage: string;
 }
 
-export interface BoardsApi {
+export interface IBoardsAPI {
   create: ({ title, backgroundImage }: CreateBoard) => Promise<void>;
   read: () => Promise<IBoard[]>;
   update: (board: Partial<IBoard>) => Promise<void>;
   delete: (id: string) => Promise<void>;
 }
 
-export const boardsApi = (httpClient: AxiosInstance): BoardsApi => {
+export const boardsApi = (httpClient: AxiosInstance): IBoardsAPI => {
   return {
     create: async (createBoard) => {
       await httpClient.post('/boards/create', createBoard);

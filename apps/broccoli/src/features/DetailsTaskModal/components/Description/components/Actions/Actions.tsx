@@ -1,12 +1,12 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
 
-interface Props {
+interface IProps {
   handleDeleteTable: () => Promise<void>;
   handleDeleteTask: () => Promise<void>;
 }
 
-export const Actions: React.FC<Props> = ({
+export const Actions: React.FC<IProps> = ({
   handleDeleteTable,
   handleDeleteTask,
 }) => {

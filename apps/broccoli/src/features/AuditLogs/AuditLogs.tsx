@@ -3,11 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { auditApi } from 'apps/broccoli/src/api/auditApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { renderAuditLogs } from 'apps/broccoli/src/utils';
-interface Props {
+interface IProps {
   taskId: string;
 }
 
-export const AuditLogs: React.FC<Props> = ({ taskId }) => {
+export const AuditLogs: React.FC<IProps> = ({ taskId }) => {
   const { data } = useQuery({
     queryKey: ['audit'],
     queryFn: () => auditApi(httpClient).read(taskId),

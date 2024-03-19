@@ -1,13 +1,13 @@
 import TitleIcon from '@mui/icons-material/Title';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-interface Props {
+interface IProps {
   tableTitle: string;
   title: string | undefined;
   updateTitle: (title: string) => Promise<void>;
 }
 
-export const Title: React.FC<Props> = ({ tableTitle, title, updateTitle }) => {
+export const Title: React.FC<IProps> = ({ tableTitle, title, updateTitle }) => {
   const [isEdit, setEdit] = useState(false);
   const [value, setValue] = useState(title ? title : '');
 

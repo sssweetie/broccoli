@@ -1,19 +1,18 @@
-import { IBoard, ITable, RequiredParamsToUpdate } from 'apps/libs/types/src';
+import {
+  IBoard,
+  ICreateTable,
+  RequiredParamsToUpdate,
+} from 'apps/libs/types/src';
 import { AxiosInstance } from 'axios';
 
-interface CreateTable {
-  table: Partial<ITable>;
-  boardId: string;
-}
-
-export interface DragDropApi {
-  create: (createTable: CreateTable) => Promise<void>;
+export interface IDragDropAPI {
+  create: (createTable: ICreateTable) => Promise<void>;
   read: (id: string) => Promise<Partial<IBoard>>;
   update: (params: RequiredParamsToUpdate) => Promise<void>;
   delete: (id: string) => Promise<void>;
 }
 
-export const dragDropApi = (httpClient: AxiosInstance): DragDropApi => ({
+export const dragDropApi = (httpClient: AxiosInstance): IDragDropAPI => ({
   create: async (createTable) =>
     await httpClient.post('/dragdrop/table/create', createTable),
   read: async (id: string) => {

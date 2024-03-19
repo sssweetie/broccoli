@@ -1,4 +1,4 @@
-export interface AddAudit {
+export interface IAddAudit {
   audit: IAudit;
   taskId: string;
 }
@@ -11,7 +11,7 @@ export interface IAudit {
   date: Date;
 }
 
-export interface AuditParams {
+export interface IAuditParams {
   type: string;
   newName?: string;
 }

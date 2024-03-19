@@ -1,7 +1,7 @@
-import { ICheckListApi } from '../api/checkListApi';
+import { ICheckListAPI } from '../api/checkListApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const useCheckList = (checklistApi: ICheckListApi, taskId: string) => {
+export const useCheckList = (checklistApi: ICheckListAPI, taskId: string) => {
   const queryClient = useQueryClient();
 
   const { data } = useQuery({

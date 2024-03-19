@@ -3,13 +3,13 @@ import { Table } from '../Table/Table';
 import { ITable } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
 
-interface Props {
+interface IProps {
   board: ITable[];
   isDragDisabled: boolean;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Tables: React.FC<Props> = ({
+export const Tables: React.FC<IProps> = ({
   board,
   isDragDisabled,
   deleteTable,

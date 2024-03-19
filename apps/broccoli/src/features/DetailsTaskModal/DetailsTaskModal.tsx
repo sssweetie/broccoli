@@ -8,9 +8,9 @@ import { Description } from './components/Description';
 import { Title } from './components/Title';
 import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
 import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/TaskManager/styles/taskModal';
-import { CheckList } from '../CheckList/CheckList';
+import { CheckList } from '../CheckList';
 
-interface Props {
+interface IProps {
   isOpen: boolean;
   task: ITask;
   tableTitle: string;
@@ -25,7 +25,7 @@ export interface IDescription {
   text: string | undefined;
 }
 
-export const DetailsTaskModal: React.FC<Props> = ({
+export const DetailsTaskModal: React.FC<IProps> = ({
   isOpen,
   task,
   tableTitle,

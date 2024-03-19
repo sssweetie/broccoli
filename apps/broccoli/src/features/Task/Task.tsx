@@ -4,7 +4,7 @@ import { DetailsTaskModal } from '../DetailsTaskModal';
 import { useState } from 'react';
 import { UseMutateFunction } from '@tanstack/react-query';
 
-interface Props {
+interface IProps {
   provided: DraggableProvided;
   tableTitle: string;
   tableId: string;
@@ -12,7 +12,7 @@ interface Props {
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Task: React.FC<Props> = ({
+export const Task: React.FC<IProps> = ({
   provided,
   task,
   tableTitle,

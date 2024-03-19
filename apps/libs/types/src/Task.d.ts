@@ -10,12 +10,12 @@ export interface ITask {
   subTasks?: ISubTask[];
 }
 
-export interface AddTask {
+export interface IAddTask {
   tableId: string;
   task: Partial<ITask>;
 }
 
-export interface UpdateTask {
+export interface IUpdateTask {
   task: ITask;
   audit: IAudit;
 }

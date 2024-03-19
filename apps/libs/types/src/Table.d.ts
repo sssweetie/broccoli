@@ -24,3 +24,7 @@ export interface RequiredParamsToUpdate {
   updateTable?: Partial<ITable>;
 }
 
+export interface ICreateTable {
+  table: Partial<ITable>;
+  boardId: string;
+}

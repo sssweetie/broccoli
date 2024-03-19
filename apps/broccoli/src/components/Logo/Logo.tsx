@@ -5,7 +5,6 @@ interface sx {
   icon: object;
   text: object;
 }
-
 interface Props {
   sx: sx;
 }

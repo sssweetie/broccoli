@@ -1,12 +1,12 @@
-import { AddAudit, IAudit } from 'apps/libs/types/src/Audit';
+import { IAddAudit, IAudit } from 'apps/libs/types/src/Audit';
 import { AxiosInstance } from 'axios';
 
-export interface AuditAPI {
-  create: ({ taskId, audit }: AddAudit) => Promise<void>;
+export interface IAuditAPI {
+  create: ({ taskId, audit }: IAddAudit) => Promise<void>;
   read: (taskId: string) => Promise<IAudit[]>;
 }
 
-export const auditApi = (httpClient: AxiosInstance): AuditAPI => ({
+export const auditApi = (httpClient: AxiosInstance): IAuditAPI => ({
   create: async ({ taskId, audit }) => {
     await httpClient.post('/dragdrop/audit/create', { taskId, audit });
   },

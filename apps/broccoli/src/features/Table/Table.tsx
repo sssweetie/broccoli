@@ -10,14 +10,14 @@ import { taskApi } from '../../api/taskApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { AddForm } from 'apps/broccoli/src/components/AddForm/AddForm';
 import { MenuItem } from '@mui/material';
-interface Props {
+interface IProps {
   provided: DraggableProvided;
   table: ITable;
   isDragDisabled: boolean;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Table: React.FC<Props> = ({
+export const Table: React.FC<IProps> = ({
   provided,
   table,
   isDragDisabled,
