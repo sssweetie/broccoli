@@ -24,4 +24,7 @@ export const SubTaskController = {
   update: async (subTask: ISubTask) => {
     await SubTaskModel.findByIdAndUpdate(subTask._id, { ...subTask });
   },
+  delete: async (id: string) => {
+    await SubTaskModel.findByIdAndDelete(id);
+  },
 };

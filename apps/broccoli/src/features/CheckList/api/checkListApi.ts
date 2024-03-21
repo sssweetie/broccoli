@@ -5,6 +5,7 @@ export interface ICheckListAPI {
   create: (createSubTask: ICreateSubTask) => Promise<void>;
   read: (id: string) => Promise<ISubTask[]>;
   update: (subTask: ISubTask) => Promise<void>;
+  delete: (id: string) => Promise<void>;
 }
 
 export const checkListApi = (httpClient: AxiosInstance): ICheckListAPI => ({
@@ -17,5 +18,8 @@ export const checkListApi = (httpClient: AxiosInstance): ICheckListAPI => ({
   },
   update: async (subTask: ISubTask) => {
     await httpClient.put('/dragdrop/subtask/update', subTask);
+  },
+  delete: async (id: string) => {
+    await httpClient.delete(`/dragdrop/subtask/delete/${id}`);
   },
 });

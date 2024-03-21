@@ -29,3 +29,12 @@ subTaskRouter.post('/create', async (req, res) => {
     res.status(400).send('error create data');
   }
 });
+
+subTaskRouter.delete('/delete/:id', async (req, res) => {
+  try {
+    await SubTaskController.delete(req.params.id as string);
+    res.sendStatus(200);
+  } catch {
+    res.status(400).send('error create data');
+  }
+});

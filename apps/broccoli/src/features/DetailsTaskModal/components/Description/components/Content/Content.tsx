@@ -1,6 +1,5 @@
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { ChangeEvent } from 'react';
-
 interface IProps {
   isEdit: boolean;
   value: string;
@@ -26,6 +25,7 @@ export const Content: React.FC<IProps> = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          placeholder="Add a description..."
         />
       ) : (
         <div onClick={onClick} className="task__description">

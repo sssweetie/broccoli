@@ -28,5 +28,14 @@ export const useCheckList = (checklistApi: ICheckListAPI, taskId: string) => {
     onError: () => callErrorToast('Oops! Something went wrong...'),
   });
 
-  return { updateSubTask, createSubTask, subTasks: data };
+  const deleteSubTask = useMutation({
+    mutationFn: checklistApi.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['checklist'] });
+      callSuccessToast('Subtask is deleted successfully!');
+    },
+    onError: () => callErrorToast('Oops! Something went wrong...'),
+  });
+
+  return { updateSubTask, createSubTask, deleteSubTask, subTasks: data };
 };

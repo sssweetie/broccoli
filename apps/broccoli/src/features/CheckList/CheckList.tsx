@@ -13,10 +13,8 @@ interface IProps {
 
 export const CheckList: React.FC<IProps> = ({ taskId }) => {
   const [progress, setProgress] = useState(0);
-  const { updateSubTask, createSubTask, subTasks } = useCheckList(
-    checkListApi(httpClient),
-    taskId
-  );
+  const { updateSubTask, createSubTask, deleteSubTask, subTasks } =
+    useCheckList(checkListApi(httpClient), taskId);
 
   const mutateTask = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
@@ -30,6 +28,10 @@ export const CheckList: React.FC<IProps> = ({ taskId }) => {
 
   const mutateSubTask = (subTask: ISubTask) => {
     updateSubTask.mutate(subTask);
+  };
+
+  const handleDeleteSubTask = (id: string) => {
+    deleteSubTask.mutate(id);
   };
 
   if (subTasks) {
@@ -50,6 +52,7 @@ export const CheckList: React.FC<IProps> = ({ taskId }) => {
     const checkList = subTasks.map((subTask) => (
       <SubTask
         subTask={subTask}
+        handleDeleteSubTask={handleDeleteSubTask}
         updateSubTask={mutateSubTask}
         setProgress={updateProgress}
       />
@@ -65,7 +68,7 @@ export const CheckList: React.FC<IProps> = ({ taskId }) => {
           <AddForm
             title="Create a subtask"
             mutate={mutateTask}
-            formClassName="edit-table edit-table--subtask"
+            formClassName="edit-table edit-table--independent"
             addButtonClassName="add-subtask"
             inputPlaceholder="Enter a subtask name..."
           />

@@ -257,6 +257,13 @@
   margin-bottom: 4px;
 }
 
+.subtask__title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
 .subtask__title--completed {
   text-decoration: line-through;
   font-style: italic;
