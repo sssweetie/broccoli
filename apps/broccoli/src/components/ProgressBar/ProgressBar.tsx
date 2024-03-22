@@ -9,19 +9,19 @@ interface IProgressBar {
   value: number;
 }
 
-const LinearProgressWithLabel: React.FC<LinearProgressProps> = (props) => {
+const LinearProgressWithLabel: React.FC<LinearProgressProps> = ({ value }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
         <LinearProgress
           variant="determinate"
-          {...props}
+          value={value}
           sx={{ borderRadius: '6px', height: '6px' }}
         />
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value as number
+          value ?? 0
         )}%`}</Typography>
       </Box>
     </Box>

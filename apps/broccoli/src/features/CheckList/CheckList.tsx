@@ -12,9 +12,27 @@ interface IProps {
 }
 
 export const CheckList: React.FC<IProps> = ({ taskId }) => {
-  const [progress, setProgress] = useState(0);
   const { updateSubTask, createSubTask, deleteSubTask, subTasks } =
     useCheckList(checkListApi(httpClient), taskId);
+
+  const [progress, setProgress] = useState(0);
+
+  const countProgress = () => {
+    if (subTasks && subTasks.length) {
+      const completedTasksCount = subTasks.reduce(
+        (acc, currVal) => acc + (currVal.isCompleted ? 1 : 0),
+        0
+      );
+
+      const percent = (completedTasksCount / subTasks.length) * 100;
+
+      setProgress(percent);
+      return;
+    }
+
+    setProgress(0);
+    return;
+  };
 
   const mutateTask = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
@@ -35,26 +53,12 @@ export const CheckList: React.FC<IProps> = ({ taskId }) => {
   };
 
   if (subTasks) {
-    const updateProgress = (checked: boolean) => {
-      if (checked) {
-        setProgress((prevState) => {
-          return prevState + 100 / subTasks.length;
-        });
-      }
-
-      if (!checked) {
-        setProgress((prevState) => {
-          return prevState - 100 / subTasks.length;
-        });
-      }
-    };
-
     const checkList = subTasks.map((subTask) => (
       <SubTask
         subTask={subTask}
         handleDeleteSubTask={handleDeleteSubTask}
         updateSubTask={mutateSubTask}
-        setProgress={updateProgress}
+        countProgress={countProgress}
       />
     ));
 

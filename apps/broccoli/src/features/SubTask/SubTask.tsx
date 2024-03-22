@@ -7,14 +7,14 @@ interface IProps {
   subTask: ISubTask;
   updateSubTask: (subTask: ISubTask) => void;
   handleDeleteSubTask: (id: string) => void;
-  setProgress: (checked: boolean) => void;
+  countProgress: () => void;
 }
 
 export const SubTask: React.FC<IProps> = ({
   subTask,
   updateSubTask,
   handleDeleteSubTask,
-  setProgress,
+  countProgress,
 }) => {
   const [isEdit, setEdit] = useState(false);
 
@@ -25,9 +25,7 @@ export const SubTask: React.FC<IProps> = ({
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
-
     updateSubTask({ ...subTask, isCompleted: checked });
-    setProgress(checked);
     setEdit(false);
   };
 
@@ -36,10 +34,12 @@ export const SubTask: React.FC<IProps> = ({
     handleDeleteSubTask(subTask._id);
   };
 
+  countProgress();
+
   return (
     <div className="subtask subtask--margin">
       <Checkbox
-        value={subTask.isCompleted}
+        checked={subTask.isCompleted}
         onChange={onChange}
         sx={{ padding: 0 }}
       />
