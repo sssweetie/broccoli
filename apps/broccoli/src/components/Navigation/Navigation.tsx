@@ -14,10 +14,6 @@ const pages = [
     name: 'Boards',
     link: '/application/boards',
   },
-  {
-    name: 'Drag&Drop',
-    link: '/application/dragdrop',
-  },
 ];
 
 export const Navigation: React.FC = () => {

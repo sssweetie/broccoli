@@ -1,4 +1,5 @@
 import { IAudit } from './Audit';
+import { ISubTask } from './SubTask';
 
 export interface ITask {
   _id: string;
@@ -6,14 +7,15 @@ export interface ITask {
   title?: string;
   description?: string;
   audits?: IAudit[];
+  subTasks?: ISubTask[];
 }
 
-export interface AddTask {
+export interface IAddTask {
   tableId: string;
   task: Partial<ITask>;
 }
 
-export interface UpdateTask {
+export interface IUpdateTask {
   task: ITask;
   audit: IAudit;
 }

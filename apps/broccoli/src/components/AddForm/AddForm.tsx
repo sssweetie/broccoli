@@ -3,6 +3,9 @@ import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 interface Props {
   title: string;
+  formClassName: string;
+  inputPlaceholder: string;
+  addButtonClassName: string;
   mutate: (e: FormEvent<HTMLFormElement>, inputValue: string) => void;
 }
 
@@ -12,11 +15,15 @@ const sx = {
   fontWeight: '600',
 };
 
-export const AddForm: React.FC<Props> = ({ title, mutate }) => {
+export const AddForm: React.FC<Props> = ({
+  inputPlaceholder,
+  addButtonClassName,
+  formClassName,
+  title,
+  mutate,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState('');
-
-  const isTask = title === 'Create a task' ? true : false;
 
   const turnEditModeOn = () => {
     setEditMode(true);
@@ -37,13 +44,10 @@ export const AddForm: React.FC<Props> = ({ title, mutate }) => {
   };
 
   return editMode ? (
-    <form
-      className={isTask ? `edit-table table__add-form` : `edit-table`}
-      onSubmit={onSubmit}
-    >
+    <form className={formClassName} onSubmit={onSubmit}>
       <TextField
         id="outlined-basic"
-        label="Name"
+        label={inputPlaceholder}
         variant="outlined"
         size="small"
         value={inputValue}
@@ -59,7 +63,7 @@ export const AddForm: React.FC<Props> = ({ title, mutate }) => {
       </section>
     </form>
   ) : (
-    <div className={isTask ? `add-task` : 'add-table'} onClick={turnEditModeOn}>
+    <div className={addButtonClassName} onClick={turnEditModeOn}>
       <span className="add-task__plus">+</span>
       {title}
     </div>

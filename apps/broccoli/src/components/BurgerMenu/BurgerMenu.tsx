@@ -2,11 +2,11 @@ import { MouseEvent } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { Page } from 'apps/libs/types/src';
+import { IPage } from 'apps/libs/types/src';
 
 interface Props {
   anchorElNav: null | HTMLElement;
-  pages: Page[];
+  pages: IPage[];
   handleOpenNavMenu: (event: MouseEvent<HTMLElement>) => void;
   handleCloseNavMenu: (to: string) => void;
 }

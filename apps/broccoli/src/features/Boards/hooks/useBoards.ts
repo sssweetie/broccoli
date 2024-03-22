@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BoardsApi } from '../api/boardsApi';
+import { IBoardsAPI } from '../api/boardsApi';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { callSuccessToast } from 'apps/broccoli/src/utils';
 import { callErrorToast } from 'apps/broccoli/src/utils';
 
-export const useBoards = (boardsApi: BoardsApi) => {
+export const useBoards = (boardsApi: IBoardsAPI) => {
   const [isOpen, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [selectedImage, setSelectedImage] = useState<HTMLImageElement | null>(

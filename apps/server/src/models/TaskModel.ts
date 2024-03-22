@@ -13,6 +13,12 @@ const taskSchema = new Schema<ITask>({
   description: {
     type: String,
   },
+  subTasks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'subTasks',
+    },
+  ],
   audits: [
     {
       type: Schema.Types.ObjectId,

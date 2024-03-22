@@ -1,13 +1,13 @@
 import { MouseEvent } from 'react';
 
-export interface Page {
+export interface IPage {
   name: string;
   link: string;
 }
 
-export interface AppBar {
+export interface IAppBar {
   handleOpenUserMenu: (event: MouseEvent<HTMLElement>) => void;
   handleCloseUserMenu?: (to: string) => void;
   anchorElUser?: HTMLElement | null;
-  pages: Page[];
+  pages: IPage[];
 }

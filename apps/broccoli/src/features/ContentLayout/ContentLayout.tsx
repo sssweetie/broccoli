@@ -1,6 +1,6 @@
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { Tables } from './components/Tables';
-import { useDragDrop } from './hooks/useDragDrop';
+import { Tables } from '../Tables';
+import { useDragDrop } from '../../hooks/useDragDrop';
 import { AddForm } from '../../components/AddForm/AddForm';
 import { ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
@@ -73,7 +73,13 @@ export const ContentLayout = () => {
                   deleteTable={deleteTable.mutate}
                 />
                 {provided.placeholder}
-                <AddForm mutate={mutateTable} title="Create a table" />
+                <AddForm
+                  mutate={mutateTable}
+                  title="Create a table"
+                  formClassName="edit-table edit-table--independent"
+                  addButtonClassName="add-table"
+                  inputPlaceholder="Enter a table name..."
+                />
               </div>
             </div>
           )}

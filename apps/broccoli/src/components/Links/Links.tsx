@@ -1,8 +1,8 @@
 import { Box, Button } from '@mui/material';
-import { Page } from 'apps/libs/types/src';
+import { IPage } from 'apps/libs/types/src';
 
 interface Props {
-  pages: Page[];
+  pages: IPage[];
   handleCloseNavMenu: (to: string) => void;
 }
 

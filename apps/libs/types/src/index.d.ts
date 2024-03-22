@@ -5,3 +5,4 @@ export * from './Audit';
 export * from './Board';
 export * from './User';
 export * from './Org';
+export * from './SubTask';
