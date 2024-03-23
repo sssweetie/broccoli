@@ -14,6 +14,7 @@ import { Hero } from './components/Hero';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Boards } from './features/Boards';
+import { Calendar } from './features/Calendar/Calendar';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
           {
             path: '/application/boards',
             element: <Boards />,
+          },
+          {
+            path: '/application/calendar',
+            element: <Calendar />,
           },
           {
             path: '/application/dragdrop/:id',

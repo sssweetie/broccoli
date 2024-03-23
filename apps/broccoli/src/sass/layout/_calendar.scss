@@ -1,0 +1,30 @@
+@use '../abstracts/' as *;
+
+.day {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid $color-gray;
+  border-right: 1px solid $color-gray;
+}
+
+.day__header {
+  padding-top: 8px;
+}
+
+.day__number {
+  margin-top: 4px;
+}
+
+.day--today {
+  font-weight: 700;
+  color: $color-light-blue;
+  background-color: rgba($color-light-blue, 0.1);
+}
+
+.week {
+  display: flex;
+  height: calc(100% / 6);
+  &:first-of-type {
+    border-top: 1px solid black;
+  }
+}
