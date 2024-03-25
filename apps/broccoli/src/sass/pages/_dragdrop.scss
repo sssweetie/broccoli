@@ -253,6 +253,12 @@
   gap: 8px;
 }
 
+.subtask__icons {
+  display: flex;
+  gap: 0px;
+  align-items: center;
+}
+
 .subtask--margin {
   margin-bottom: 4px;
 }

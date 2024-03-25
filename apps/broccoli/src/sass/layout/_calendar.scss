@@ -21,6 +21,16 @@
   background-color: rgba($color-light-blue, 0.1);
 }
 
+.calendar-picker {
+  position: relative;
+}
+
+.calendar-picker__icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .week {
   display: flex;
   height: calc(100% / 6);
