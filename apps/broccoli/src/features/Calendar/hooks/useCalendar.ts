@@ -10,8 +10,8 @@ interface IDate {
 export const useCalendar = (subtasksAPI: ISubtasksAPI, dates: IDate) => {
   const getSubtasksForPeriod = async ({ queryKey }: { queryKey: string[] }) => {
     const [, dateTo, dateFrom] = queryKey;
-    const res = await subtasksAPI.read(dateFrom, dateTo);
-    return res;
+    const data = await subtasksAPI.read(dateFrom, dateTo);
+    return data;
   };
 
   const { data } = useQuery({
