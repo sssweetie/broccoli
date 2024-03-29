@@ -6,16 +6,6 @@ import { ISubTask } from 'apps/libs/types/src';
 const WEEK_LENGTH = 7;
 const WEEK_COUNT = 6;
 
-export const getDates = () => {
-  const firstDayOfTheMonth = moment().startOf('month').isoWeekday();
-  const dateFrom = moment()
-    .startOf('month')
-    .subtract(firstDayOfTheMonth - 1, 'days');
-  const dateTo = dateFrom.clone().add(41, 'day');
-
-  return { dateTo, dateFrom };
-};
-
 export const renderCalendar = (
   dateFrom: Moment,
   subtasks: ISubTask[] | undefined
