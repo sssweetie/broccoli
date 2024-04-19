@@ -6,6 +6,7 @@ import React, {
   SetStateAction,
   useEffect,
   useState,
+  useCallback,
 } from 'react';
 import { getRandomBackgroundURL } from '../../features/Firebase';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -21,9 +22,6 @@ interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const max = 12;
-const min = 1;
-
 export const ModalCreateBoard: React.FC<Props> = ({
   isOpen,
   value,
@@ -35,7 +33,9 @@ export const ModalCreateBoard: React.FC<Props> = ({
 }) => {
   const [images, setImages] = useState<string[]>([]);
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
+    const max = 12;
+    const min = 1;
     const arr = [];
     while (arr.length < 6) {
       const randomBackgroundIndex =
@@ -48,7 +48,7 @@ export const ModalCreateBoard: React.FC<Props> = ({
     Promise.all(arr.map((index) => getRandomBackgroundURL(index))).then((res) =>
       setImages(res)
     );
-  };
+  }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onClick = (e: any) => {
@@ -66,7 +66,7 @@ export const ModalCreateBoard: React.FC<Props> = ({
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <Modal

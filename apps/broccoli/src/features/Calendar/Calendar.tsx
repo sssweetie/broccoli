@@ -4,17 +4,16 @@ import { httpClient } from '../../services/httpClient';
 import { subtasksAPI } from '../../api/subtasksAPI';
 import { renderCalendar } from '../../utils';
 
-export const Calendar = () => {
-  const { subtasks, nextMonth, prevMonth, getToday, dateFrom } = useCalendar(
-    subtasksAPI(httpClient)
-  );
+export const Calendar: React.FC = () => {
+  const { subtasks, nextMonth, prevMonth, getToday, dateFrom, currentMonth } =
+    useCalendar(subtasksAPI(httpClient));
 
   const calendar = renderCalendar(dateFrom, subtasks);
-
+  const currentDate = currentMonth.format('MMM YYYY');
   return (
     <div style={{ height: '100%' }}>
       <section className="calendar-navigation">
-        <h1 className="calendar-navigation__title">March 2024</h1>
+        <h1 className="calendar-navigation__title">{currentDate}</h1>
         <div className="calendar-navigation__menu">
           <button onClick={prevMonth} type="button">
             &#8592;

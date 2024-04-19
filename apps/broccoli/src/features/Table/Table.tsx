@@ -42,7 +42,11 @@ export const Table: React.FC<IProps> = ({
     await createTask.mutate({ tableId: table._id, task });
   };
 
-  const items = [<MenuItem onClick={openModal}>Delete table</MenuItem>];
+  const items = [
+    <MenuItem onClick={openModal} key="delete-table">
+      Delete table
+    </MenuItem>,
+  ];
 
   return (
     <article

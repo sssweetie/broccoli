@@ -67,6 +67,7 @@ export const Boards: React.FC = () => {
                     items={[
                       <MenuItem
                         onClick={(e) => handleDeleteBoard(e, board._id)}
+                        key="delete-board"
                       >
                         Delete board
                       </MenuItem>,

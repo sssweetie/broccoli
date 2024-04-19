@@ -14,7 +14,7 @@ export const useCalendar = (subtasksAPI: ISubtasksAPI) => {
   const [dateTo, setDateTo] = useState<Moment>(calendarDateTo);
   const [dateFrom, setDateFrom] = useState<Moment>(calendarDateFrom);
   const [currentMonth, setCurrentMonth] = useState<Moment>(
-    moment().set({ day: 1 })
+    moment().clone().startOf('month')
   );
 
   const getSubtasksForPeriod = async ({ queryKey }: { queryKey: string[] }) => {
@@ -24,17 +24,17 @@ export const useCalendar = (subtasksAPI: ISubtasksAPI) => {
   };
 
   const nextMonth = () => {
-    const newMonth = currentMonth.clone().add(1, 'month').set({ day: 1 });
+    const newMonth = currentMonth.clone().add(1, 'month').startOf('month');
     setNewDates(newMonth);
   };
 
   const prevMonth = () => {
-    const newMonth = currentMonth.clone().subtract(1, 'month').set({ day: 1 });
+    const newMonth = currentMonth.clone().subtract(1, 'month').startOf('month');
     setNewDates(newMonth);
   };
 
   const getToday = () => {
-    const newMonth = moment().set({ day: 1 });
+    const newMonth = moment().startOf('month');
     setNewDates(newMonth);
   };
 
@@ -56,5 +56,12 @@ export const useCalendar = (subtasksAPI: ISubtasksAPI) => {
     queryFn: getSubtasksForPeriod,
   });
 
-  return { subtasks: data, nextMonth, prevMonth, getToday, dateFrom };
+  return {
+    subtasks: data,
+    nextMonth,
+    prevMonth,
+    getToday,
+    currentMonth,
+    dateFrom,
+  };
 };
