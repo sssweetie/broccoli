@@ -22,38 +22,42 @@ export const renderCalendar = (
       const daySubtasks = subtasks
         ? subtasks.filter((subtask) => {
             return (
+              subtask.date &&
               moment(subtask.date).format('DD-MM') ===
-              calendarDate.format('DD-MM')
+                calendarDate.format('DD-MM')
             );
           })
         : [];
 
       let day: JSX.Element = <></>;
-      let className: string | undefined = 'day';
+      const className: string[] = ['day'];
 
       if (calendarDate.isSame(today, 'day')) {
-        className += ' day--today';
+        className.push('day--today');
       }
 
       if (calendarDate.isoWeekday() === 6 || calendarDate.isoWeekday() === 7) {
-        className += ' day--weekend';
+        className.push('day--weekend');
       }
 
       if (j === 0) {
-        className += ' day--edge';
+        className.push('day--edge');
       }
 
+      const daySubtasksLength =
+        daySubtasks.length > 0 ? (
+          <span className="day__cards-count">{daySubtasks.length} cards</span>
+        ) : null;
+
       if (i === 0) {
-        className += ' day--header';
+        className.push('day--header');
+        const headerTitle = header[j] + ' ' + calendarDate.format('D') + ' ';
+
         day = (
-          <Day className={className} daySubtasks={daySubtasks}>
+          <Day className={className.join(' ')} daySubtasks={daySubtasks}>
             <div className="day__number">
-              {header[j] + ' ' + calendarDate.format('D') + ' '}
-              {daySubtasks.length ? (
-                <span className="day__cards-count">
-                  {daySubtasks.length} cards
-                </span>
-              ) : null}
+              {headerTitle}
+              {daySubtasksLength}
             </div>
           </Day>
         );
@@ -61,14 +65,10 @@ export const renderCalendar = (
 
       if (i !== 0) {
         day = (
-          <Day className={className} daySubtasks={daySubtasks}>
+          <Day className={className.join(' ')} daySubtasks={daySubtasks}>
             <div className="day__number">
               {calendarDate.format('D') + ' '}
-              {daySubtasks.length ? (
-                <span className="day__cards-count">
-                  {daySubtasks.length} cards
-                </span>
-              ) : null}
+              {daySubtasksLength}
             </div>
           </Day>
         );

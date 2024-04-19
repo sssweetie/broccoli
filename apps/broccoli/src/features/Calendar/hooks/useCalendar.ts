@@ -58,10 +58,10 @@ export const useCalendar = (subtasksAPI: ISubtasksAPI) => {
 
   return {
     subtasks: data,
+    currentMonth,
+    dateFrom,
     nextMonth,
     prevMonth,
     getToday,
-    currentMonth,
-    dateFrom,
   };
 };
