@@ -2,9 +2,9 @@ import { IAddTask, ITask, IUpdateTask } from 'apps/libs/types/src';
 import { AxiosInstance } from 'axios';
 
 export interface ITaskAPI {
-  create: ({ tableId, task }: IAddTask) => Promise<void>;
+  create: (addTask: IAddTask) => Promise<void>;
   read: (taskId: string) => Promise<ITask>;
-  update: ({ task, audit }: IUpdateTask) => Promise<void>;
+  update: (updateTask: IUpdateTask) => Promise<void>;
   delete: (taskId: string) => Promise<void>;
 }
 

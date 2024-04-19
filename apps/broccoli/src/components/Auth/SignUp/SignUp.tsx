@@ -1,16 +1,8 @@
-import { SignUp as ClerkSignUp, useAuth } from '@clerk/clerk-react';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { SignUp as ClerkSignUp } from '@clerk/clerk-react';
+import { useSignIn } from 'apps/broccoli/src/hooks/useSignIn';
 
 export const SignUp: React.FC = () => {
-  const { userId, isLoaded } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isLoaded && userId) {
-      navigate('/application/boards');
-    }
-  }, [isLoaded, userId, navigate]);
+  useSignIn();
 
   return (
     <article className="login">

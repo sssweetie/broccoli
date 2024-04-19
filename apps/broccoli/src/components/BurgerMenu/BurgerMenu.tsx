@@ -1,24 +1,49 @@
 import { MouseEvent } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
-import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import {
+  IconButton,
+  Menu,
+  MenuItem,
+  PopoverOrigin,
+  Typography,
+} from '@mui/material';
 import { IPage } from 'apps/libs/types/src';
 
-interface Props {
+interface BurgerMenuProps {
   anchorElNav: null | HTMLElement;
   pages: IPage[];
   handleOpenNavMenu: (event: MouseEvent<HTMLElement>) => void;
   handleCloseNavMenu: (to: string) => void;
 }
 
-export const BurgerMenu: React.FC<Props> = ({
+const boxSX = { flexGrow: 1, display: { xs: 'flex', md: 'none' } };
+const menuSX = {
+  display: { xs: 'block', md: 'none' },
+};
+const anchorOrigin: PopoverOrigin = {
+  vertical: 'bottom',
+  horizontal: 'left',
+};
+const transformOrigin: PopoverOrigin = {
+  vertical: 'top',
+  horizontal: 'left',
+};
+
+export const BurgerMenu: React.FC<BurgerMenuProps> = ({
   anchorElNav,
   pages,
   handleOpenNavMenu,
   handleCloseNavMenu,
 }) => {
+  const menuItems = pages.map((page) => (
+    <MenuItem key={page.name} onClick={() => handleCloseNavMenu(page.link)}>
+      <Typography textAlign="center">{page.name}</Typography>
+    </MenuItem>
+  ));
+
   return (
-    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+    <Box sx={boxSX}>
       <IconButton
         size="large"
         aria-label="account of current user"
@@ -32,29 +57,14 @@ export const BurgerMenu: React.FC<Props> = ({
       <Menu
         id="menu-appbar"
         anchorEl={anchorElNav}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
+        anchorOrigin={anchorOrigin}
         keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
+        transformOrigin={transformOrigin}
         open={Boolean(anchorElNav)}
         onClose={handleCloseNavMenu}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-        }}
+        sx={menuSX}
       >
-        {pages.map((page) => (
-          <MenuItem
-            key={page.name}
-            onClick={() => handleCloseNavMenu(page.link)}
-          >
-            <Typography textAlign="center">{page.name}</Typography>
-          </MenuItem>
-        ))}
+        {menuItems}
       </Menu>
     </Box>
   );

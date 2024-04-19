@@ -1,12 +1,19 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { Button, IconButton, TextField } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-interface Props {
+import { useAddForm } from './hooks/useAddForm';
+
+export type MutateForm = (
+  e: FormEvent<HTMLFormElement>,
+  inputValue: string
+) => void;
+
+interface AddFormProps {
   title: string;
   formClassName: string;
   inputPlaceholder: string;
   addButtonClassName: string;
-  mutate: (e: FormEvent<HTMLFormElement>, inputValue: string) => void;
+  mutate: MutateForm;
 }
 
 const sx = {
@@ -15,33 +22,21 @@ const sx = {
   fontWeight: '600',
 };
 
-export const AddForm: React.FC<Props> = ({
+export const AddForm: React.FC<AddFormProps> = ({
   inputPlaceholder,
   addButtonClassName,
   formClassName,
   title,
   mutate,
 }) => {
-  const [editMode, setEditMode] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-
-  const turnEditModeOn = () => {
-    setEditMode(true);
-  };
-
-  const turnEditModeOff = () => {
-    setEditMode(false);
-  };
-
-  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    await mutate(e, inputValue);
-    setEditMode(false);
-    setInputValue('');
-  };
+  const {
+    editMode,
+    inputValue,
+    onSubmit,
+    onChange,
+    turnEditModeOff,
+    turnEditModeOn,
+  } = useAddForm(mutate);
 
   return editMode ? (
     <form className={formClassName} onSubmit={onSubmit}>

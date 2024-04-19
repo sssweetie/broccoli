@@ -3,21 +3,19 @@ import { DateCalendar } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
 import { FC, MouseEvent, useState } from 'react';
 
-interface Props {
+interface CalendarPickerProps {
   changeSubtaskDate: (date: Date) => void;
   date: Moment;
 }
 
-export const CalendarPicker: FC<Props> = ({ date, changeSubtaskDate }) => {
+const sx = { position: 'absolute', backgroundColor: '#FFFFFF' };
+const DATE_FORMAT = 'MMM DD';
+
+export const CalendarPicker: FC<CalendarPickerProps> = ({
+  date,
+  changeSubtaskDate,
+}) => {
   const [isOpen, setOpen] = useState(false);
-
-  //   const closeCalendar = () => {
-  //     setOpen(false);
-  //   };
-
-  //   const openCalendar = () => {
-  //     setOpen(true);
-  //   };
 
   const toggleCalendar = (e: MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
@@ -33,15 +31,9 @@ export const CalendarPicker: FC<Props> = ({ date, changeSubtaskDate }) => {
     <div className="calendar-picker">
       <div className="calendar-picker__icons">
         <CalendarMonthIcon onClick={toggleCalendar} />
-        <span>{date.format('MMM DD')}</span>
+        <span>{date.format(DATE_FORMAT)}</span>
       </div>
-      {isOpen && (
-        <DateCalendar
-          value={date}
-          onChange={onChange}
-          sx={{ position: 'absolute', backgroundColor: '#FFFFFF' }}
-        />
-      )}
+      {isOpen && <DateCalendar value={date} onChange={onChange} sx={sx} />}
     </div>
   );
 };

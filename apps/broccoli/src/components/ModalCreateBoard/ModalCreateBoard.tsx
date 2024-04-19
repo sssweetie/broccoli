@@ -34,20 +34,14 @@ export const ModalCreateBoard: React.FC<Props> = ({
   const [images, setImages] = useState<string[]>([]);
 
   const fetchData = useCallback(() => {
-    const max = 12;
-    const min = 1;
-    const arr = [];
-    while (arr.length < 6) {
-      const randomBackgroundIndex =
-        Math.floor(Math.random() * (max - min + 1)) + min;
-      if (arr.indexOf(randomBackgroundIndex) === -1) {
-        arr.push(randomBackgroundIndex);
-      }
+    const getRandomIndex = () => Math.floor(Math.random() * 12) + 1;
+    const indexes = new Set<number>();
+
+    while (indexes.size < 6) {
+      indexes.add(getRandomIndex());
     }
 
-    Promise.all(arr.map((index) => getRandomBackgroundURL(index))).then((res) =>
-      setImages(res)
-    );
+    Promise.all(Array.from(indexes, getRandomBackgroundURL)).then(setImages);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
