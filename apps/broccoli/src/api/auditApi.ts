@@ -2,7 +2,7 @@ import { IAddAudit, IAudit } from 'apps/libs/types/src/Audit';
 import { AxiosInstance } from 'axios';
 
 export interface IAuditAPI {
-  create: ({ taskId, audit }: IAddAudit) => Promise<void>;
+  create: (addAudit: IAddAudit) => Promise<void>;
   read: (taskId: string) => Promise<IAudit[]>;
 }
 

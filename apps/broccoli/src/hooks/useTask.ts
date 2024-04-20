@@ -3,6 +3,8 @@ import { callSuccessToast } from 'apps/broccoli/src/utils';
 import { callErrorToast } from 'apps/broccoli/src/utils';
 import { ITaskAPI } from '../api/taskApi';
 
+const ENTITY = 'Task';
+
 export const useTask = (taskApi: ITaskAPI) => {
   const queryClient = useQueryClient();
 
@@ -10,7 +12,7 @@ export const useTask = (taskApi: ITaskAPI) => {
     mutationFn: taskApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['board'] });
-      callSuccessToast('Task is created successfully!');
+      callSuccessToast(ENTITY, 'created');
     },
     onError: () => {
       callErrorToast('Oops! Something went wrong...');
@@ -24,7 +26,7 @@ export const useTask = (taskApi: ITaskAPI) => {
         queryClient.invalidateQueries({ queryKey: ['board'] }),
         queryClient.invalidateQueries({ queryKey: ['audit'] }),
       ]);
-      callSuccessToast('Task is updated successfully!');
+      callSuccessToast(ENTITY, 'updated');
     },
     onError: () => {
       callErrorToast('Oops! Something went wrong...');
@@ -34,7 +36,7 @@ export const useTask = (taskApi: ITaskAPI) => {
   const deleteTask = useMutation({
     mutationFn: taskApi.delete,
     onSuccess: () => {
-      callSuccessToast('Task is deleted successfully!');
+      callSuccessToast(ENTITY, 'deleted');
       queryClient.invalidateQueries({ queryKey: ['board'] });
     },
     onError: () => {

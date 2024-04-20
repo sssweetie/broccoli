@@ -1,0 +1,141 @@
+@use '../abstracts/' as *;
+
+.example::-webkit-scrollbar {
+  display: none;
+
+  &:hover {
+    display: initial;
+  }
+}
+
+.day {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid $color-gray;
+  border-right: 1px solid $color-gray;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  padding: 6px 8px;
+  background-color: $color-gray;
+}
+
+.day__number {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  text-align: start;
+  font-size: 18px;
+  opacity: 0.8;
+  font-weight: 700;
+}
+
+.day--header {
+  margin-top: 8px;
+}
+
+.day--edge {
+  margin-left: 8px;
+}
+
+.day--today {
+  font-weight: 700;
+  color: $color-light-blue;
+  background-color: rgba($color-light-blue, 0.1);
+}
+
+.day__cards-count {
+  font-size: 14px;
+  color: $color-text-secondary;
+}
+
+.calendar-picker {
+  position: relative;
+}
+
+.calendar-picker__icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.week {
+  display: flex;
+  height: calc(100% / 6);
+}
+
+.calendar-subtask {
+  width: 100%;
+  height: 60px;
+  padding: 12px;
+  color: black;
+  background-color: white;
+  border-radius: 8px;
+  text-align: start;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  &:not(:last-of-type) {
+    margin-bottom: 12px;
+  }
+}
+
+.calendar-navigation {
+  background-color: rgba(226, 226, 226, 0.7);
+  height: 64px;
+  border: 0;
+  display: flex;
+  padding-left: 32px;
+  align-items: center;
+}
+
+.calendar-navigation__title {
+  margin-right: 16px;
+}
+
+.calendar-navigation__menu {
+  display: flex;
+  gap: 8px;
+
+  button {
+    height: 40px;
+    font-size: 20px;
+    padding: 0 12px;
+    border: 0;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:focus {
+      border: 1px solid $color-main;
+    }
+  }
+}
+
+.day__subtasks {
+  height: calc(100% - 36px);
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &:hover {
+    -ms-overflow-style: initial;
+    scrollbar-width: initial;
+  }
+}
+
+.day__subtasks::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.day__subtasks::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+.day__subtasks::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #a1a1a1;
+}

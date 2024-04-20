@@ -1,6 +1,6 @@
 import { IAudit } from 'apps/libs/types/src';
 import { UPDATE } from '../constants/TaskManager/auditLog';
-import { AuditLog } from '../features/AuditLog';
+import { AuditLog } from '../features/AuditLogs/components/AuditLog';
 import { months } from '../constants/TaskManager/months';
 
 const getAuditLogText = ({ params, userName }: IAudit) => {
@@ -18,23 +18,24 @@ const getAuditLogText = ({ params, userName }: IAudit) => {
 };
 
 export const renderAuditLogs = (data: IAudit[] | undefined) => {
-  if (data) {
-    return data.map((auditLog) => {
-      const logDate = new Date(auditLog.date);
-      const auditLogText = getAuditLogText(auditLog);
-      const date = `${logDate.getDate()} ${months[logDate.getMonth()]}, ${
-        logDate.toTimeString().split(' ')[0]
-      }`;
-
-      return (
-        <AuditLog
-          date={date}
-          auditLogText={auditLogText}
-          userImg={auditLog.userImg}
-          key={auditLog.date.toString()}
-        />
-      );
-    });
+  if (!data) {
+    return null;
   }
-  return null;
+
+  return data.map((auditLog) => {
+    const logDate = new Date(auditLog.date);
+    const auditLogText = getAuditLogText(auditLog);
+    const date = `${logDate.getDate()} ${months[logDate.getMonth()]}, ${
+      logDate.toTimeString().split(' ')[0]
+    }`;
+
+    return (
+      <AuditLog
+        date={date}
+        auditLogText={auditLogText}
+        userImg={auditLog.userImg}
+        key={auditLog.date.toString()}
+      />
+    );
+  });
 };

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LinkItemIcon } from '../ApplicationLayout/ApplicationLayout';
 
-interface Props {
+interface LinkItemProps {
   isOpen: boolean;
   title: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Icon: any;
+  Icon: LinkItemIcon;
 }
 
-export const LinkItem: React.FC<Props> = ({ isOpen, title, Icon }) => {
+export const LinkItem: React.FC<LinkItemProps> = ({ isOpen, title, Icon }) => {
   const navigate = useNavigate();
 
   const onClick = () => {

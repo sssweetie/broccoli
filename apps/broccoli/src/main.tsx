@@ -14,6 +14,9 @@ import { Hero } from './components/Hero';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Boards } from './features/Boards';
+import { Calendar } from './features/Calendar/Calendar';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -46,6 +49,10 @@ const router = createBrowserRouter([
             element: <Boards />,
           },
           {
+            path: '/application/calendar',
+            element: <Calendar />,
+          },
+          {
             path: '/application/dragdrop/:id',
             element: <ContentLayout />,
           },
@@ -62,8 +69,10 @@ const router = createBrowserRouter([
 root.render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools />
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools />
+      </LocalizationProvider>
     </QueryClientProvider>
   </StrictMode>
 );

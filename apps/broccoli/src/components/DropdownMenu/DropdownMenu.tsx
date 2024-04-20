@@ -1,16 +1,15 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { IconButton } from '@mui/material';
 
-interface Props {
-  items?: JSX.Element[];
+interface DropdownMenuProps {
+  items: JSX.Element[];
 }
 
-export const DropdownMenu: React.FC<Props> = ({ items }) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+export const DropdownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,7 +42,7 @@ export const DropdownMenu: React.FC<Props> = ({ items }) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {items ? items : null}
+        {items}
         <MenuItem onClick={handleClose}>Close</MenuItem>
       </Menu>
     </>

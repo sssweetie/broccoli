@@ -3,8 +3,14 @@ import { IBoardsAPI } from '../api/boardsApi';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { callSuccessToast } from 'apps/broccoli/src/utils';
 import { callErrorToast } from 'apps/broccoli/src/utils';
+import { useNavigate } from 'react-router-dom';
+import { toastActions } from 'apps/broccoli/src/constants/toastActions';
+
+const TOAST_ERROR_MESSAGE = 'Oops! Something went wrong...';
+const ENTITY = 'Board';
 
 export const useBoards = (boardsApi: IBoardsAPI) => {
+  const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [selectedImage, setSelectedImage] = useState<HTMLImageElement | null>(
@@ -22,10 +28,10 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['boards'] });
       closeModal();
-      callSuccessToast('Board is created successful;y!');
+      callSuccessToast(ENTITY, toastActions.created);
     },
     onError: () => {
-      callErrorToast('Oops! Something went wrong...');
+      callErrorToast(TOAST_ERROR_MESSAGE);
     },
   });
 
@@ -33,10 +39,10 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     mutationFn: boardsApi.update,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['board'] });
-      callSuccessToast('Board is updated successfully!');
+      callSuccessToast(ENTITY, toastActions.updated);
     },
     onError: () => {
-      callErrorToast('Oops! Something went wrong...');
+      callErrorToast(TOAST_ERROR_MESSAGE);
     },
   });
 
@@ -44,10 +50,10 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     mutationFn: boardsApi.delete,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['boards'] });
-      callSuccessToast('Board is deleted successfully!');
+      callSuccessToast(ENTITY, toastActions.deleted);
     },
     onError: () => {
-      callErrorToast('Oops! Something went wrong...');
+      callErrorToast(TOAST_ERROR_MESSAGE);
     },
   });
 
@@ -59,7 +65,7 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     setOpen(true);
   };
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const createBoardOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await createBoard.mutate({
       title: value,
@@ -67,8 +73,20 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     });
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
+  };
+
+  const redirect = (id: string) => {
+    navigate(`/application/dragdrop/${id}`);
+  };
+
+  const deleteBoardOnClick = async (
+    e: React.MouseEvent<HTMLLIElement>,
+    id: string
+  ) => {
+    e.stopPropagation();
+    await deleteBoard.mutate(id);
   };
 
   return {
@@ -81,8 +99,10 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     selectedImage,
     setSelectedImage,
     closeModal,
-    openModal,
-    onChange,
-    onSubmit,
+    openModalOnClick: openModal,
+    changeInputValue,
+    createBoardOnSubmit,
+    redirect,
+    deleteBoardOnClick,
   };
 };

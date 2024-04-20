@@ -6,12 +6,13 @@ import React, {
   SetStateAction,
   useEffect,
   useState,
+  useCallback,
 } from 'react';
 import { getRandomBackgroundURL } from '../../features/Firebase';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { style } from '../../constants/TaskManager/styles/boardModal';
 
-interface Props {
+interface ModalCreateBoardProps {
   isOpen: boolean;
   value: string;
   selectedImage: HTMLElement | null;
@@ -21,10 +22,7 @@ interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const max = 12;
-const min = 1;
-
-export const ModalCreateBoard: React.FC<Props> = ({
+export const ModalCreateBoard: React.FC<ModalCreateBoardProps> = ({
   isOpen,
   value,
   selectedImage,
@@ -35,21 +33,18 @@ export const ModalCreateBoard: React.FC<Props> = ({
 }) => {
   const [images, setImages] = useState<string[]>([]);
 
-  const fetchData = () => {
-    const arr = [];
-    while (arr.length < 6) {
-      const randomBackgroundIndex =
-        Math.floor(Math.random() * (max - min + 1)) + min;
-      if (arr.indexOf(randomBackgroundIndex) === -1) {
-        arr.push(randomBackgroundIndex);
-      }
+  const fetchData = useCallback(() => {
+    const getRandomIndex = () => Math.floor(Math.random() * 12) + 1;
+    const indexes = new Set<number>();
+
+    while (indexes.size < 6) {
+      indexes.add(getRandomIndex());
     }
 
-    Promise.all(arr.map((index) => getRandomBackgroundURL(index))).then((res) =>
-      setImages(res)
-    );
-  };
+    Promise.all(Array.from(indexes, getRandomBackgroundURL)).then(setImages);
+  }, []);
 
+  //TODO: Нельзя мутировать state :)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onClick = (e: any) => {
     if (e && e.target) {
@@ -66,7 +61,7 @@ export const ModalCreateBoard: React.FC<Props> = ({
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <Modal
@@ -82,19 +77,17 @@ export const ModalCreateBoard: React.FC<Props> = ({
             <RefreshIcon />
           </IconButton>
         </div>
-        {images ? (
-          <section className="pick-up-image">
-            {images.map((image) => (
-              <img
-                key={image}
-                alt="background"
-                src={image}
-                className="pick-up-image__background"
-                onClick={onClick}
-              />
-            ))}
-          </section>
-        ) : null}
+        <section className="pick-up-image">
+          {images.map((image) => (
+            <img
+              key={image}
+              alt="background"
+              src={image}
+              className="pick-up-image__background"
+              onClick={onClick}
+            />
+          ))}
+        </section>
         <form onSubmit={onSubmit} className="pick-up-image-form">
           <TextField
             id="outlined-basic"

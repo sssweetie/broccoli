@@ -3,17 +3,19 @@ import { ISubTask } from 'apps/libs/types/src';
 import { ChangeEvent, FocusEvent, MouseEvent, useState } from 'react';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-interface IProps {
+import { CalendarPicker } from '../../components/CalendarPicker';
+import moment from 'moment';
+interface SubTaskProps {
   subTask: ISubTask;
-  updateSubTask: (subTask: ISubTask) => void;
-  handleDeleteSubTask: (id: string) => void;
+  updateSubTask: (subtask: ISubTask) => void;
+  deleteSubTask: (id: string) => void;
   countProgress: () => void;
 }
 
-export const SubTask: React.FC<IProps> = ({
+export const SubTask: React.FC<SubTaskProps> = ({
   subTask,
   updateSubTask,
-  handleDeleteSubTask,
+  deleteSubTask,
   countProgress,
 }) => {
   const [isEdit, setEdit] = useState(false);
@@ -31,7 +33,15 @@ export const SubTask: React.FC<IProps> = ({
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    handleDeleteSubTask(subTask._id);
+    deleteSubTask(subTask._id);
+  };
+
+  const changeSubtaskDate = (date: Date) => {
+    updateSubTask({ ...subTask, date });
+  };
+
+  const editSubTask = () => {
+    setEdit(true);
   };
 
   countProgress();
@@ -52,15 +62,20 @@ export const SubTask: React.FC<IProps> = ({
         />
       ) : (
         <h5
-          onClick={() => setEdit(true)}
           className={`subtask__title ${
             subTask.isCompleted ? 'subtask__title--completed' : ''
           }`}
         >
-          <span>{subTask.title}</span>
-          <IconButton onClick={onClick}>
-            <CloseIcon />
-          </IconButton>
+          <span onClick={editSubTask}>{subTask.title}</span>
+          <div className="subtask__icons">
+            <CalendarPicker
+              date={moment(subTask.date)}
+              changeSubtaskDate={changeSubtaskDate}
+            />
+            <IconButton onClick={onClick}>
+              <CloseIcon />
+            </IconButton>
+          </div>
         </h5>
       )}
     </div>

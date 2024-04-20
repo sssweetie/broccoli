@@ -10,6 +10,9 @@ const subTaskSchema = new Schema<ISubTask>({
     type: Boolean,
     required: true,
   },
+  date: {
+    type: Date
+  },
 });
 
 export const SubTaskModel = model<ISubTask>('subTasks', subTaskSchema);
