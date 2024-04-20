@@ -8,21 +8,15 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { MouseEvent } from 'react';
+import { MenuProps } from 'apps/libs/types/src/Global';
 import { useNavigate } from 'react-router-dom';
-
-interface IProps {
-  anchorElUser: HTMLElement | null;
-  handleOpenUserMenu: (event: MouseEvent<HTMLElement>) => void;
-  handleCloseUserMenu: () => void;
-}
 
 const setting = { name: 'Logout', link: '/sign-in' };
 
-export const Settings: React.FC<IProps> = ({
-  anchorElUser,
-  handleOpenUserMenu,
-  handleCloseUserMenu,
+export const Settings: React.FC<Omit<MenuProps, 'pages'>> = ({
+  anchorEl,
+  openMenu,
+  closeMenu,
 }) => {
   const { signOut } = useClerk();
   const navigate = useNavigate();
@@ -32,14 +26,14 @@ export const Settings: React.FC<IProps> = ({
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+        <IconButton onClick={openMenu} sx={{ p: 0 }}>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
         </IconButton>
       </Tooltip>
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
-        anchorEl={anchorElUser}
+        anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'right',
@@ -49,8 +43,8 @@ export const Settings: React.FC<IProps> = ({
           vertical: 'top',
           horizontal: 'right',
         }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
+        open={Boolean(anchorEl)}
+        onClose={closeMenu}
       >
         <MenuItem key={setting.name} onClick={onClick}>
           <Typography textAlign="center">{setting.name}</Typography>

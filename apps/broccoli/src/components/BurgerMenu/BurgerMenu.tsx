@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import {
@@ -8,14 +7,7 @@ import {
   PopoverOrigin,
   Typography,
 } from '@mui/material';
-import { IPage } from 'apps/libs/types/src';
-
-interface BurgerMenuProps {
-  anchorElNav: null | HTMLElement;
-  pages: IPage[];
-  handleOpenNavMenu: (event: MouseEvent<HTMLElement>) => void;
-  handleCloseNavMenu: (to: string) => void;
-}
+import { MenuProps } from 'apps/libs/types/src/Global';
 
 const boxSX = { flexGrow: 1, display: { xs: 'flex', md: 'none' } };
 const menuSX = {
@@ -30,14 +22,14 @@ const transformOrigin: PopoverOrigin = {
   horizontal: 'left',
 };
 
-export const BurgerMenu: React.FC<BurgerMenuProps> = ({
-  anchorElNav,
+export const BurgerMenu: React.FC<MenuProps<string>> = ({
+  anchorEl,
   pages,
-  handleOpenNavMenu,
-  handleCloseNavMenu,
+  openMenu,
+  closeMenu,
 }) => {
-  const menuItems = pages.map((page) => (
-    <MenuItem key={page.name} onClick={() => handleCloseNavMenu(page.link)}>
+  const menuItems = pages?.map((page) => (
+    <MenuItem key={page.name} onClick={() => closeMenu(page.link)}>
       <Typography textAlign="center">{page.name}</Typography>
     </MenuItem>
   ));
@@ -49,19 +41,19 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({
         aria-label="account of current user"
         aria-controls="menu-appbar"
         aria-haspopup="true"
-        onClick={handleOpenNavMenu}
+        onClick={openMenu}
         color="inherit"
       >
         <MenuIcon />
       </IconButton>
       <Menu
         id="menu-appbar"
-        anchorEl={anchorElNav}
+        anchorEl={anchorEl}
         anchorOrigin={anchorOrigin}
         keepMounted
         transformOrigin={transformOrigin}
-        open={Boolean(anchorElNav)}
-        onClose={handleCloseNavMenu}
+        open={Boolean(anchorEl)}
+        onClose={closeMenu}
         sx={menuSX}
       >
         {menuItems}

@@ -26,20 +26,20 @@ export const Navigation: React.FC = () => {
     null
   );
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const openNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const openUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (to: string) => {
+  const closeNavMenu = (to: string) => {
     setAnchorElNav(null);
     navigate(to);
   };
 
-  const handleCloseUserMenu = () => {
+  const closeUserMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -55,17 +55,17 @@ export const Navigation: React.FC = () => {
         <Toolbar disableGutters>
           <Logo sx={SX.Common} />
           <BurgerMenu
-            handleOpenNavMenu={handleOpenNavMenu}
-            handleCloseNavMenu={handleCloseNavMenu}
-            anchorElNav={anchorElNav}
+            openMenu={openNavMenu}
+            closeMenu={closeNavMenu}
+            anchorEl={anchorElNav}
             pages={pages}
           />
           <Logo sx={SX.Small} />
-          <Links handleCloseNavMenu={handleCloseNavMenu} pages={pages} />
+          <Links closeMenu={closeNavMenu} pages={pages} />
           <Settings
-            handleOpenUserMenu={handleOpenUserMenu}
-            handleCloseUserMenu={handleCloseUserMenu}
-            anchorElUser={anchorElUser}
+            openMenu={openUserMenu}
+            closeMenu={closeUserMenu}
+            anchorEl={anchorElUser}
           />
         </Toolbar>
       </Container>

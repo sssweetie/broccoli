@@ -1,21 +1,17 @@
 import { Box, Button } from '@mui/material';
-import { IPage } from 'apps/libs/types/src';
-
-interface LinksProps {
-  pages: IPage[];
-  handleCloseNavMenu: (to: string) => void;
-}
+import { MenuProps } from 'apps/libs/types/src/Global';
 
 const boxSX = { flexGrow: 1, display: { xs: 'none', md: 'flex' } };
 const buttonSX = { my: 2, color: 'white', display: 'block' };
 
-export const Links: React.FC<LinksProps> = ({ pages, handleCloseNavMenu }) => {
-  const buttons = pages.map((page) => (
-    <Button
-      key={page.name}
-      onClick={() => handleCloseNavMenu(page.link)}
-      sx={buttonSX}
-    >
+type LinksProps = 'pages' | 'closeMenu';
+
+export const Links: React.FC<Pick<MenuProps<string>, LinksProps>> = ({
+  pages,
+  closeMenu,
+}) => {
+  const buttons = pages?.map((page) => (
+    <Button key={page.name} onClick={() => closeMenu(page.link)} sx={buttonSX}>
       {page.name}
     </Button>
   ));
