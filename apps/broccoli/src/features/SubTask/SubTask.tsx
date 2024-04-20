@@ -5,17 +5,17 @@ import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { CalendarPicker } from '../../components/CalendarPicker';
 import moment from 'moment';
-interface IProps {
+interface SubTaskProps {
   subTask: ISubTask;
-  updateSubTask: (subTask: ISubTask) => void;
-  handleDeleteSubTask: (id: string) => void;
+  updateSubTask: (subtask: ISubTask) => void;
+  deleteSubTask: (id: string) => void;
   countProgress: () => void;
 }
 
-export const SubTask: React.FC<IProps> = ({
+export const SubTask: React.FC<SubTaskProps> = ({
   subTask,
   updateSubTask,
-  handleDeleteSubTask,
+  deleteSubTask,
   countProgress,
 }) => {
   const [isEdit, setEdit] = useState(false);
@@ -33,7 +33,7 @@ export const SubTask: React.FC<IProps> = ({
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    handleDeleteSubTask(subTask._id);
+    deleteSubTask(subTask._id);
   };
 
   const changeSubtaskDate = (date: Date) => {

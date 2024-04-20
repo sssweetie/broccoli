@@ -5,7 +5,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { IconButton } from '@mui/material';
 
 interface DropdownMenuProps {
-  items?: JSX.Element[];
+  items: JSX.Element[];
 }
 
 export const DropdownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
@@ -42,7 +42,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {items ? items : null}
+        {items}
         <MenuItem onClick={handleClose}>Close</MenuItem>
       </Menu>
     </>

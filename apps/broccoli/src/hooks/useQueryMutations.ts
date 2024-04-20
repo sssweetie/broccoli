@@ -26,14 +26,14 @@ export const useQueryMutations = (dragDropApi: IDragDropAPI, id: string) => {
 
   const updateTable = useMutation({
     mutationFn: dragDropApi.update,
-    onSuccess: () => callSuccessToast('Order is updated!'),
+    onSuccess: () => callSuccessToast('Order', 'updated'),
     onError,
   });
 
   const createTable = useMutation({
     mutationFn: dragDropApi.create,
     onSuccess: () => {
-      callSuccessToast('Table is added!');
+      callSuccessToast('Table', 'created');
       queryClient.invalidateQueries({ queryKey: ['board'] });
     },
     onError,
@@ -42,7 +42,7 @@ export const useQueryMutations = (dragDropApi: IDragDropAPI, id: string) => {
   const deleteTable = useMutation({
     mutationFn: dragDropApi.delete,
     onSuccess: () => {
-      callSuccessToast('Table is deleted!');
+      callSuccessToast('Table', 'deleted');
       queryClient.invalidateQueries({ queryKey: ['board'] });
     },
     onError,

@@ -2,10 +2,8 @@ import BackupTableIcon from '@mui/icons-material/BackupTable';
 import { useBoards } from './hooks/useBoards';
 import { httpClient } from '../../services/httpClient';
 import { boardsApi } from './api/boardsApi';
-import { useNavigate } from 'react-router-dom';
 import { ModalCreateBoard } from '../../components/ModalCreateBoard';
-import { DropdownMenu } from '../../components/DropdownMenu';
-import { MenuItem } from '@mui/material';
+import { Board } from './components/Board';
 
 export const Boards: React.FC = () => {
   const {
@@ -13,31 +11,14 @@ export const Boards: React.FC = () => {
     isOpen,
     value,
     selectedImage,
-    deleteBoard,
+    deleteBoardOnClick,
     setSelectedImage,
     closeModal,
-    openModal,
-    onChange,
-    onSubmit,
+    openModalOnClick,
+    changeInputValue,
+    createBoardOnSubmit,
+    redirect,
   } = useBoards(boardsApi(httpClient));
-
-  const navigate = useNavigate();
-
-  const onClick = async () => {
-    openModal();
-  };
-
-  const handleDeleteBoard = async (
-    e: React.MouseEvent<HTMLLIElement>,
-    id: string
-  ) => {
-    e.stopPropagation();
-    await deleteBoard.mutate(id);
-  };
-
-  const redirect = (id: string) => {
-    navigate(`/application/dragdrop/${id}`);
-  };
 
   return (
     <>
@@ -48,36 +29,14 @@ export const Boards: React.FC = () => {
       <div className="board-wrapper">
         {boards
           ? boards.map((board) => (
-              <article
-                onClick={() => redirect(board._id)}
-                className="board"
-                key={board._id}
-              >
-                {board.backgroundImage ? (
-                  <img
-                    src={board.backgroundImage}
-                    className="board-background"
-                    alt="board background"
-                    key={board._id}
-                  />
-                ) : null}
-                <section className="board__title">
-                  <h4>{board.title}</h4>
-                  <DropdownMenu
-                    items={[
-                      <MenuItem
-                        onClick={(e) => handleDeleteBoard(e, board._id)}
-                        key="delete-board"
-                      >
-                        Delete board
-                      </MenuItem>,
-                    ]}
-                  />
-                </section>
-              </article>
+              <Board
+                board={board}
+                redirect={redirect}
+                handleDeleteBoard={deleteBoardOnClick}
+              />
             ))
           : null}
-        <button onClick={onClick} className="board">
+        <button onClick={openModalOnClick} className="board">
           Create a new board
         </button>
         <ModalCreateBoard
@@ -86,8 +45,8 @@ export const Boards: React.FC = () => {
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
           closeModal={closeModal}
-          onSubmit={onSubmit}
-          onChange={onChange}
+          onSubmit={createBoardOnSubmit}
+          onChange={changeInputValue}
         />
       </div>
     </>

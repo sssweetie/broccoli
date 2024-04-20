@@ -74,7 +74,7 @@ export const ContentLayout = () => {
                 />
                 {provided.placeholder}
                 <AddForm
-                  mutate={mutateTable}
+                  mutateEntity={mutateTable}
                   title="Create a table"
                   formClassName="edit-table edit-table--independent"
                   addButtonClassName="add-table"

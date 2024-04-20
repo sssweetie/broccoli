@@ -77,7 +77,7 @@ export const Table: React.FC<IProps> = ({
         )}
       </Droppable>
       <AddForm
-        mutate={mutateTask}
+        mutateEntity={mutateTask}
         title="Create a task"
         formClassName="edit-table table__add-form"
         addButtonClassName="add-task"

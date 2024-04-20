@@ -1,15 +1,16 @@
 import { ISubTask } from 'apps/libs/types/src';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
-type Children = string | JSX.Element | JSX.Element[];
-
-interface Props {
-  children: Children;
+interface DayProps {
   daySubtasks: ISubTask[] | [];
   className?: string;
 }
 
-export const Day: React.FC<Props> = ({ children, className, daySubtasks }) => {
+export const Day: React.FC<PropsWithChildren<DayProps>> = ({
+  children,
+  className,
+  daySubtasks,
+}) => {
   const dayClassName = className ?? 'day';
   const subtasks = daySubtasks.map((subtask) => (
     <div className="calendar-subtask">{subtask.title}</div>

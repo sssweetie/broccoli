@@ -13,7 +13,7 @@ interface AddFormProps {
   formClassName: string;
   inputPlaceholder: string;
   addButtonClassName: string;
-  mutate: MutateForm;
+  mutateEntity: MutateForm;
 }
 
 const sx = {
@@ -26,8 +26,8 @@ export const AddForm: React.FC<AddFormProps> = ({
   inputPlaceholder,
   addButtonClassName,
   formClassName,
+  mutateEntity,
   title,
-  mutate,
 }) => {
   const {
     editMode,
@@ -36,7 +36,7 @@ export const AddForm: React.FC<AddFormProps> = ({
     onChange,
     turnEditModeOff,
     turnEditModeOn,
-  } = useAddForm(mutate);
+  } = useAddForm(mutateEntity);
 
   return editMode ? (
     <form className={formClassName} onSubmit={onSubmit}>

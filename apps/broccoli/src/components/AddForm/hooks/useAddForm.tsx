@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { MutateForm } from '../AddForm';
 
-export const useAddForm = (mutate: MutateForm) => {
+export const useAddForm = (mutateEntity: MutateForm) => {
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -18,7 +18,7 @@ export const useAddForm = (mutate: MutateForm) => {
   };
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    await mutate(e, inputValue);
+    await mutateEntity(e, inputValue);
     setEditMode(false);
     setInputValue('');
   };
