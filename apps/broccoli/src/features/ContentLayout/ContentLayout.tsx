@@ -3,49 +3,41 @@ import { Tables } from '../Tables';
 import { useDragDrop } from '../../hooks/useDragDrop';
 import { AddForm } from '../../components/AddForm/AddForm';
 import { ChangeEvent, FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
-import { useBoards } from '../Boards/hooks/useBoards';
-import { boardsApi } from '../Boards/api/boardsApi';
-import { httpClient } from '../../services/httpClient';
+import { useModal } from '../../hooks/useModal';
+import { useBoardsMutations } from '../../hooks/useBoardsMutations';
 
 export const ContentLayout = () => {
-  const { id } = useParams();
-
   const {
-    setEdit,
     onDragEnd,
-    isEdit,
     createTable,
-    board,
+    tables,
     isDragDisabled,
     deleteTable,
     boardInfo,
-  } = useDragDrop(id!);
+    id,
+  } = useDragDrop();
 
-  const { updateBoard } = useBoards(boardsApi(httpClient));
+  const { isOpen, openModal, closeModal } = useModal();
+  const { updateBoardMutation } = useBoardsMutations();
 
   const mutateTable = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
-    const table = { order: board?.length, tasks: [], title };
-    await createTable.mutate({ table, boardId: id! });
+    const table = { order: tables?.length, tasks: [], title };
+    await createTable.mutate({ table, boardId: id });
   };
 
   const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-    updateBoard.mutate({ _id: id, title: e.target.value });
-    setEdit(false);
+    updateBoardMutation.mutate({ _id: id, title: e.target.value });
+    closeModal();
   };
 
-  const onClick = () => {
-    setEdit(true);
-  };
-
-  return board ? (
+  return tables ? (
     <>
       <section className="board-title">
-        {!isEdit ? (
-          <h4 onClick={onClick}>{boardInfo.title}</h4>
+        {!isOpen ? (
+          <h4 onClick={openModal}>{boardInfo.title}</h4>
         ) : (
           <input
             className="board-title--input"
@@ -68,7 +60,7 @@ export const ContentLayout = () => {
               ) : null}
               <div className="table-wrapper">
                 <Tables
-                  board={board}
+                  board={tables}
                   isDragDisabled={isDragDisabled}
                   deleteTable={deleteTable.mutate}
                 />

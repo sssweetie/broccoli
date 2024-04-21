@@ -1,5 +1,5 @@
+import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { IBoard } from 'apps/libs/types/src';
-import { AxiosInstance } from 'axios';
 
 interface CreateBoard {
   title: string;
@@ -13,20 +13,18 @@ export interface IBoardsAPI {
   delete: (id: string) => Promise<void>;
 }
 
-export const boardsApi = (httpClient: AxiosInstance): IBoardsAPI => {
-  return {
-    create: async (createBoard) => {
-      await httpClient.post('/boards/create', createBoard);
-    },
-    read: async () => {
-      const boards = await httpClient.get('/boards/read');
-      return boards.data;
-    },
-    update: async (board) => {
-      await httpClient.put('/boards/update', board);
-    },
-    delete: async (id) => {
-      await httpClient.delete(`/boards/delete/${id}`);
-    },
-  };
+export const boardsApi: IBoardsAPI = {
+  create: async (createBoard) => {
+    await httpClient.post('/boards/create', createBoard);
+  },
+  read: async () => {
+    const boards = await httpClient.get('/boards/read');
+    return boards.data;
+  },
+  update: async (board) => {
+    await httpClient.put('/boards/update', board);
+  },
+  delete: async (id) => {
+    await httpClient.delete(`/boards/delete/${id}`);
+  },
 };

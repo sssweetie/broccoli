@@ -1,19 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { DragUpdate } from '@hello-pangea/dnd';
 import { findTable, isTableExist, reorderTable } from 'apps/broccoli/src/utils';
-import { useQueryMutations } from './useQueryMutations';
+import { useTableMutations } from './useTableMutations';
 import { dragDropApi } from '../api/dragDropApi';
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
-import { useState } from 'react';
 
-export const useDragDrop = (id: string) => {
-  const { state, boardInfo, createTable, deleteTable, updateTable, setState } =
-    useQueryMutations(dragDropApi(httpClient), id);
-
-  const [isEdit, setEdit] = useState(false);
+export const useDragDrop = () => {
+  const { tables, boardInfo, id, createTable, deleteTable, updateTable } =
+    useTableMutations(dragDropApi(httpClient));
 
   const onDragEnd = async ({ type, source, destination }: DragUpdate) => {
-    const boardState = state ? [...state] : [];
     const updateInformation = {
       subType: 0,
       type: type.toLowerCase(),
@@ -24,25 +20,23 @@ export const useDragDrop = (id: string) => {
     const isSameTable = source.droppableId === destination?.droppableId;
 
     if (isDragTable && isDestinationExist && !isSamePosition) {
-      const [sourceTable] = boardState.splice(source.index, 1);
+      const [sourceTable] = tables.splice(source.index, 1);
 
-      boardState.splice(destination!.index, 0, sourceTable);
+      tables.splice(destination!.index, 0, sourceTable);
 
-      const newBoardState = boardState.map((table, index) => ({
+      const newtables = tables.map((table, index) => ({
         ...table,
         order: index,
       }));
 
-      setState(newBoardState);
-
       updateTable.mutateAsync({
         updateInformation,
-        boardToUpdate: newBoardState,
+        boardToUpdate: newtables,
       });
     }
 
     if (!isDragTable && isSameTable) {
-      const sourceTable = findTable(boardState, source.droppableId);
+      const sourceTable = findTable(tables, source.droppableId);
 
       if (sourceTable && sourceTable.tasks) {
         const sourceTask = sourceTable.tasks[source.index];
@@ -50,15 +44,6 @@ export const useDragDrop = (id: string) => {
         sourceTable.insertTask(destination!.index, sourceTask);
         reorderTable(sourceTable);
       }
-
-      setState((prevState) =>
-        prevState?.map((table) => {
-          if (table._id === sourceTable?._id) {
-            return { ...table, tasks: sourceTable.tasks };
-          }
-          return table;
-        })
-      );
 
       updateTable.mutate({
         updateInformation,
@@ -69,8 +54,8 @@ export const useDragDrop = (id: string) => {
     if (!isDragTable && isDestinationExist && !isSameTable) {
       updateInformation.subType = 1;
 
-      const sourceTable = findTable(boardState, source.droppableId);
-      const destinationTable = findTable(boardState, destination!.droppableId);
+      const sourceTable = findTable(tables, source.droppableId);
+      const destinationTable = findTable(tables, destination!.droppableId);
 
       if (isTableExist(sourceTable) && isTableExist(destinationTable)) {
         const sourceTask = sourceTable!.tasks[source.index];
@@ -80,20 +65,6 @@ export const useDragDrop = (id: string) => {
         reorderTable(sourceTable!);
         reorderTable(destinationTable!);
       }
-
-      setState((prevState) =>
-        prevState?.map((table) => {
-          if (table._id === sourceTable?._id) {
-            return { ...table, tasks: sourceTable.tasks };
-          }
-
-          if (table._id === destinationTable?._id) {
-            return { ...table, tasks: destinationTable.tasks };
-          }
-
-          return table;
-        })
-      );
 
       updateTable.mutate({
         updateInformation,
@@ -107,12 +78,11 @@ export const useDragDrop = (id: string) => {
 
   return {
     onDragEnd,
-    setEdit,
-    board: state,
+    tables,
     createTable,
     deleteTable,
     isDragDisabled: updateTable.isPending,
     boardInfo,
-    isEdit,
+    id,
   };
 };

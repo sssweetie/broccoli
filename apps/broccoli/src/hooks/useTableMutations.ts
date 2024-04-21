@@ -1,16 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IDragDropAPI } from '../api/dragDropApi';
-import { ITable } from 'apps/libs/types/src';
 import { toastConfig } from 'apps/broccoli/src/services/toastConfig';
 import { toast } from 'react-toastify';
 import { callSuccessToast } from 'apps/broccoli/src/utils';
-export const useQueryMutations = (dragDropApi: IDragDropAPI, id: string) => {
+import { useParams } from 'react-router-dom';
+export const useTableMutations = (dragDropApi: IDragDropAPI) => {
+  const { id } = useParams();
   const { data } = useQuery({
     queryKey: ['board'],
-    queryFn: () => dragDropApi.read(id),
+    queryFn: () => dragDropApi.read(id!),
   });
-  const [state, setState] = useState<ITable[] | undefined>(data?.tables);
   const queryClient = useQueryClient();
   const boardInfo = {
     title: data?.title,
@@ -18,7 +18,6 @@ export const useQueryMutations = (dragDropApi: IDragDropAPI, id: string) => {
   };
 
   const onError = () => {
-    setState((prevState) => prevState);
     toast.error('Oops! Something went wrong...', {
       ...toastConfig,
     });
@@ -57,16 +56,14 @@ export const useQueryMutations = (dragDropApi: IDragDropAPI, id: string) => {
         this.tasks.splice(removeIndex, 1);
       };
     });
-
-    setState(data?.tables);
   }, [data]);
 
   return {
-    setState,
-    state,
+    tables: data?.tables ?? [],
     boardInfo,
     updateTable,
     createTable,
     deleteTable,
+    id,
   };
 };
