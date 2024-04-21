@@ -2,7 +2,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { MenuProps } from 'apps/libs/types/src/Global';
-import { BURGER_MENU } from '../../constants/BurgerMenu';
+import * as BURGER_MENU from './constants';
 
 export const BurgerMenu: React.FC<MenuProps<string>> = ({
   anchorEl,

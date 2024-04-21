@@ -1,23 +1,37 @@
 import { Audit } from 'apps/libs/types/src';
-import { UPDATE } from '../constants/AuditLog';
 import { AuditLog } from '../features/AuditLogs/components/AuditLog';
-import { months } from '../constants/months';
+import { DESCRIPTION, TITLE } from '../features/AuditLogs/constants';
+
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 
 const getAuditLogText = ({ params, userName }: Audit) => {
   let auditLogText = '';
 
-  if (params.type === UPDATE.TITLE) {
+  if (params.type === TITLE) {
     auditLogText = `${userName} changes title on "${params.newName}"`;
   }
 
-  if (params.type === UPDATE.DESCRIPTION) {
+  if (params.type === DESCRIPTION) {
     auditLogText = `${userName} updates task description`;
   }
 
   return auditLogText;
 };
 
-export const renderAuditLogs = (data: Audit[] | undefined) => {
+export const renderAuditLogs = (data?: Audit[]) => {
   if (!data) {
     return null;
   }

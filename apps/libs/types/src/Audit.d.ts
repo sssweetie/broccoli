@@ -12,6 +12,6 @@ export interface Audit {
 }
 
 export interface AuditParams {
-  type: string;
+  type: 'updateTitle' | 'updateDescription';
   newName: string | null;
 }

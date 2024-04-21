@@ -1,19 +1,14 @@
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
-import { Board } from 'apps/libs/types/src';
+import { Board, CreateBoard } from 'apps/libs/types/src';
 
-interface CreateBoard {
-  title: string;
-  backgroundImage: string;
-}
-
-export interface IBoardsAPI {
-  create: ({ title, backgroundImage }: CreateBoard) => Promise<void>;
+export interface BoardsAPI {
+  create: (createBoard: CreateBoard) => Promise<void>;
   read: () => Promise<Board[]>;
   update: (board: Partial<Board>) => Promise<void>;
   delete: (id: string) => Promise<void>;
 }
 
-export const boardsApi: IBoardsAPI = {
+export const boardsApi: BoardsAPI = {
   create: async (createBoard) => {
     await httpClient.post('/boards/create', createBoard);
   },

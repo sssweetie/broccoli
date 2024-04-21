@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Box, Button, IconButton, Modal, TextField } from '@mui/material';
 import React, {
   ChangeEvent,
@@ -5,63 +6,36 @@ import React, {
   FormEvent,
   SetStateAction,
   useEffect,
-  useState,
-  useCallback,
 } from 'react';
-import { getRandomBackgroundURL } from '../../features/Firebase';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { style } from '../../constants/boardModal';
+import { boxSX } from './constants';
 
 interface ModalCreateBoardProps {
   isOpen: boolean;
+  images: string[];
   value: string;
-  selectedImage: HTMLElement | null;
-  setSelectedImage: Dispatch<SetStateAction<HTMLImageElement | null>>;
+  selectedIndex: number | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchData: any;
+  setSelectedIndex: Dispatch<SetStateAction<number | null>>;
   closeModal: () => void;
   onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClick: (index: number) => void;
 }
 
 export const ModalCreateBoard: React.FC<ModalCreateBoardProps> = ({
   isOpen,
   value,
-  selectedImage,
-  setSelectedImage,
+  selectedIndex,
+  images,
+  onClick,
+  fetchData,
   closeModal,
   onSubmit,
   onChange,
 }) => {
-  const [images, setImages] = useState<string[]>([]);
-
-  const fetchData = useCallback(() => {
-    const getRandomIndex = () => Math.floor(Math.random() * 12) + 1;
-    const indexes = new Set<number>();
-
-    while (indexes.size < 6) {
-      indexes.add(getRandomIndex());
-    }
-
-    Promise.all(Array.from(indexes, getRandomBackgroundURL)).then(setImages);
-  }, []);
-
-  //TODO: Нельзя мутировать state :)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onClick = (e: any) => {
-    if (e && e.target) {
-      if (
-        selectedImage &&
-        selectedImage.classList.contains('pick-up-image__background_active')
-      ) {
-        selectedImage.classList.remove('pick-up-image__background_active');
-      }
-      e.target.classList.add('pick-up-image__background_active');
-      setSelectedImage(e.target);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  useEffect(() => fetchData(), [fetchData]);
 
   return (
     <Modal
@@ -70,7 +44,7 @@ export const ModalCreateBoard: React.FC<ModalCreateBoardProps> = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={boxSX}>
         <div className="pick-up-image-title">
           <h3>Choose your background</h3>
           <IconButton onClick={fetchData}>
@@ -78,13 +52,16 @@ export const ModalCreateBoard: React.FC<ModalCreateBoardProps> = ({
           </IconButton>
         </div>
         <section className="pick-up-image">
-          {images.map((image) => (
+          {images.map((image, index) => (
             <img
               key={image}
               alt="background"
               src={image}
-              className="pick-up-image__background"
-              onClick={onClick}
+              className={clsx('pick-up-image__background', {
+                'pick-up-image__background--with-border':
+                  selectedIndex === index,
+              })}
+              onClick={() => onClick(index)}
             />
           ))}
         </section>

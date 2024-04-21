@@ -1,20 +1,24 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBoardsMutations } from './useBoardsMutations';
+import { getRandomBackgroundURL } from '../features/Firebase';
 
 export const useBoards = () => {
-  const navigate = useNavigate();
   const { createBoardMutation, deleteBoardMutation } = useBoardsMutations();
+  const navigate = useNavigate();
+
   const [value, setValue] = useState('');
-  const [selectedImage, setSelectedImage] = useState<HTMLImageElement | null>(
-    null
-  );
+  const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
+  const [images, setImages] = useState<string[]>([]);
 
   const createBoard = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const selectedImage = images[selectedIndex ?? 0];
+
     await createBoardMutation.mutate({
       title: value,
-      backgroundImage: selectedImage?.src ?? '',
+      backgroundImage: selectedImage ?? '',
     });
   };
 
@@ -34,13 +38,31 @@ export const useBoards = () => {
     await deleteBoardMutation.mutate(id);
   };
 
+  const fetchData = useCallback(() => {
+    const getRandomIndex = () => Math.floor(Math.random() * 12) + 1;
+    const indexes = new Set<number>();
+
+    while (indexes.size < 6) {
+      indexes.add(getRandomIndex());
+    }
+
+    Promise.all(Array.from(indexes, getRandomBackgroundURL)).then(setImages);
+  }, []);
+
+  const onClick = (index: number) => {
+    setSelectedIndex(index);
+  };
+
   return {
     value,
-    selectedImage,
-    setSelectedImage,
+    onClick,
+    selectedIndex,
     changeInputValue,
+    setSelectedIndex,
+    fetchData,
     createBoard,
     redirect,
     deleteBoard,
+    images,
   };
 };

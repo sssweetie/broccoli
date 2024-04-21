@@ -1,17 +1,16 @@
 import { UserResource } from '@clerk/types';
-import { UPDATE } from '../constants/AuditLog';
 import { Audit, AuditParams } from 'apps/libs/types/src';
+import { DESCRIPTION, TITLE } from '../features/AuditLogs/constants';
 
 type User = UserResource | null | undefined;
-type Title = string | undefined;
 
-export const createAuditLog = (user: User, title: Title): Audit => {
+export const createAuditLog = (user: User, title?: string): Audit => {
   const params: AuditParams = {
-    type: '',
+    type: TITLE,
     newName: '',
   };
 
-  params.type = title ? UPDATE.TITLE : UPDATE.DESCRIPTION;
+  params.type = title ? TITLE : DESCRIPTION;
   params.newName = title ?? null;
 
   const audit = {

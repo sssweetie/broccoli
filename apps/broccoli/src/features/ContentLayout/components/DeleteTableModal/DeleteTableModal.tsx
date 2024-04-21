@@ -1,7 +1,6 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { style } from 'apps/broccoli/src/constants/DeleteTableModal/styles';
-
+import { boxSX } from './constants';
 interface DeleteTableModal {
   isModalOpen: boolean;
   tableId: string;
@@ -26,7 +25,7 @@ export const DeleteTableModal: React.FC<DeleteTableModal> = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={boxSX}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Do you want to delete this table?
         </Typography>

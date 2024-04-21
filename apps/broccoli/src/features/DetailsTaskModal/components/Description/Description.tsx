@@ -65,7 +65,7 @@ export const Description: React.FC<DescriptionProps> = ({
         onChange={onChange}
         onBlur={onBlur}
       />
-      <Actions deleteTask={handleDeleteTable} deleteTable={handleDeleteTask} />
+      <Actions deleteTask={handleDeleteTask} deleteTable={handleDeleteTable} />
     </form>
   );
 };

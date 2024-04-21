@@ -2,7 +2,7 @@ import { SubTask } from '../SubTask';
 import { useCheckList } from './hooks/useCheckList';
 import { ProgressBar } from 'apps/broccoli/src/components/ProgressBar';
 import ChecklistIcon from '@mui/icons-material/Checklist';
-import { AddForm } from 'apps/broccoli/src/components/AddForm';
+import { AddFormLayout } from 'apps/broccoli/src/components/AddFormLayout';
 import { useSubtasksMutations } from '../../hooks/useSubtasksMutations';
 interface CheckListProps {
   taskId: string;
@@ -33,7 +33,7 @@ export const CheckList: React.FC<CheckListProps> = ({ taskId }) => {
         <h3>Subtasks</h3>
         <ProgressBar value={progress} />
         {checkList}
-        <AddForm
+        <AddFormLayout
           title="Create a subtask"
           mutateEntity={mutateEntity}
           formClassName="edit-table edit-table--independent"

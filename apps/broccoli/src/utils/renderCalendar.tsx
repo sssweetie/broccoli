@@ -8,7 +8,7 @@ const WEEK_COUNT = 6;
 
 export const renderCalendar = (
   dateFrom: Moment,
-  subtasks: SubTask[] | undefined
+  subtasks?: SubTask[]
 ) => {
   const calendarDate = dateFrom.clone();
 

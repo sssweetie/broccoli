@@ -1,8 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { MenuProps } from 'apps/libs/types/src/Global';
-
-const boxSX = { flexGrow: 1, display: { xs: 'none', md: 'flex' } };
-const buttonSX = { my: 2, color: 'white', display: 'block' };
+import { boxSX, buttonSX } from './constants';
 
 type LinksProps = 'pages' | 'closeMenu';
 

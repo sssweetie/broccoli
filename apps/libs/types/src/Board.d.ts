@@ -7,3 +7,8 @@ export interface Board {
   access: string;
   backgroundImage: string;
 }
+
+interface CreateBoard {
+  title: string;
+  backgroundImage: string;
+}

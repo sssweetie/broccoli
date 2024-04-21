@@ -1,6 +1,6 @@
 import { Table } from 'apps/libs/types/src';
 
-export const isTableExist = (table: Table | undefined) => {
+export const isTableExist = (table?: Table) => {
   if (table && table.tasks) return true;
-  else return false;
+  return false;
 };

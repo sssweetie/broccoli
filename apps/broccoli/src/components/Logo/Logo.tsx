@@ -5,20 +5,21 @@ interface sx {
   icon: object;
   text: object;
 }
-interface Props {
+interface LogoProps {
   sx: sx;
 }
 
-export const Logo: React.FC<Props> = ({ sx }) => {
+export const Logo: React.FC<LogoProps> = ({ sx }) => {
+  const { icon, text } = sx;
   return (
     <>
-      <ForestIcon sx={sx.icon} />
+      <ForestIcon sx={icon} />
       <Typography
         variant="h6"
         noWrap
         component="a"
         href="/application"
-        sx={sx.text}
+        sx={text}
       >
         BI
       </Typography>

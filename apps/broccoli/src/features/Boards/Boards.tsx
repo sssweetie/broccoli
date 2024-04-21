@@ -8,12 +8,15 @@ import { useModal } from '../../hooks/useModal';
 export const Boards: React.FC = () => {
   const {
     value,
-    selectedImage,
     deleteBoard,
-    setSelectedImage,
-    changeInputValue,
     createBoard,
     redirect,
+    selectedIndex,
+    setSelectedIndex,
+    changeInputValue,
+    images,
+    onClick,
+    fetchData,
   } = useBoards();
   const { boards } = useBoardsMutations();
   const { isOpen, closeModal, openModal } = useModal();
@@ -43,11 +46,14 @@ export const Boards: React.FC = () => {
         <ModalCreateBoard
           isOpen={isOpen}
           value={value}
-          selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
           closeModal={closeModal}
           onSubmit={onSubmit}
           onChange={changeInputValue}
+          images={images}
+          fetchData={fetchData}
+          onClick={onClick}
         />
       </div>
     </>

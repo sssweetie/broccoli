@@ -1,7 +1,6 @@
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { Tables } from '../Tables';
 import { useDragDrop } from '../../hooks/useDragDrop';
-import { AddForm } from '../../components/AddForm/AddForm';
 import { ChangeEvent, FormEvent } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
@@ -9,6 +8,7 @@ import { useModal } from '../../hooks/useModal';
 import { useBoardsMutations } from '../../hooks/useBoardsMutations';
 import { BoardTitle } from './components/BoardTitle';
 import { BackgroundImage } from './components/BackgroundImage';
+import { AddFormLayout } from '../../components/AddFormLayout';
 
 export const ContentLayout = () => {
   const {
@@ -57,7 +57,7 @@ export const ContentLayout = () => {
                   deleteTable={deleteTable.mutate}
                 />
                 {provided.placeholder}
-                <AddForm
+                <AddFormLayout
                   mutateEntity={mutateTable}
                   title="Create a table"
                   formClassName="edit-table edit-table--independent"

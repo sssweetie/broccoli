@@ -1,30 +1,29 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent } from 'react';
+import { useModal } from '../../hooks/useModal';
+import { DATE_FORMAT, sx } from './constants';
 
 interface CalendarPickerProps {
   changeSubtaskDate: (date: Date) => void;
   date: Moment;
 }
 
-const sx = { position: 'absolute', backgroundColor: '#FFFFFF' };
-const DATE_FORMAT = 'MMM DD';
-
 export const CalendarPicker: FC<CalendarPickerProps> = ({
   date,
   changeSubtaskDate,
 }) => {
-  const [isOpen, setOpen] = useState(false);
+  const { isOpen, closeModal, toggleModal } = useModal();
 
   const toggleCalendar = (e: MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
-    setOpen((prevState) => !prevState);
+    toggleModal();
   };
 
   const onChange = (momentDate: Moment) => {
     changeSubtaskDate(momentDate.toDate());
-    setOpen(false);
+    closeModal();
   };
 
   return (

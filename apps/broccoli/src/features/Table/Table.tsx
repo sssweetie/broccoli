@@ -6,9 +6,9 @@ import { DeleteTableModal } from '../ContentLayout/components/DeleteTableModal';
 import { FormEvent } from 'react';
 import { useTask } from '../../hooks/useTask';
 import { Tasks } from '../Tasks';
-import { AddForm } from 'apps/broccoli/src/components/AddForm/AddForm';
 import { MenuItem } from '@mui/material';
 import { useModal } from '../../hooks/useModal';
+import { AddFormLayout } from '../../components/AddFormLayout';
 interface TableProps {
   provided: DraggableProvided;
   table: TableType;
@@ -68,7 +68,7 @@ export const Table: React.FC<TableProps> = ({
           </div>
         )}
       </Droppable>
-      <AddForm
+      <AddFormLayout
         mutateEntity={mutateTask}
         title="Create a task"
         formClassName="edit-table table__add-form"
