@@ -7,7 +7,7 @@ import { Logo } from '../Logo';
 import { Settings } from '../Settings';
 import { Links } from '../Links';
 import { useNavigate } from 'react-router-dom';
-import { SX } from '../../constants/Navigation/styles';
+import { SX } from '../../constants/Navigation';
 
 const pages = [
   {

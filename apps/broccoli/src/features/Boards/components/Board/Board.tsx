@@ -5,21 +5,16 @@ import { FC } from 'react';
 
 interface BoardProps {
   board: IBoard;
-  handleDeleteBoard: (
+  deleteBoard: (
     e: React.MouseEvent<HTMLLIElement>,
     id: string
   ) => Promise<void>;
   redirect: (id: string) => void;
 }
 
-export const Board: FC<BoardProps> = ({
-  board,
-  redirect,
-  handleDeleteBoard,
-}) => {
+export const Board: FC<BoardProps> = ({ board, redirect, deleteBoard }) => {
   const redirectToBoards = () => redirect(board._id);
-  const deleteBoard = (e: React.MouseEvent<HTMLLIElement>) =>
-    handleDeleteBoard(e, board._id);
+
   const backgroundImage = board.backgroundImage && (
     <img
       src={board.backgroundImage}
@@ -28,6 +23,7 @@ export const Board: FC<BoardProps> = ({
       key={board._id}
     />
   );
+
   return (
     <article onClick={redirectToBoards} className="board" key={board._id}>
       {backgroundImage}
@@ -35,7 +31,10 @@ export const Board: FC<BoardProps> = ({
         <h4>{board.title}</h4>
         <DropdownMenu
           items={[
-            <MenuItem onClick={deleteBoard} key="delete-board">
+            <MenuItem
+              onClick={(e) => deleteBoard(e, board._id)}
+              key="delete-board"
+            >
               Delete board
             </MenuItem>,
           ]}

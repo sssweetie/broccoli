@@ -7,7 +7,7 @@ import { AuditLogs } from '../AuditLogs/AuditLogs';
 import { Description } from './components/Description';
 import { Title } from './components/Title';
 import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
-import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/TaskManager/styles/taskModal';
+import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/taskModal';
 import { CheckList } from '../CheckList';
 
 interface IProps {

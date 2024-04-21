@@ -1,26 +1,8 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
-import {
-  IconButton,
-  Menu,
-  MenuItem,
-  PopoverOrigin,
-  Typography,
-} from '@mui/material';
+import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { MenuProps } from 'apps/libs/types/src/Global';
-
-const boxSX = { flexGrow: 1, display: { xs: 'flex', md: 'none' } };
-const menuSX = {
-  display: { xs: 'block', md: 'none' },
-};
-const anchorOrigin: PopoverOrigin = {
-  vertical: 'bottom',
-  horizontal: 'left',
-};
-const transformOrigin: PopoverOrigin = {
-  vertical: 'top',
-  horizontal: 'left',
-};
+import { BURGER_MENU } from '../../constants/BurgerMenu';
 
 export const BurgerMenu: React.FC<MenuProps<string>> = ({
   anchorEl,
@@ -35,7 +17,7 @@ export const BurgerMenu: React.FC<MenuProps<string>> = ({
   ));
 
   return (
-    <Box sx={boxSX}>
+    <Box sx={BURGER_MENU.boxSX}>
       <IconButton
         size="large"
         aria-label="account of current user"
@@ -49,12 +31,12 @@ export const BurgerMenu: React.FC<MenuProps<string>> = ({
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}
-        anchorOrigin={anchorOrigin}
-        keepMounted
-        transformOrigin={transformOrigin}
         open={Boolean(anchorEl)}
+        anchorOrigin={BURGER_MENU.anchorOrigin}
+        transformOrigin={BURGER_MENU.transformOrigin}
+        sx={BURGER_MENU.menuSX}
         onClose={closeMenu}
-        sx={menuSX}
+        keepMounted
       >
         {menuItems}
       </Menu>

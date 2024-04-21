@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { getRandomBackgroundURL } from '../../features/Firebase';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { style } from '../../constants/TaskManager/styles/boardModal';
+import { style } from '../../constants/boardModal';
 
 interface ModalCreateBoardProps {
   isOpen: boolean;

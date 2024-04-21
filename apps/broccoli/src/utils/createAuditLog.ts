@@ -1,25 +1,18 @@
 import { UserResource } from '@clerk/types';
-import { UPDATE } from '../constants/TaskManager/auditLog';
+import { UPDATE } from '../constants/AuditLog';
+import { IAudit, IAuditParams } from 'apps/libs/types/src';
 
 type User = UserResource | null | undefined;
 type Title = string | undefined;
 
-interface Params {
-  type: string;
-  newName?: string;
-}
-
-export const createAuditLog = (user: User, title: Title) => {
-  const params: Params = {
+export const createAuditLog = (user: User, title: Title): IAudit => {
+  const params: IAuditParams = {
     type: '',
+    newName: '',
   };
 
-  if (title) {
-    params.type = UPDATE.TITLE;
-    params.newName = title;
-  } else {
-    params.type = UPDATE.DESCRIPTION;
-  }
+  params.type = title ? UPDATE.TITLE : UPDATE.DESCRIPTION;
+  params.newName = title ?? null;
 
   const audit = {
     userId: user?.id,

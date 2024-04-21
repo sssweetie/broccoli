@@ -1,6 +1,7 @@
 import React from 'react';
+import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
-import { LinkItemIcon } from '../ApplicationLayout/ApplicationLayout';
+import { LinkItemIcon } from '../ApplicationLayout';
 
 interface LinkItemProps {
   isOpen: boolean;
@@ -18,9 +19,7 @@ export const LinkItem: React.FC<LinkItemProps> = ({ isOpen, title, Icon }) => {
   return (
     <div
       onClick={onClick}
-      className={`${
-        isOpen ? 'navigation__item navigation__item--open' : 'navigation__item'
-      }`}
+      className={clsx('navigation__item', { 'navigation__item--open': isOpen })}
     >
       <Icon />
       <span>{title}</span>

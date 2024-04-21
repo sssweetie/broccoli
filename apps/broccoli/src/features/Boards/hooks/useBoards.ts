@@ -23,7 +23,7 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     queryFn: boardsApi.read,
   });
 
-  const createBoard = useMutation({
+  const createBoardMutation = useMutation({
     mutationFn: boardsApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['boards'] });
@@ -35,7 +35,7 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     },
   });
 
-  const updateBoard = useMutation({
+  const updateBoardMutation = useMutation({
     mutationFn: boardsApi.update,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['board'] });
@@ -46,7 +46,7 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     },
   });
 
-  const deleteBoard = useMutation({
+  const deleteBoardMutation = useMutation({
     mutationFn: boardsApi.delete,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['boards'] });
@@ -67,7 +67,7 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
 
   const createBoardOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createBoard.mutate({
+    await createBoardMutation.mutate({
       title: value,
       backgroundImage: selectedImage?.src ?? '',
     });
@@ -81,19 +81,18 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     navigate(`/application/dragdrop/${id}`);
   };
 
-  const deleteBoardOnClick = async (
+  const deleteBoard = async (
     e: React.MouseEvent<HTMLLIElement>,
     id: string
   ) => {
     e.stopPropagation();
-    await deleteBoard.mutate(id);
+    await deleteBoardMutation.mutate(id);
   };
 
   return {
     boards: data,
-    createBoard,
-    updateBoard,
-    deleteBoard,
+    createBoard: createBoardMutation,
+    updateBoard: updateBoardMutation,
     isOpen,
     value,
     selectedImage,
@@ -103,6 +102,6 @@ export const useBoards = (boardsApi: IBoardsAPI) => {
     changeInputValue,
     createBoardOnSubmit,
     redirect,
-    deleteBoardOnClick,
+    deleteBoard,
   };
 };

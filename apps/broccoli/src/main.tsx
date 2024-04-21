@@ -6,8 +6,6 @@ import { StrictMode } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RootLayout } from './components/RootLayout';
 import { ContentLayout } from './features/ContentLayout';
-import { SignIn } from './components/Auth/SignIn';
-import { SignUp } from './components/Auth/SignUp';
 import { ApplicationLayout } from './components/ApplicationLayout';
 import { PageNotFound } from './components/PageNotFound';
 import { Hero } from './components/Hero';
@@ -17,6 +15,7 @@ import { Boards } from './features/Boards';
 import { Calendar } from './features/Calendar/Calendar';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { Auth } from './components/Auth';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -34,11 +33,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/sign-in',
-        element: <SignIn />,
+        element: <Auth authType="sign-in" />,
       },
       {
         path: '/sign-up',
-        element: <SignUp />,
+        element: <Auth authType="sign-up" />,
       },
       {
         path: '/application',

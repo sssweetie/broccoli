@@ -7,11 +7,11 @@ export interface IAudit {
   userId: string | undefined;
   userName: string | null | undefined;
   userImg: string | undefined;
-  params: AuditParams;
+  params: IAuditParams;
   date: Date;
 }
 
 export interface IAuditParams {
   type: string;
-  newName?: string;
+  newName: string | null;
 }

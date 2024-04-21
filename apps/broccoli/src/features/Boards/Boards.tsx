@@ -11,7 +11,7 @@ export const Boards: React.FC = () => {
     isOpen,
     value,
     selectedImage,
-    deleteBoardOnClick,
+    deleteBoard,
     setSelectedImage,
     closeModal,
     openModalOnClick,
@@ -32,7 +32,7 @@ export const Boards: React.FC = () => {
               <Board
                 board={board}
                 redirect={redirect}
-                handleDeleteBoard={deleteBoardOnClick}
+                deleteBoard={deleteBoard}
               />
             ))
           : null}
