@@ -1,9 +1,9 @@
-import { ICreateSubTask, ISubTask } from 'apps/libs/types/src';
+import { CreateSubTask, SubTask } from 'apps/libs/types/src';
 import { SubTaskModel } from '../models/SubTaskModel';
 import { TaskModel } from '../models/TaskModel';
 
 export const SubTaskController = {
-  create: async ({ subTask, taskId }: ICreateSubTask) => {
+  create: async ({ subTask, taskId }: CreateSubTask) => {
     const document = await SubTaskModel.create({
       ...subTask,
     });
@@ -21,7 +21,7 @@ export const SubTaskController = {
       .exec();
     return task.subTasks;
   },
-  update: async (subTask: ISubTask) => {
+  update: async (subTask: SubTask) => {
     await SubTaskModel.findByIdAndUpdate(subTask._id, { ...subTask });
   },
   delete: async (id: string) => {

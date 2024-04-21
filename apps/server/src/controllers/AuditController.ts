@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ITask } from 'apps/libs/types/src';
+import { Task } from 'apps/libs/types/src';
 import { AuditModel } from '../models/AuditModel';
 import { TaskModel } from '../models/TaskModel';
-import { IAddAudit } from 'apps/libs/types/src/Audit';
+import { AddAudit } from 'apps/libs/types/src/Audit';
 
 export const AuditController = {
-  create: async ({ audit, taskId }: IAddAudit) => {
+  create: async ({ audit, taskId }: AddAudit) => {
     TaskModel;
     const auditDoc = await AuditModel.create(audit);
     await TaskModel.findByIdAndUpdate(taskId, {
@@ -17,7 +17,7 @@ export const AuditController = {
 
   read: async (taskId: string) => {
     try {
-      const task: ITask = await TaskModel.findById(taskId)
+      const task: Task = await TaskModel.findById(taskId)
         .populate('audits')
         .exec();
       task.audits.sort((a, b) => b.date.getTime() - a.date.getTime());

@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { IBoard } from 'apps/libs/types/src';
+import { Board } from 'apps/libs/types/src';
 
-const boardSchema = new Schema<IBoard>({
+const boardSchema = new Schema<Board>({
   title: {
     type: String,
     required: true,
@@ -20,4 +20,4 @@ const boardSchema = new Schema<IBoard>({
   ],
 });
 
-export const BoardModel = model<IBoard>('boards', boardSchema);
+export const BoardModel = model<Board>('boards', boardSchema);

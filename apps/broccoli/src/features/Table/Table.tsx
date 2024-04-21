@@ -1,37 +1,29 @@
 import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
-import { ITable } from 'apps/libs/types/src';
+import { Table as TableType } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { DropdownMenu } from '../../components/DropdownMenu';
 import { DeleteTableModal } from '../ContentLayout/components/DeleteTableModal';
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { useTask } from '../../hooks/useTask';
 import { Tasks } from '../Tasks';
-import { taskApi } from '../../api/taskApi';
-import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { AddForm } from 'apps/broccoli/src/components/AddForm/AddForm';
 import { MenuItem } from '@mui/material';
-interface IProps {
+import { useModal } from '../../hooks/useModal';
+interface TableProps {
   provided: DraggableProvided;
-  table: ITable;
+  table: TableType;
   isDragDisabled: boolean;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Table: React.FC<IProps> = ({
+export const Table: React.FC<TableProps> = ({
   provided,
   table,
   isDragDisabled,
   deleteTable,
 }) => {
-  const { createTask } = useTask(taskApi(httpClient));
-  const [isModalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const { createTask } = useTask();
+  const { isOpen, closeModal, openModal } = useModal();
 
   const mutateTask = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
@@ -84,7 +76,7 @@ export const Table: React.FC<IProps> = ({
         inputPlaceholder="Enter a task name..."
       />
       <DeleteTableModal
-        isModalOpen={isModalOpen}
+        isModalOpen={isOpen}
         closeModal={closeModal}
         deleteTable={deleteTable}
         tableId={table._id}

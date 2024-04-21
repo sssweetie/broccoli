@@ -2,41 +2,70 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { Actions } from './components/Actions';
 import { Content } from './components/Content';
-import { useDescription } from './hooks/useDescription';
-import { IDescription } from '../../DetailsTaskModal';
+import { Description as DescriptionType } from '../../DetailsTaskModal';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-interface IProps {
-  description: IDescription;
+interface DescriptionProps {
+  description: DescriptionType;
   updateDescription: (description: string) => Promise<void>;
-  deleteTable: UseMutateFunction<void, Error, string, unknown>;
-  deleteTask: UseMutateFunction<void, Error, string, unknown>;
+  deleteTableMutation: UseMutateFunction<void, Error, string, unknown>;
+  deleteTaskMutation: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Description: React.FC<IProps> = ({
+export const Description: React.FC<DescriptionProps> = ({
   description,
   updateDescription,
-  deleteTable,
-  deleteTask,
+  deleteTableMutation,
+  deleteTaskMutation,
 }) => {
-  const mutations = { updateDescription, deleteTable, deleteTask };
-  const { models, operations } = useDescription({
-    description,
-    mutations,
-  });
+  const [isEdit, setEdit] = useState(false);
+  const [inputValue, setInputValue] = useState(
+    description.text ? description.text : ''
+  );
+
+  const disableEditMode = async () => {
+    if (description.text !== inputValue) {
+      await updateDescription(inputValue);
+    }
+
+    setEdit(false);
+  };
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    disableEditMode();
+  };
+
+  const onBlur = async () => {
+    disableEditMode();
+  };
+
+  const onClick = () => {
+    setEdit(true);
+  };
+
+  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleDeleteTable = async () => {
+    await deleteTableMutation(description.tableId);
+  };
+
+  const handleDeleteTask = async () => {
+    await deleteTaskMutation(description.taskId);
+  };
   return (
-    <form onSubmit={operations.onSubmit} className="task__section">
+    <form onSubmit={onSubmit} className="task__section">
       <DescriptionIcon />
       <Content
-        isEdit={models.isEdit}
-        value={models.descriptionState}
-        onClick={operations.onClick}
-        onChange={operations.onChange}
-        onBlur={operations.onBlur}
+        isEdit={isEdit}
+        value={inputValue}
+        onClick={onClick}
+        onChange={onChange}
+        onBlur={onBlur}
       />
-      <Actions
-        handleDeleteTable={operations.handleDeleteTable}
-        handleDeleteTask={operations.handleDeleteTask}
-      />
+      <Actions deleteTask={handleDeleteTable} deleteTable={handleDeleteTask} />
     </form>
   );
 };

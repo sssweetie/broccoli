@@ -1,6 +1,6 @@
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { ChangeEvent } from 'react';
-interface IProps {
+interface ContentProps {
   isEdit: boolean;
   value: string;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -8,7 +8,7 @@ interface IProps {
   onClick: () => void;
 }
 
-export const Content: React.FC<IProps> = ({
+export const Content: React.FC<ContentProps> = ({
   isEdit,
   value,
   onChange,

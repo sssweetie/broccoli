@@ -1,6 +1,6 @@
-import { IBoard } from './Board';
+import { Board } from './Board';
 
-export interface IOrg {
+export interface Organization {
   clerkOrgId: string;
-  boards: IBoard[];
+  boards: Board[];
 }

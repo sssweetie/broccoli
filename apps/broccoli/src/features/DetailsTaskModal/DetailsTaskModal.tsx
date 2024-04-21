@@ -1,4 +1,4 @@
-import { ITask } from 'apps/libs/types/src';
+import { Task } from 'apps/libs/types/src';
 
 import { Box, Modal } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
@@ -10,32 +10,33 @@ import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
 import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/taskModal';
 import { CheckList } from '../CheckList';
 
-interface IProps {
+interface DetailsTaskModalProps {
   isOpen: boolean;
-  task: ITask;
+  task: Task;
   tableTitle: string;
   tableId: string;
   closeModal: () => void;
-  deleteTable: UseMutateFunction<void, Error, string, unknown>;
+  deleteTableMutation: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export interface IDescription {
+export interface Description {
   tableId: string;
   taskId: string;
-  text: string | undefined;
+  text?: string;
 }
 
-export const DetailsTaskModal: React.FC<IProps> = ({
+export const DetailsTaskModal: React.FC<DetailsTaskModalProps> = ({
   isOpen,
   task,
   tableTitle,
   tableId,
   closeModal,
-  deleteTable,
+  deleteTableMutation,
 }) => {
-  const { operations } = useDetailsTaskModal({ task });
+  const { updateDescription, updateTitle, deleteTaskMutation } =
+    useDetailsTaskModal(task);
 
-  const description: IDescription = {
+  const description: Description = {
     tableId,
     taskId: task._id,
     text: task.description,
@@ -52,13 +53,13 @@ export const DetailsTaskModal: React.FC<IProps> = ({
         <Title
           tableTitle={tableTitle}
           title={task.title}
-          updateTitle={operations.updateTitle}
+          updateTitle={updateTitle}
         />
         <Description
           description={description}
-          updateDescription={operations.updateDescription}
-          deleteTable={deleteTable}
-          deleteTask={operations.deleteTask}
+          updateDescription={updateDescription}
+          deleteTableMutation={deleteTableMutation}
+          deleteTaskMutation={deleteTaskMutation}
         />
         <CheckList taskId={task._id} />
         {task.audits ? <AuditLogs taskId={task._id} /> : null}

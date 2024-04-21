@@ -1,9 +1,9 @@
-import { ITable } from './Table';
+import { Table } from './Table';
 
-export interface IBoard {
+export interface Board {
   _id: string;
   title: string;
-  tables: ITable[];
+  tables: Table[];
   access: string;
   backgroundImage: string;
 }

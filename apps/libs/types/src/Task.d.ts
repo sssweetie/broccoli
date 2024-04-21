@@ -1,21 +1,21 @@
-import { IAudit } from './Audit';
-import { ISubTask } from './SubTask';
+import { Audit } from './Audit';
+import { SubTask } from './SubTask';
 
-export interface ITask {
+export interface Task {
   _id: string;
   order: number;
   title?: string;
   description?: string;
-  audits?: IAudit[];
-  subTasks?: ISubTask[];
+  audits?: Audit[];
+  subTasks?: SubTask[];
 }
 
-export interface IAddTask {
+export interface AddTask {
   tableId: string;
-  task: Partial<ITask>;
+  task: Partial<Task>;
 }
 
-export interface IUpdateTask {
-  task: ITask;
-  audit: IAudit;
+export interface UpdateTask {
+  task: Task;
+  audit: Audit;
 }

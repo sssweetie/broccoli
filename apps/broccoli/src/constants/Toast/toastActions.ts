@@ -1,4 +1,4 @@
-import { Action } from '../utils/toastNotification';
+import { Action } from '../../utils/toastNotification';
 
 export const toastActions: Record<Action, Action> = {
   deleted: 'deleted',

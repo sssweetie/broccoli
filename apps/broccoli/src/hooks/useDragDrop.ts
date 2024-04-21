@@ -2,12 +2,10 @@
 import { DragUpdate } from '@hello-pangea/dnd';
 import { findTable, isTableExist, reorderTable } from 'apps/broccoli/src/utils';
 import { useTableMutations } from './useTableMutations';
-import { dragDropApi } from '../api/dragDropApi';
-import { httpClient } from 'apps/broccoli/src/services/httpClient';
 
 export const useDragDrop = () => {
   const { tables, boardInfo, id, createTable, deleteTable, updateTable } =
-    useTableMutations(dragDropApi(httpClient));
+    useTableMutations();
 
   const onDragEnd = async ({ type, source, destination }: DragUpdate) => {
     const updateInformation = {

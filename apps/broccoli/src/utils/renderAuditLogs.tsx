@@ -1,9 +1,9 @@
-import { IAudit } from 'apps/libs/types/src';
+import { Audit } from 'apps/libs/types/src';
 import { UPDATE } from '../constants/AuditLog';
 import { AuditLog } from '../features/AuditLogs/components/AuditLog';
 import { months } from '../constants/months';
 
-const getAuditLogText = ({ params, userName }: IAudit) => {
+const getAuditLogText = ({ params, userName }: Audit) => {
   let auditLogText = '';
 
   if (params.type === UPDATE.TITLE) {
@@ -17,7 +17,7 @@ const getAuditLogText = ({ params, userName }: IAudit) => {
   return auditLogText;
 };
 
-export const renderAuditLogs = (data: IAudit[] | undefined) => {
+export const renderAuditLogs = (data: Audit[] | undefined) => {
   if (!data) {
     return null;
   }

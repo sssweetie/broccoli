@@ -1,10 +1,10 @@
 import { MenuItem } from '@mui/material';
 import { DropdownMenu } from 'apps/broccoli/src/components/DropdownMenu';
-import { IBoard } from 'apps/libs/types/src';
+import { Board as BoardType } from 'apps/libs/types/src';
 import { FC } from 'react';
 
 interface BoardProps {
-  board: IBoard;
+  board: BoardType;
   deleteBoard: (
     e: React.MouseEvent<HTMLLIElement>,
     id: string

@@ -15,7 +15,6 @@ export const Boards: React.FC = () => {
     createBoard,
     redirect,
   } = useBoards();
-
   const { boards } = useBoardsMutations();
   const { isOpen, closeModal, openModal } = useModal();
 
@@ -24,6 +23,12 @@ export const Boards: React.FC = () => {
     closeModal();
   };
 
+  const boardsComponent = boards
+    ? boards.map((board) => (
+        <Board board={board} redirect={redirect} deleteBoard={deleteBoard} />
+      ))
+    : null;
+
   return (
     <>
       <h1 className="title">
@@ -31,15 +36,7 @@ export const Boards: React.FC = () => {
         Your boards
       </h1>
       <div className="board-wrapper">
-        {boards
-          ? boards.map((board) => (
-              <Board
-                board={board}
-                redirect={redirect}
-                deleteBoard={deleteBoard}
-              />
-            ))
-          : null}
+        {boardsComponent}
         <button onClick={openModal} className="board">
           Create a new board
         </button>

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ISubtasksAPI } from 'apps/broccoli/src/api/subtasksAPI';
+import { subtasksAPI } from 'apps/broccoli/src/api/subtasksAPI';
 import { Moment } from 'moment';
 import moment from 'moment';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ const calendarDateFrom = moment()
   .subtract(calendarFirstDayOfMonth - 1, 'days');
 const calendarDateTo = calendarDateFrom.clone().add(41, 'day');
 
-export const useCalendar = (subtasksAPI: ISubtasksAPI) => {
+export const useCalendar = () => {
   const [dateTo, setDateTo] = useState<Moment>(calendarDateTo);
   const [dateFrom, setDateFrom] = useState<Moment>(calendarDateFrom);
   const [currentMonth, setCurrentMonth] = useState<Moment>(

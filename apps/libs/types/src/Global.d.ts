@@ -1,8 +1,8 @@
-import { IPage } from './Navigation';
+import { Page } from './Navigation';
 
 export interface MenuProps<T = {}> {
   anchorEl: HTMLElement | null;
-  pages?: IPage[];
+  pages?: Page[];
   openMenu: (event: MouseEvent<HTMLElement>) => void;
   closeMenu: T extends string ? (to: T) => void : () => void;
 }

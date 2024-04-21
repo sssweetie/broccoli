@@ -1,12 +1,12 @@
 import { UserResource } from '@clerk/types';
 import { UPDATE } from '../constants/AuditLog';
-import { IAudit, IAuditParams } from 'apps/libs/types/src';
+import { Audit, AuditParams } from 'apps/libs/types/src';
 
 type User = UserResource | null | undefined;
 type Title = string | undefined;
 
-export const createAuditLog = (user: User, title: Title): IAudit => {
-  const params: IAuditParams = {
+export const createAuditLog = (user: User, title: Title): Audit => {
+  const params: AuditParams = {
     type: '',
     newName: '',
   };

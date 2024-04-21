@@ -1,5 +1,5 @@
-import { ITable } from 'apps/libs/types/src';
+import { Table } from 'apps/libs/types/src';
 
-export const findTable = (board: ITable[], id: string) => {
+export const findTable = (board: Table[], id: string) => {
   return board.find((table) => table._id === id);
 };

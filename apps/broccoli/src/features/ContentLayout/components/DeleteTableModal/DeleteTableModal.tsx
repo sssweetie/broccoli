@@ -2,14 +2,14 @@ import { Box, Button, Modal, Typography } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { style } from 'apps/broccoli/src/constants/DeleteTableModal/styles';
 
-interface IProps {
+interface DeleteTableModal {
   isModalOpen: boolean;
   tableId: string;
   closeModal: () => void;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const DeleteTableModal: React.FC<IProps> = ({
+export const DeleteTableModal: React.FC<DeleteTableModal> = ({
   isModalOpen,
   tableId,
   closeModal,

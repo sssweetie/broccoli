@@ -1,5 +1,5 @@
 interface AuditLogProps {
-  userImg: string | undefined;
+  userImg?: string;
   auditLogText: string;
   date: string;
 }

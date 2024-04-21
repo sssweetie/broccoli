@@ -1,16 +1,10 @@
 import { useUser } from '@clerk/clerk-react';
-import { taskApi } from 'apps/broccoli/src/api/taskApi';
 import { useTask } from 'apps/broccoli/src/hooks/useTask';
-import { httpClient } from 'apps/broccoli/src/services/httpClient';
 import { createAuditLog } from 'apps/broccoli/src/utils';
-import { ITask } from 'apps/libs/types/src';
+import { Task as TaskType } from 'apps/libs/types/src';
 
-interface IData {
-  task: ITask;
-}
-
-export const useDetailsTaskModal = ({ task }: IData) => {
-  const { updateTask, deleteTask } = useTask(taskApi(httpClient));
+export const useDetailsTaskModal = (task: TaskType) => {
+  const { updateTask, deleteTask } = useTask();
   const { user } = useUser();
 
   const updateTitle = async (title: string) => {
@@ -26,10 +20,8 @@ export const useDetailsTaskModal = ({ task }: IData) => {
   };
 
   return {
-    operations: {
-      updateDescription,
-      updateTitle,
-      deleteTask: deleteTask.mutate,
-    },
+    updateDescription,
+    updateTitle,
+    deleteTaskMutation: deleteTask.mutate,
   };
 };

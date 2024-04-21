@@ -1,15 +1,15 @@
 import { Draggable } from '@hello-pangea/dnd';
-import { Table } from '../Table/Table';
-import { ITable } from 'apps/libs/types/src';
+import { Table } from '../Table';
+import { Table as TableType } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
 
-interface IProps {
-  board: ITable[];
+interface TablesProps {
+  board: TableType[];
   isDragDisabled: boolean;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Tables: React.FC<IProps> = ({
+export const Tables: React.FC<TablesProps> = ({
   board,
   isDragDisabled,
   deleteTable,

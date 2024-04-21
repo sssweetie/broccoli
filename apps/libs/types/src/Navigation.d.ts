@@ -1,6 +1,4 @@
-import { MouseEvent } from 'react';
-
-export interface IPage {
+export interface Page {
   name: string;
   link: string;
 }

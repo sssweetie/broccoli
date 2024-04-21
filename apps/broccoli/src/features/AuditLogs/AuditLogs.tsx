@@ -1,7 +1,6 @@
 import HistoryIcon from '@mui/icons-material/History';
 import { useQuery } from '@tanstack/react-query';
-import { auditApi } from 'apps/broccoli/src/api/auditApi';
-import { httpClient } from 'apps/broccoli/src/services/httpClient';
+import { auditAPI } from 'apps/broccoli/src/api/auditAPI';
 import { renderAuditLogs } from 'apps/broccoli/src/utils';
 interface AuditLogsProps {
   taskId: string;
@@ -10,7 +9,7 @@ interface AuditLogsProps {
 export const AuditLogs: React.FC<AuditLogsProps> = ({ taskId }) => {
   const { data } = useQuery({
     queryKey: ['audit'],
-    queryFn: () => auditApi(httpClient).read(taskId),
+    queryFn: () => auditAPI.read(taskId),
   });
 
   const auditLogs = renderAuditLogs(data);

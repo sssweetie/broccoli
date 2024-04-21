@@ -1,5 +1,5 @@
 import { httpClient } from 'apps/broccoli/src/services/httpClient';
-import { IBoard } from 'apps/libs/types/src';
+import { Board } from 'apps/libs/types/src';
 
 interface CreateBoard {
   title: string;
@@ -8,8 +8,8 @@ interface CreateBoard {
 
 export interface IBoardsAPI {
   create: ({ title, backgroundImage }: CreateBoard) => Promise<void>;
-  read: () => Promise<IBoard[]>;
-  update: (board: Partial<IBoard>) => Promise<void>;
+  read: () => Promise<Board[]>;
+  update: (board: Partial<Board>) => Promise<void>;
   delete: (id: string) => Promise<void>;
 }
 

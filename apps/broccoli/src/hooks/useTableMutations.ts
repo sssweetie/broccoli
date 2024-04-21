@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { IDragDropAPI } from '../api/dragDropApi';
 import { toastConfig } from 'apps/broccoli/src/services/toastConfig';
 import { toast } from 'react-toastify';
 import { callSuccessToast } from 'apps/broccoli/src/utils';
 import { useParams } from 'react-router-dom';
-export const useTableMutations = (dragDropApi: IDragDropAPI) => {
+import { dragDropApi } from '../api/dragDropAPI';
+export const useTableMutations = () => {
   const { id } = useParams();
   const { data } = useQuery({
     queryKey: ['board'],

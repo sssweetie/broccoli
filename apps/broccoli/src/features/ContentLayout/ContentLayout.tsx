@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
 import { useModal } from '../../hooks/useModal';
 import { useBoardsMutations } from '../../hooks/useBoardsMutations';
+import { BoardTitle } from './components/BoardTitle';
+import { BackgroundImage } from './components/BackgroundImage';
 
 export const ContentLayout = () => {
   const {
@@ -36,28 +38,18 @@ export const ContentLayout = () => {
   return tables ? (
     <>
       <section className="board-title">
-        {!isOpen ? (
-          <h4 onClick={openModal}>{boardInfo.title}</h4>
-        ) : (
-          <input
-            className="board-title--input"
-            defaultValue={boardInfo.title}
-            onBlur={onBlur}
-            autoFocus
-          />
-        )}
+        <BoardTitle
+          isOpen={isOpen}
+          onBlur={onBlur}
+          openModal={openModal}
+          title={boardInfo.title}
+        />
       </section>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="tables" type="TABLE" direction="horizontal">
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              {boardInfo.backgroundImage ? (
-                <img
-                  alt="table background"
-                  src={boardInfo.backgroundImage}
-                  className="table-background"
-                />
-              ) : null}
+              <BackgroundImage backgroundImage={boardInfo.backgroundImage} />
               <div className="table-wrapper">
                 <Tables
                   board={tables}

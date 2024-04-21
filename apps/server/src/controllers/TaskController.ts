@@ -1,11 +1,11 @@
 import { TaskModel } from '../models/TaskModel';
 import { TableModel } from '../models/TableModel';
-import { IAddTask, IUpdateTask } from 'apps/libs/types/src';
+import { AddTask, UpdateTask } from 'apps/libs/types/src';
 import { AuditController } from './AuditController';
 import { AuditModel } from '../models/AuditModel';
 
 export const TaskController = {
-  create: async ({ task, tableId }: IAddTask) => {
+  create: async ({ task, tableId }: AddTask) => {
     const document = await TaskModel.create({
       title: task.title,
       order: task.order,
@@ -22,7 +22,7 @@ export const TaskController = {
     const task = await TaskModel.findById(taskId);
     return task;
   },
-  update: async ({ task, audit }: IUpdateTask) => {
+  update: async ({ task, audit }: UpdateTask) => {
     await TaskModel.findByIdAndUpdate(task._id, { ...task });
     await AuditController.create({ audit, taskId: task._id });
   },

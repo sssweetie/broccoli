@@ -1,13 +1,14 @@
 import { Checkbox } from '@mui/material';
-import { ISubTask } from 'apps/libs/types/src';
-import { ChangeEvent, FocusEvent, MouseEvent, useState } from 'react';
+import { SubTask as SubTaskType } from 'apps/libs/types/src';
+import { ChangeEvent, FocusEvent, MouseEvent } from 'react';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { CalendarPicker } from '../../components/CalendarPicker';
 import moment from 'moment';
+import { useModal } from '../../hooks/useModal';
 interface SubTaskProps {
-  subTask: ISubTask;
-  updateSubTask: (subtask: ISubTask) => void;
+  subTask: SubTaskType;
+  updateSubTask: (subtask: SubTaskType) => void;
   deleteSubTask: (id: string) => void;
   countProgress: () => void;
 }
@@ -18,17 +19,17 @@ export const SubTask: React.FC<SubTaskProps> = ({
   deleteSubTask,
   countProgress,
 }) => {
-  const [isEdit, setEdit] = useState(false);
+  const { isOpen, closeModal, openModal } = useModal();
 
   const onBlur = (e: FocusEvent<HTMLInputElement>) => {
     updateSubTask({ ...subTask, title: e.target.value });
-    setEdit(false);
+    closeModal();
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     updateSubTask({ ...subTask, isCompleted: checked });
-    setEdit(false);
+    closeModal();
   };
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -40,10 +41,6 @@ export const SubTask: React.FC<SubTaskProps> = ({
     updateSubTask({ ...subTask, date });
   };
 
-  const editSubTask = () => {
-    setEdit(true);
-  };
-
   countProgress();
 
   return (
@@ -53,7 +50,7 @@ export const SubTask: React.FC<SubTaskProps> = ({
         onChange={onChange}
         sx={{ padding: 0 }}
       />
-      {isEdit ? (
+      {isOpen ? (
         <input
           defaultValue={subTask.title}
           onBlur={onBlur}
@@ -66,7 +63,7 @@ export const SubTask: React.FC<SubTaskProps> = ({
             subTask.isCompleted ? 'subtask__title--completed' : ''
           }`}
         >
-          <span onClick={editSubTask}>{subTask.title}</span>
+          <span onClick={openModal}>{subTask.title}</span>
           <div className="subtask__icons">
             <CalendarPicker
               date={moment(subTask.date)}

@@ -1,6 +1,6 @@
-import { ITable } from 'apps/libs/types/src';
+import { Table } from 'apps/libs/types/src';
 
-export const reorderTable = (table: ITable) => {
+export const reorderTable = (table: Table) => {
   table.tasks.forEach(
     (task, index) =>
       (table.tasks[index] = {
