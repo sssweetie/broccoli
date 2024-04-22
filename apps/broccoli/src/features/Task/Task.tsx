@@ -3,6 +3,7 @@ import { Task as TaskType } from 'apps/libs/types/src';
 import { DetailsTaskModal } from '../DetailsTaskModal';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { useModal } from '../../hooks/useModal';
+import { Provided } from '../../components/Provided/Provided';
 
 interface TaskProps {
   provided: DraggableProvided;
@@ -23,15 +24,10 @@ export const Task: React.FC<TaskProps> = ({
 
   return (
     <>
-      <section
-        onClick={openModal}
-        className="table__task"
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-      >
+      <Provided provided={provided} onClick={openModal} className="table__task">
         {task.title}
-      </section>
+      </Provided>
+      
       <DetailsTaskModal
         isOpen={isOpen}
         closeModal={closeModal}

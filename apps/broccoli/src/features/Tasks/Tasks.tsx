@@ -2,7 +2,6 @@ import { Draggable } from '@hello-pangea/dnd';
 import { Task } from '../Task/Task';
 import { Table } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
-
 interface TasksProps {
   table: Table;
   isDragDisabled: boolean;

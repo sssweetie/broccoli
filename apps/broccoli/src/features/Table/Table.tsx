@@ -9,6 +9,7 @@ import { Tasks } from '../Tasks';
 import { MenuItem } from '@mui/material';
 import { useModal } from '../../hooks/useModal';
 import { AddFormLayout } from '../../components/AddFormLayout';
+import { Provided } from '../../components/Provided/Provided';
 interface TableProps {
   provided: DraggableProvided;
   table: TableType;
@@ -41,12 +42,7 @@ export const Table: React.FC<TableProps> = ({
   ];
 
   return (
-    <article
-      className="table"
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-    >
+    <Provided className="table" provided={provided}>
       <section className="table__header">
         <h3 className="table__title">{table.title}</h3>
         <DropdownMenu items={items} />
@@ -68,6 +64,7 @@ export const Table: React.FC<TableProps> = ({
           </div>
         )}
       </Droppable>
+
       <AddFormLayout
         mutateEntity={mutateTask}
         title="Create a task"
@@ -75,12 +72,13 @@ export const Table: React.FC<TableProps> = ({
         addButtonClassName="add-task"
         inputPlaceholder="Enter a task name..."
       />
+
       <DeleteTableModal
         isModalOpen={isOpen}
         closeModal={closeModal}
         deleteTable={deleteTable}
         tableId={table._id}
       />
-    </article>
+    </Provided>
   );
 };

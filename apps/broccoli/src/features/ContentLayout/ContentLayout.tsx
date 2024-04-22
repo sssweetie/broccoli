@@ -1,5 +1,4 @@
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { Tables } from '../Tables';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { useDragDrop } from '../../hooks/useDragDrop';
 import { ChangeEvent, FormEvent } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -9,6 +8,7 @@ import { useBoardsMutations } from '../../hooks/useBoardsMutations';
 import { BoardTitle } from './components/BoardTitle';
 import { BackgroundImage } from './components/BackgroundImage';
 import { AddFormLayout } from '../../components/AddFormLayout';
+import { Table } from '../Table';
 
 export const ContentLayout = () => {
   const {
@@ -51,11 +51,23 @@ export const ContentLayout = () => {
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <BackgroundImage backgroundImage={boardInfo.backgroundImage} />
               <div className="table-wrapper">
-                <Tables
-                  board={tables}
-                  isDragDisabled={isDragDisabled}
-                  deleteTable={deleteTable.mutate}
-                />
+                {tables.map((table, index) => (
+                  <Draggable
+                    draggableId={table._id}
+                    key={table._id}
+                    index={index}
+                    isDragDisabled={isDragDisabled}
+                  >
+                    {(provided) => (
+                      <Table
+                        provided={provided}
+                        deleteTable={deleteTable}
+                        table={table}
+                        isDragDisabled={isDragDisabled}
+                      />
+                    )}
+                  </Draggable>
+                ))}
                 {provided.placeholder}
                 <AddFormLayout
                   mutateEntity={mutateTable}
