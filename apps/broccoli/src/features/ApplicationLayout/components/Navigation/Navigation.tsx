@@ -3,7 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
-import { BurgerMenu } from 'apps/broccoli/src/components/BurgerMenu/BurgerMenu';
+import { BurgerMenu } from 'apps/broccoli/src/features/ApplicationLayout/components/Navigation/components/BurgerMenu/BurgerMenu';
 import { Logo } from 'apps/broccoli/src/features/ApplicationLayout/components/Navigation/components/Logo';
 import { Links } from 'apps/broccoli/src/features/ApplicationLayout/components/Navigation/components/Links';
 import { Settings } from 'apps/broccoli/src/features/ApplicationLayout/components/Navigation/components/Settings';

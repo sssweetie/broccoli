@@ -1,4 +1,4 @@
-export const BOX = {
+export const boxSX = {
   position: 'absolute',
   top: '50%',
   left: '50%',

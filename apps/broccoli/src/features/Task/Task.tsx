@@ -27,7 +27,6 @@ export const Task: React.FC<TaskProps> = ({
       <Provided provided={provided} onClick={openModal} className="table__task">
         {task.title}
       </Provided>
-      
       <DetailsTaskModal
         isOpen={isOpen}
         closeModal={closeModal}

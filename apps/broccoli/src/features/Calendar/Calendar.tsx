@@ -3,7 +3,7 @@ import { useCalendar } from './hooks/useCalendar';
 import { renderCalendar } from '../../utils';
 
 export const Calendar: React.FC = () => {
-  const { subtasks, nextMonth, prevMonth, getToday, dateFrom, currentMonth } =
+  const { subtasks, dateFrom, currentMonth, nextMonth, prevMonth, getToday } =
     useCalendar();
 
   const calendar = renderCalendar(dateFrom, subtasks);

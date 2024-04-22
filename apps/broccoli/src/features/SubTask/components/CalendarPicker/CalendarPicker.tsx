@@ -2,7 +2,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { DateCalendar } from '@mui/x-date-pickers';
 import { Moment } from 'moment';
 import { FC, MouseEvent } from 'react';
-import { useModal } from '../../hooks/useModal';
+import { useModal } from '../../../../hooks/useModal';
 import { DATE_FORMAT, sx } from './constants';
 
 interface CalendarPickerProps {

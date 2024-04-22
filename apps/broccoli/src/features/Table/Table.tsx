@@ -44,13 +44,11 @@ export const Table: React.FC<TableProps> = ({
   return (
     <Provided className="table" provided={provided}>
       <Header items={items} title={table.title} />
-
       <DroppableArea
         isDragDisabled={isDragDisabled}
         table={table}
         deleteTable={deleteTable}
       />
-
       <AddFormLayout
         mutateEntity={mutateTask}
         title="Create a task"
@@ -58,7 +56,6 @@ export const Table: React.FC<TableProps> = ({
         addButtonClassName="add-task"
         inputPlaceholder="Enter a task name..."
       />
-
       <DeleteTableModal
         isModalOpen={isOpen}
         closeModal={closeModal}

@@ -7,8 +7,8 @@ import { AuditLogs } from '../AuditLogs/AuditLogs';
 import { Description } from './components/Description';
 import { Title } from './components/Title';
 import { useDetailsTaskModal } from './hooks/useDetailsTaskModal';
-import { TASK_MODAL_STYLE } from 'apps/broccoli/src/constants/taskModal';
 import { CheckList } from '../CheckList';
+import { boxSX } from './constants';
 
 interface DetailsTaskModalProps {
   isOpen: boolean;
@@ -49,7 +49,7 @@ export const DetailsTaskModal: React.FC<DetailsTaskModalProps> = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={TASK_MODAL_STYLE.BOX} className="task">
+      <Box sx={boxSX} className="task">
         <Title
           tableTitle={tableTitle}
           title={task.title}
