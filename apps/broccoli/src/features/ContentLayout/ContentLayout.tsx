@@ -1,4 +1,4 @@
-import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { useDragDrop } from '../../hooks/useDragDrop';
 import { ChangeEvent, FormEvent } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -6,9 +6,14 @@ import { CircularProgress } from '@mui/material';
 import { useModal } from '../../hooks/useModal';
 import { useBoardsMutations } from '../../hooks/useBoardsMutations';
 import { BoardTitle } from './components/BoardTitle';
-import { BackgroundImage } from './components/BackgroundImage';
-import { AddFormLayout } from '../../components/AddFormLayout';
-import { Table } from '../Table';
+import { DroppableLayout } from './components/DroppableLayout';
+
+const CIRCULAR_SX = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+};
 
 export const ContentLayout = () => {
   const {
@@ -37,60 +42,29 @@ export const ContentLayout = () => {
 
   return tables ? (
     <>
-      <section className="board-title">
-        <BoardTitle
-          isOpen={isOpen}
-          onBlur={onBlur}
-          openModal={openModal}
-          title={boardInfo.title}
-        />
-      </section>
+      <BoardTitle
+        isOpen={isOpen}
+        onBlur={onBlur}
+        openModal={openModal}
+        title={boardInfo.title}
+      />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="tables" type="TABLE" direction="horizontal">
           {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <BackgroundImage backgroundImage={boardInfo.backgroundImage} />
-              <div className="table-wrapper">
-                {tables.map((table, index) => (
-                  <Draggable
-                    draggableId={table._id}
-                    key={table._id}
-                    index={index}
-                    isDragDisabled={isDragDisabled}
-                  >
-                    {(provided) => (
-                      <Table
-                        provided={provided}
-                        deleteTable={deleteTable}
-                        table={table}
-                        isDragDisabled={isDragDisabled}
-                      />
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-                <AddFormLayout
-                  mutateEntity={mutateTable}
-                  title="Create a table"
-                  formClassName="edit-table edit-table--independent"
-                  addButtonClassName="add-table"
-                  inputPlaceholder="Enter a table name..."
-                />
-              </div>
-            </div>
+            <DroppableLayout
+              provided={provided}
+              tables={tables}
+              isDragDisabled={isDragDisabled}
+              backgroundImage={boardInfo.backgroundImage}
+              deleteTable={deleteTable}
+              mutateTable={mutateTable}
+            />
           )}
         </Droppable>
       </DragDropContext>
       <ToastContainer />
     </>
   ) : (
-    <CircularProgress
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-    />
+    <CircularProgress sx={CIRCULAR_SX} />
   );
 };

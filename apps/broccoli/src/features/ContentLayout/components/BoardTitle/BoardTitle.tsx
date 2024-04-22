@@ -14,14 +14,18 @@ export const BoardTitle: FC<BoardTitleProps> = ({
   onBlur,
   openModal,
 }) => {
-  return !isOpen ? (
-    <h4 onClick={openModal}>{title}</h4>
-  ) : (
-    <input
-      className="board-title--input"
-      defaultValue={title}
-      onBlur={onBlur}
-      autoFocus
-    />
+  return (
+    <section className="board-title">
+      {!isOpen ? (
+        <h4 onClick={openModal}>{title}</h4>
+      ) : (
+        <input
+          className="board-title--input"
+          defaultValue={title}
+          onBlur={onBlur}
+          autoFocus
+        />
+      )}
+    </section>
   );
 };
