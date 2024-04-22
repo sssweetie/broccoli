@@ -4,7 +4,7 @@ import { DESCRIPTION, TITLE } from '../features/AuditLogs/constants';
 
 type User = UserResource | null | undefined;
 
-export const createAuditLog = (user: User, title?: string): Audit => {
+export const createAuditLog = (user: Partial<User>, title?: string): Audit => {
   const params: AuditParams = {
     type: TITLE,
     newName: '',
