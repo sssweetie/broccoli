@@ -2,6 +2,28 @@
 import { DragUpdate } from '@hello-pangea/dnd';
 import { findTable, isTableExist, reorderTable } from 'apps/broccoli/src/utils';
 import { useTableMutations } from './useTableMutations';
+import { Task } from 'apps/libs/types/src';
+
+interface InsertTask {
+  insertIndex: number;
+  taskToInsert: Task;
+  tasksToMutate: Task[];
+}
+
+interface RemoveTask {
+  removeIndex: number;
+  tasksToMutate: Task[];
+}
+
+const insertTask = (data: InsertTask) => {
+  const { insertIndex, taskToInsert, tasksToMutate } = data;
+  tasksToMutate.splice(insertIndex, 0, taskToInsert);
+};
+
+const removeTask = (data: RemoveTask) => {
+  const { tasksToMutate, removeIndex } = data;
+  tasksToMutate.splice(removeIndex, 1);
+};
 
 export const useDragDrop = () => {
   const { tables, boardInfo, id, createTable, deleteTable, updateTable } =
@@ -22,14 +44,14 @@ export const useDragDrop = () => {
 
       tables.splice(destination!.index, 0, sourceTable);
 
-      const newtables = tables.map((table, index) => ({
+      const newTables = tables.map((table, index) => ({
         ...table,
         order: index,
       }));
 
       updateTable.mutateAsync({
         updateInformation,
-        boardToUpdate: newtables,
+        boardToUpdate: newTables,
       });
     }
 
@@ -38,8 +60,18 @@ export const useDragDrop = () => {
 
       if (sourceTable && sourceTable.tasks) {
         const sourceTask = sourceTable.tasks[source.index];
-        sourceTable!.removeTask(source.index);
-        sourceTable.insertTask(destination!.index, sourceTask);
+        const removeData: RemoveTask = {
+          removeIndex: source.index,
+          tasksToMutate: sourceTable.tasks,
+        };
+        const insertData: InsertTask = {
+          insertIndex: destination.index,
+          taskToInsert: sourceTask,
+          tasksToMutate: sourceTable.tasks,
+        };
+
+        removeTask(removeData);
+        insertTask(insertData);
         reorderTable(sourceTable);
       }
 
@@ -57,11 +89,20 @@ export const useDragDrop = () => {
 
       if (isTableExist(sourceTable) && isTableExist(destinationTable)) {
         const sourceTask = sourceTable!.tasks[source.index];
-        sourceTable!.removeTask(source.index);
-        destinationTable!.insertTask(destination!.index, sourceTask);
+        const removeData: RemoveTask = {
+          removeIndex: source.index,
+          tasksToMutate: sourceTable.tasks,
+        };
+        const insertData: InsertTask = {
+          insertIndex: destination!.index,
+          taskToInsert: sourceTask,
+          tasksToMutate: destinationTable.tasks,
+        };
 
-        reorderTable(sourceTable!);
-        reorderTable(destinationTable!);
+        removeTask(removeData);
+        insertTask(insertData);
+        reorderTable(sourceTable);
+        reorderTable(destinationTable);
       }
 
       updateTable.mutate({

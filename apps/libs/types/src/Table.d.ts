@@ -7,8 +7,6 @@ export interface Table {
   order: number;
   title: string;
   tasks: Task[];
-  insertTask: (insertIndex: number, taskToInsert: Task) => void;
-  removeTask: (removeIndex: number) => void;
 }
 
 export interface UpdateInformation {

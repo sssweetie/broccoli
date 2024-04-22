@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { checkListApi } from '../features/CheckList/api/checkListApi';
 import { callErrorToast, callSuccessToast } from '../utils';
-import { toastActions } from '../constants/Toast/toastActions';
+import { toastActions } from '../services/toastConfig';
 
 const ENTITY = 'Subtask';
 
