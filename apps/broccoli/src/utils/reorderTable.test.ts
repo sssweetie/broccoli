@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { reorderTable } from './reorderTable';
 import { Table } from 'apps/libs/types/src';
 
-describe('reorderTable', () => {
+describe('reordering table tasks', () => {
   const table: Table = {
     _id: '123',
     order: 0,

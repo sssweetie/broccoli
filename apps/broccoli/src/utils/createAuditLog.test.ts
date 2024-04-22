@@ -2,7 +2,7 @@ import { describe, expect } from '@jest/globals';
 import { createAuditLog } from './createAuditLog';
 import { DESCRIPTION, TITLE } from '../features/AuditLogs/constants';
 
-describe('is table exist', () => {
+describe('audit log on user action', () => {
   const user = undefined;
   const user1 = {
     id: 'string',

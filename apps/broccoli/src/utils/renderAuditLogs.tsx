@@ -17,7 +17,10 @@ const months = [
   'Dec',
 ];
 
-const getAuditLogText = ({ params, userName }: Audit) => {
+export const getAuditLogText = ({
+  params,
+  userName,
+}: Pick<Audit, 'userName' | 'params'>) => {
   let auditLogText = '';
 
   if (params.type === TITLE) {
