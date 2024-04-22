@@ -1,6 +1,5 @@
-import { describe, expect } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import { isTableExist } from './isTableExist';
-import { it } from 'node:test';
 import { Table } from 'apps/libs/types/src';
 
 describe('is table exist', () => {
