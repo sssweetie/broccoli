@@ -1,4 +1,4 @@
-import { Task } from 'apps/libs/types/src';
+import { Task, VoidFunction } from 'apps/libs/types/src';
 
 import { Box, Modal } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
@@ -15,7 +15,7 @@ interface DetailsTaskModalProps {
   task: Task;
   tableTitle: string;
   tableId: string;
-  closeModal: () => void;
+  closeModal: VoidFunction;
   deleteTableMutation: UseMutateFunction<void, Error, string, unknown>;
 }
 

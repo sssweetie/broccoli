@@ -1,10 +1,11 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { boxSX } from './constants';
+import { VoidFunction } from 'apps/libs/types/src';
 interface DeleteTableModal {
   isModalOpen: boolean;
   tableId: string;
-  closeModal: () => void;
+  closeModal: VoidFunction;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 

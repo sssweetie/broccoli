@@ -1,10 +1,11 @@
+import { VoidFunction } from 'apps/libs/types/src';
 import { ChangeEvent, FC } from 'react';
 
 interface BoardTitleProps {
   isOpen: boolean;
   title?: string;
   onBlur: (e: ChangeEvent<HTMLInputElement>) => void;
-  openModal: () => void;
+  openModal: VoidFunction;
 }
 
 export const BoardTitle: FC<BoardTitleProps> = ({

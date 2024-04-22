@@ -1,11 +1,12 @@
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { VoidFunction } from 'apps/libs/types/src';
 import { ChangeEvent } from 'react';
 interface ContentProps {
   isEdit: boolean;
   value: string;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  onBlur: () => void;
-  onClick: () => void;
+  onBlur: VoidFunction;
+  onClick: VoidFunction;
 }
 
 export const Content: React.FC<ContentProps> = ({
