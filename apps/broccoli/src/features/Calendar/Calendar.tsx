@@ -1,12 +1,10 @@
 import React from 'react';
 import { useCalendar } from './hooks/useCalendar';
-import { httpClient } from '../../services/httpClient';
-import { subtasksAPI } from '../../api/subtasksAPI';
 import { renderCalendar } from '../../utils';
 
 export const Calendar: React.FC = () => {
-  const { subtasks, nextMonth, prevMonth, getToday, dateFrom, currentMonth } =
-    useCalendar(subtasksAPI(httpClient));
+  const { subtasks, dateFrom, currentMonth, nextMonth, prevMonth, getToday } =
+    useCalendar();
 
   const calendar = renderCalendar(dateFrom, subtasks);
   const currentDate = currentMonth.format('MMM YYYY');

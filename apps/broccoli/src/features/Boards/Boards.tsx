@@ -1,24 +1,34 @@
 import BackupTableIcon from '@mui/icons-material/BackupTable';
-import { useBoards } from './hooks/useBoards';
-import { httpClient } from '../../services/httpClient';
-import { boardsApi } from './api/boardsApi';
-import { ModalCreateBoard } from '../../components/ModalCreateBoard';
+import { useBoards } from '../../hooks/useBoards';
 import { Board } from './components/Board';
+import { useBoardsMutations } from '../../hooks/useBoardsMutations';
+import { useModal } from '../../hooks/useModal';
+import { BoardsLayout } from './components/BoardsLayout';
+import { ModalCreateBoard } from './components/ModalCreateBoard';
 
 export const Boards: React.FC = () => {
   const {
-    boards,
-    isOpen,
     value,
-    selectedImage,
-    deleteBoardOnClick,
-    setSelectedImage,
-    closeModal,
-    openModalOnClick,
-    changeInputValue,
-    createBoardOnSubmit,
+    images,
+    selectedIndex,
+    deleteBoard,
+    createBoard,
     redirect,
-  } = useBoards(boardsApi(httpClient));
+    setSelectedIndex,
+    changeInputValue,
+    fetchData,
+  } = useBoards();
+  const { boards } = useBoardsMutations();
+  const { isOpen, closeModal, openModal } = useModal();
+
+  const createBoardOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    await createBoard(e);
+    closeModal();
+  };
+
+  const setActiveImageOnClick = (index: number) => {
+    setSelectedIndex(index);
+  };
 
   return (
     <>
@@ -26,29 +36,30 @@ export const Boards: React.FC = () => {
         <BackupTableIcon />
         Your boards
       </h1>
-      <div className="board-wrapper">
-        {boards
-          ? boards.map((board) => (
-              <Board
-                board={board}
-                redirect={redirect}
-                handleDeleteBoard={deleteBoardOnClick}
-              />
-            ))
-          : null}
-        <button onClick={openModalOnClick} className="board">
-          Create a new board
-        </button>
-        <ModalCreateBoard
-          isOpen={isOpen}
-          value={value}
-          selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage}
-          closeModal={closeModal}
-          onSubmit={createBoardOnSubmit}
-          onChange={changeInputValue}
-        />
-      </div>
+      <BoardsLayout
+        boardsComponent={boards?.map((board) => (
+          <Board board={board} redirect={redirect} deleteBoard={deleteBoard} />
+        ))}
+        createBoardButton={
+          <button onClick={openModal} className="board">
+            Create a new board
+          </button>
+        }
+        modalCreateBoard={
+          <ModalCreateBoard
+            isOpen={isOpen}
+            images={images}
+            value={value}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+            closeModal={closeModal}
+            onChange={changeInputValue}
+            fetchData={fetchData}
+            onSubmit={createBoardOnSubmit}
+            onClick={setActiveImageOnClick}
+          />
+        }
+      />
     </>
   );
 };

@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { callSuccessToast } from 'apps/broccoli/src/utils';
 import { callErrorToast } from 'apps/broccoli/src/utils';
-import { ITaskAPI } from '../api/taskApi';
+import { taskApi } from '../api/taskAPI';
 
 const ENTITY = 'Task';
 
-export const useTask = (taskApi: ITaskAPI) => {
+export const useTask = () => {
   const queryClient = useQueryClient();
 
   const createTask = useMutation({

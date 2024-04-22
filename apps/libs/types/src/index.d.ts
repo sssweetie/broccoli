@@ -6,3 +6,4 @@ export * from './Board';
 export * from './User';
 export * from './Org';
 export * from './SubTask';
+export * from './Global';

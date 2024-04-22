@@ -1,14 +1,14 @@
 import moment, { Moment } from 'moment';
 import { Day } from '../features/Calendar/components/Day';
 import { Week } from '../features/Calendar/components/Week';
-import { ISubTask } from 'apps/libs/types/src';
+import { SubTask } from 'apps/libs/types/src';
 
 const WEEK_LENGTH = 7;
 const WEEK_COUNT = 6;
 
 export const renderCalendar = (
   dateFrom: Moment,
-  subtasks: ISubTask[] | undefined
+  subtasks?: SubTask[]
 ) => {
   const calendarDate = dateFrom.clone();
 

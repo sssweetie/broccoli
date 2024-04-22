@@ -1,15 +1,13 @@
 import { Checkbox } from '@mui/material';
-import { ISubTask } from 'apps/libs/types/src';
-import { ChangeEvent, FocusEvent, MouseEvent, useState } from 'react';
-import { IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { CalendarPicker } from '../../components/CalendarPicker';
-import moment from 'moment';
+import { SubTask as SubTaskType, VoidFunction } from 'apps/libs/types/src';
+import { ChangeEvent, FocusEvent, MouseEvent } from 'react';
+import { useModal } from '../../hooks/useModal';
+import { SubtaskTitle } from './components/SubtaskTitle';
 interface SubTaskProps {
-  subTask: ISubTask;
-  updateSubTask: (subtask: ISubTask) => void;
+  subTask: SubTaskType;
+  updateSubTask: (subtask: SubTaskType) => void;
   deleteSubTask: (id: string) => void;
-  countProgress: () => void;
+  countProgress: VoidFunction;
 }
 
 export const SubTask: React.FC<SubTaskProps> = ({
@@ -18,30 +16,26 @@ export const SubTask: React.FC<SubTaskProps> = ({
   deleteSubTask,
   countProgress,
 }) => {
-  const [isEdit, setEdit] = useState(false);
+  const { isOpen, closeModal, openModal } = useModal();
 
   const onBlur = (e: FocusEvent<HTMLInputElement>) => {
     updateSubTask({ ...subTask, title: e.target.value });
-    setEdit(false);
+    closeModal();
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     updateSubTask({ ...subTask, isCompleted: checked });
-    setEdit(false);
+    closeModal();
   };
 
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const deleteSubTaskOnClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     deleteSubTask(subTask._id);
   };
 
-  const changeSubtaskDate = (date: Date) => {
+  const updateSubTaskDate = (date: Date) => {
     updateSubTask({ ...subTask, date });
-  };
-
-  const editSubTask = () => {
-    setEdit(true);
   };
 
   countProgress();
@@ -53,7 +47,7 @@ export const SubTask: React.FC<SubTaskProps> = ({
         onChange={onChange}
         sx={{ padding: 0 }}
       />
-      {isEdit ? (
+      {isOpen ? (
         <input
           defaultValue={subTask.title}
           onBlur={onBlur}
@@ -61,22 +55,12 @@ export const SubTask: React.FC<SubTaskProps> = ({
           className="input input--borderless"
         />
       ) : (
-        <h5
-          className={`subtask__title ${
-            subTask.isCompleted ? 'subtask__title--completed' : ''
-          }`}
-        >
-          <span onClick={editSubTask}>{subTask.title}</span>
-          <div className="subtask__icons">
-            <CalendarPicker
-              date={moment(subTask.date)}
-              changeSubtaskDate={changeSubtaskDate}
-            />
-            <IconButton onClick={onClick}>
-              <CloseIcon />
-            </IconButton>
-          </div>
-        </h5>
+        <SubtaskTitle
+          subTask={subTask}
+          openModal={openModal}
+          updateSubTask={updateSubTaskDate}
+          deleteSubTask={deleteSubTaskOnClick}
+        />
       )}
     </div>
   );

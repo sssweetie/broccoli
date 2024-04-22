@@ -1,49 +1,36 @@
 import { DraggableProvided } from '@hello-pangea/dnd';
-import { ITask } from 'apps/libs/types/src';
+import { Task as TaskType } from 'apps/libs/types/src';
 import { DetailsTaskModal } from '../DetailsTaskModal';
-import { useState } from 'react';
 import { UseMutateFunction } from '@tanstack/react-query';
+import { useModal } from '../../hooks/useModal';
+import { Provided } from '../../components/Provided/Provided';
 
-interface IProps {
+interface TaskProps {
   provided: DraggableProvided;
   tableTitle: string;
   tableId: string;
-  task: ITask;
+  task: TaskType;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Task: React.FC<IProps> = ({
+export const Task: React.FC<TaskProps> = ({
   provided,
   task,
   tableTitle,
   tableId,
   deleteTable,
 }) => {
-  const [isOpen, setOpen] = useState(false);
-
-  const openModal = () => {
-    setOpen(true);
-  };
-
-  const closeModal = () => {
-    setOpen(false);
-  };
+  const { openModal, closeModal, isOpen } = useModal();
 
   return (
     <>
-      <section
-        onClick={openModal}
-        className="table__task"
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-      >
+      <Provided provided={provided} onClick={openModal} className="table__task">
         {task.title}
-      </section>
+      </Provided>
       <DetailsTaskModal
         isOpen={isOpen}
         closeModal={closeModal}
-        deleteTable={deleteTable}
+        deleteTableMutation={deleteTable}
         task={task}
         tableId={tableId}
         tableTitle={tableTitle}

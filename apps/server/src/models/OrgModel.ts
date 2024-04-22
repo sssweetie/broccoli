@@ -1,7 +1,7 @@
-import { IOrg } from 'apps/libs/types/src';
+import { Organization } from 'apps/libs/types/src';
 import { Schema, model } from 'mongoose';
 
-const orgSchema = new Schema<IOrg>({
+const orgSchema = new Schema<Organization>({
   clerkOrgId: { type: String, unique: true, require: true },
   boards: [
     {
@@ -11,4 +11,4 @@ const orgSchema = new Schema<IOrg>({
   ],
 });
 
-export const OrgModel = model<IOrg>('orgs', orgSchema);
+export const OrgModel = model<Organization>('orgs', orgSchema);

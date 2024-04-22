@@ -1,23 +1,40 @@
-import { IAudit } from 'apps/libs/types/src';
-import { UPDATE } from '../constants/TaskManager/auditLog';
+import { Audit } from 'apps/libs/types/src';
 import { AuditLog } from '../features/AuditLogs/components/AuditLog';
-import { months } from '../constants/TaskManager/months';
+import { DESCRIPTION, TITLE } from '../features/AuditLogs/constants';
 
-const getAuditLogText = ({ params, userName }: IAudit) => {
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+export const getAuditLogText = ({
+  params,
+  userName,
+}: Pick<Audit, 'userName' | 'params'>) => {
   let auditLogText = '';
 
-  if (params.type === UPDATE.TITLE) {
+  if (params.type === TITLE) {
     auditLogText = `${userName} changes title on "${params.newName}"`;
   }
 
-  if (params.type === UPDATE.DESCRIPTION) {
+  if (params.type === DESCRIPTION) {
     auditLogText = `${userName} updates task description`;
   }
 
   return auditLogText;
 };
 
-export const renderAuditLogs = (data: IAudit[] | undefined) => {
+export const renderAuditLogs = (data?: Audit[]) => {
   if (!data) {
     return null;
   }

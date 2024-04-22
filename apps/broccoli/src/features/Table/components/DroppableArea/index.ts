@@ -1,0 +1,1 @@
+export { DroppableArea } from './DroppableArea';

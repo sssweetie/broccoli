@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { ITable } from 'apps/libs/types/src';
+import { Table } from 'apps/libs/types/src';
 
-const tableSchema = new Schema<ITable>({
+const tableSchema = new Schema<Table>({
   title: {
     type: String,
     required: true,
@@ -18,4 +18,4 @@ const tableSchema = new Schema<ITable>({
   ],
 });
 
-export const TableModel = model<ITable>('tables', tableSchema);
+export const TableModel = model<Table>('tables', tableSchema);

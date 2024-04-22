@@ -1,10 +1,10 @@
-export interface ISubTask {
+export interface SubTask {
   _id: string;
   title: string;
   isCompleted: boolean;
   date: Date;
 }
-export interface ICreateSubTask {
-  subTask: ISubTask;
+export interface CreateSubTask {
+  subTask: SubTask;
   taskId: string;
 }

@@ -1,32 +1,25 @@
-import { IBoard } from 'apps/libs/types/src';
-import { AxiosInstance } from 'axios';
+import { httpClient } from 'apps/broccoli/src/services/httpClient';
+import { Board, CreateBoard } from 'apps/libs/types/src';
 
-interface CreateBoard {
-  title: string;
-  backgroundImage: string;
-}
-
-export interface IBoardsAPI {
-  create: ({ title, backgroundImage }: CreateBoard) => Promise<void>;
-  read: () => Promise<IBoard[]>;
-  update: (board: Partial<IBoard>) => Promise<void>;
+export interface BoardsAPI {
+  create: (createBoard: CreateBoard) => Promise<void>;
+  read: () => Promise<Board[]>;
+  update: (board: Partial<Board>) => Promise<void>;
   delete: (id: string) => Promise<void>;
 }
 
-export const boardsApi = (httpClient: AxiosInstance): IBoardsAPI => {
-  return {
-    create: async (createBoard) => {
-      await httpClient.post('/boards/create', createBoard);
-    },
-    read: async () => {
-      const boards = await httpClient.get('/boards/read');
-      return boards.data;
-    },
-    update: async (board) => {
-      await httpClient.put('/boards/update', board);
-    },
-    delete: async (id) => {
-      await httpClient.delete(`/boards/delete/${id}`);
-    },
-  };
+export const boardsApi: BoardsAPI = {
+  create: async (createBoard) => {
+    await httpClient.post('/boards/create', createBoard);
+  },
+  read: async () => {
+    const boards = await httpClient.get('/boards/read');
+    return boards.data;
+  },
+  update: async (board) => {
+    await httpClient.put('/boards/update', board);
+  },
+  delete: async (id) => {
+    await httpClient.delete(`/boards/delete/${id}`);
+  },
 };

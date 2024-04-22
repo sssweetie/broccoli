@@ -1,6 +1,6 @@
-import { ITable } from 'apps/libs/types/src';
+import { Table } from 'apps/libs/types/src';
 
-export const isTableExist = (table: ITable | undefined) => {
+export const isTableExist = (table?: Table): table is Table => {
   if (table && table.tasks) return true;
-  else return false;
+  return false;
 };

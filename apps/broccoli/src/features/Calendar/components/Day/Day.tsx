@@ -1,8 +1,8 @@
-import { ISubTask } from 'apps/libs/types/src';
+import { SubTask } from 'apps/libs/types/src';
 import React, { PropsWithChildren } from 'react';
 
 interface DayProps {
-  daySubtasks: ISubTask[] | [];
+  daySubtasks: SubTask[] | [];
   className?: string;
 }
 

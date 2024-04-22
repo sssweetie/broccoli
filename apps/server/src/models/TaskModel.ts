@@ -1,7 +1,7 @@
-import { ITask } from 'apps/libs/types/src';
+import { Task } from 'apps/libs/types/src';
 import { Schema, model } from 'mongoose';
 
-const taskSchema = new Schema<ITask>({
+const taskSchema = new Schema<Task>({
   title: {
     type: String,
     required: true,
@@ -27,4 +27,4 @@ const taskSchema = new Schema<ITask>({
   ],
 });
 
-export const TaskModel = model<ITask>('tasks', taskSchema);
+export const TaskModel = model<Task>('tasks', taskSchema);

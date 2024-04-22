@@ -1,37 +1,30 @@
-import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
-import { ITable } from 'apps/libs/types/src';
+import { DraggableProvided } from '@hello-pangea/dnd';
+import { Table as TableType } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { DropdownMenu } from '../../components/DropdownMenu';
-import { DeleteTableModal } from '../ContentLayout/components/DeleteTableModal';
-import { FormEvent, useState } from 'react';
+import { DeleteTableModal } from './components/DeleteTableModal';
+import { FormEvent } from 'react';
 import { useTask } from '../../hooks/useTask';
-import { Tasks } from '../Tasks';
-import { taskApi } from '../../api/taskApi';
-import { httpClient } from 'apps/broccoli/src/services/httpClient';
-import { AddForm } from 'apps/broccoli/src/components/AddForm/AddForm';
 import { MenuItem } from '@mui/material';
-interface IProps {
+import { useModal } from '../../hooks/useModal';
+import { AddFormLayout } from '../../components/AddFormLayout';
+import { Provided } from '../../components/Provided/Provided';
+import { DroppableArea } from './components/DroppableArea';
+import { Header } from './components/Header';
+interface TableProps {
   provided: DraggableProvided;
-  table: ITable;
+  table: TableType;
   isDragDisabled: boolean;
   deleteTable: UseMutateFunction<void, Error, string, unknown>;
 }
 
-export const Table: React.FC<IProps> = ({
+export const Table: React.FC<TableProps> = ({
   provided,
   table,
   isDragDisabled,
   deleteTable,
 }) => {
-  const { createTask } = useTask(taskApi(httpClient));
-  const [isModalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const { createTask } = useTask();
+  const { isOpen, closeModal, openModal } = useModal();
 
   const mutateTask = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
@@ -49,34 +42,14 @@ export const Table: React.FC<IProps> = ({
   ];
 
   return (
-    <article
-      className="table"
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-    >
-      <section className="table__header">
-        <h3 className="table__title">{table.title}</h3>
-        <DropdownMenu items={items} />
-      </section>
-
-      <Droppable droppableId={table._id} type="TASK">
-        {(provided) => (
-          <div
-            className="table__tasks"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            <Tasks
-              table={table}
-              isDragDisabled={isDragDisabled}
-              deleteTable={deleteTable}
-            />
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-      <AddForm
+    <Provided className="table" provided={provided}>
+      <Header items={items} title={table.title} />
+      <DroppableArea
+        isDragDisabled={isDragDisabled}
+        table={table}
+        deleteTable={deleteTable}
+      />
+      <AddFormLayout
         mutateEntity={mutateTask}
         title="Create a task"
         formClassName="edit-table table__add-form"
@@ -84,11 +57,11 @@ export const Table: React.FC<IProps> = ({
         inputPlaceholder="Enter a task name..."
       />
       <DeleteTableModal
-        isModalOpen={isModalOpen}
+        isModalOpen={isOpen}
         closeModal={closeModal}
         deleteTable={deleteTable}
         tableId={table._id}
       />
-    </article>
+    </Provided>
   );
 };

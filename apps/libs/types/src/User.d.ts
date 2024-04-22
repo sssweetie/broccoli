@@ -1,3 +1,3 @@
-export interface IUser {
+export interface User {
   clerkUserId: string;
 }

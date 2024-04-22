@@ -1,4 +1,4 @@
-import { IBoard } from 'apps/libs/types/src';
+import { Board } from 'apps/libs/types/src';
 import { BoardModel } from '../models/BoardModel';
 
 export const BoardController = {
@@ -21,7 +21,7 @@ export const BoardController = {
     const boards = await BoardModel.find();
     return boards;
   },
-  update: async (board: Partial<IBoard>) => {
+  update: async (board: Partial<Board>) => {
     await BoardModel.findByIdAndUpdate(board._id, { ...board });
   },
   delete: async (id: string) => {

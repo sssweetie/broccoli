@@ -1,100 +1,70 @@
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { Tables } from '../Tables';
 import { useDragDrop } from '../../hooks/useDragDrop';
-import { AddForm } from '../../components/AddForm/AddForm';
 import { ChangeEvent, FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
-import { useBoards } from '../Boards/hooks/useBoards';
-import { boardsApi } from '../Boards/api/boardsApi';
-import { httpClient } from '../../services/httpClient';
+import { useModal } from '../../hooks/useModal';
+import { useBoardsMutations } from '../../hooks/useBoardsMutations';
+import { BoardTitle } from './components/BoardTitle';
+import { DroppableLayout } from './components/DroppableLayout';
+
+const CIRCULAR_SX = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+};
 
 export const ContentLayout = () => {
-  const { id } = useParams();
-
   const {
-    setEdit,
     onDragEnd,
-    isEdit,
     createTable,
-    board,
+    tables,
     isDragDisabled,
     deleteTable,
     boardInfo,
-  } = useDragDrop(id!);
+    id,
+  } = useDragDrop();
 
-  const { updateBoard } = useBoards(boardsApi(httpClient));
+  const { isOpen, openModal, closeModal } = useModal();
+  const { updateBoardMutation } = useBoardsMutations();
 
   const mutateTable = async (e: FormEvent<HTMLFormElement>, title: string) => {
     e.preventDefault();
-    const table = { order: board?.length, tasks: [], title };
-    await createTable.mutate({ table, boardId: id! });
+    const table = { order: tables?.length, tasks: [], title };
+    await createTable.mutate({ table, boardId: id });
   };
 
   const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-    updateBoard.mutate({ _id: id, title: e.target.value });
-    setEdit(false);
+    updateBoardMutation.mutate({ _id: id, title: e.target.value });
+    closeModal();
   };
 
-  const onClick = () => {
-    setEdit(true);
-  };
-
-  return board ? (
+  return tables ? (
     <>
-      <section className="board-title">
-        {!isEdit ? (
-          <h4 onClick={onClick}>{boardInfo.title}</h4>
-        ) : (
-          <input
-            className="board-title--input"
-            defaultValue={boardInfo.title}
-            onBlur={onBlur}
-            autoFocus
-          />
-        )}
-      </section>
+      <BoardTitle
+        isOpen={isOpen}
+        onBlur={onBlur}
+        openModal={openModal}
+        title={boardInfo.title}
+      />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="tables" type="TABLE" direction="horizontal">
           {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {boardInfo.backgroundImage ? (
-                <img
-                  alt="table background"
-                  src={boardInfo.backgroundImage}
-                  className="table-background"
-                />
-              ) : null}
-              <div className="table-wrapper">
-                <Tables
-                  board={board}
-                  isDragDisabled={isDragDisabled}
-                  deleteTable={deleteTable.mutate}
-                />
-                {provided.placeholder}
-                <AddForm
-                  mutateEntity={mutateTable}
-                  title="Create a table"
-                  formClassName="edit-table edit-table--independent"
-                  addButtonClassName="add-table"
-                  inputPlaceholder="Enter a table name..."
-                />
-              </div>
-            </div>
+            <DroppableLayout
+              provided={provided}
+              tables={tables}
+              isDragDisabled={isDragDisabled}
+              backgroundImage={boardInfo.backgroundImage}
+              deleteTable={deleteTable}
+              mutateTable={mutateTable}
+            />
           )}
         </Droppable>
       </DragDropContext>
       <ToastContainer />
     </>
   ) : (
-    <CircularProgress
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-    />
+    <CircularProgress sx={CIRCULAR_SX} />
   );
 };

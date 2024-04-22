@@ -1,0 +1,1 @@
+export { BoardTitle } from './BoardTitle';

@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { IAudit } from 'apps/libs/types/src';
+import { Audit } from 'apps/libs/types/src';
 
-const auditSchema = new Schema<IAudit>({
+const auditSchema = new Schema<Audit>({
   params: {
     type: { type: String, required: true },
     newName: { type: String },
@@ -15,4 +15,4 @@ const auditSchema = new Schema<IAudit>({
   },
 });
 
-export const AuditModel = model<IAudit>('audits', auditSchema);
+export const AuditModel = model<Audit>('audits', auditSchema);

@@ -1,10 +1,10 @@
-import { ITable, RequiredParamsToUpdate } from 'apps/libs/types/src';
+import { Table, RequiredParamsToUpdate } from 'apps/libs/types/src';
 import { TableModel } from '../models/TableModel';
 import { TaskModel } from '../models/TaskModel';
 import { BoardModel } from '../models/BoardModel';
 
 interface CreateTable {
-  table: Partial<ITable>;
+  table: Partial<Table>;
   boardId: string;
 }
 
@@ -26,7 +26,7 @@ export const TableController = {
           path: 'tasks',
         },
       });
-      const tables: ITable[] = board.tables;
+      const tables: Table[] = board.tables;
       tables.sort((a, b) => a.order - b.order);
       tables.forEach((table) => {
         table.tasks.sort((a, b) => a.order - b.order);

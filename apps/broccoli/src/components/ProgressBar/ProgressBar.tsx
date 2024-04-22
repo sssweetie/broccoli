@@ -5,7 +5,7 @@ import LinearProgress, {
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-interface IProgressBar {
+interface ProgressBarProps {
   value: number;
 }
 
@@ -28,7 +28,7 @@ const LinearProgressWithLabel: React.FC<LinearProgressProps> = ({ value }) => {
   );
 };
 
-export const ProgressBar: React.FC<IProgressBar> = ({ value }) => {
+export const ProgressBar: React.FC<ProgressBarProps> = ({ value }) => {
   return (
     <Box sx={{ width: '100%', marginBottom: '8px' }}>
       <LinearProgressWithLabel value={value} />

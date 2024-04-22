@@ -1,10 +1,14 @@
-interface IProps {
-  userImg: string | undefined;
+interface AuditLogProps {
+  userImg?: string;
   auditLogText: string;
   date: string;
 }
 
-export const AuditLog: React.FC<IProps> = ({ userImg, auditLogText, date }) => {
+export const AuditLog: React.FC<AuditLogProps> = ({
+  userImg,
+  auditLogText,
+  date,
+}) => {
   return (
     <article className="audit" key={date}>
       <img src={userImg} alt="person" className="audit__img" />

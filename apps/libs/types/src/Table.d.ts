@@ -1,15 +1,17 @@
-export interface ITable {
+type UpdateTable = Partial<Table>;
+
+import { Task } from './Task';
+
+export interface Table {
   _id: string;
   order: number;
   title: string;
-  tasks: ITask[];
-  insertTask: (insertIndex: number, taskToInsert: ITask) => void;
-  removeTask: (removeIndex: number) => void;
+  tasks: Task[];
 }
 
 export interface UpdateInformation {
   type: string;
-  subType: number;
+  subType: 0 | 1;
 }
 
 export interface TablesToUpdate {
@@ -19,12 +21,12 @@ export interface TablesToUpdate {
 
 export interface RequiredParamsToUpdate {
   updateInformation: UpdateInformation;
-  boardToUpdate?: Partial<ITable>[];
+  boardToUpdate?: UpdateTable[];
   updateBoard?: TablesToUpdate;
-  updateTable?: Partial<ITable>;
+  updateTable?: UpdateTable;
 }
 
-export interface ICreateTable {
-  table: Partial<ITable>;
+export interface CreateTable {
+  table: UpdateTable;
   boardId: string;
 }
