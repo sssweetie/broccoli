@@ -1,1 +1,2 @@
-export { ApplicationLayout, LinkItemIcon } from './ApplicationLayout';
+export { ApplicationLayout } from './ApplicationLayout';
+export { LinkItemIcon } from './ApplicationLayout';

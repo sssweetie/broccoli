@@ -11,6 +11,14 @@ export const useBoards = () => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null);
   const [images, setImages] = useState<string[]>([]);
 
+  const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const redirect = (id: string) => {
+    navigate(`/application/dragdrop/${id}`);
+  };
+
   const createBoard = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -20,14 +28,6 @@ export const useBoards = () => {
       title: value,
       backgroundImage: selectedImage ?? '',
     });
-  };
-
-  const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-
-  const redirect = (id: string) => {
-    navigate(`/application/dragdrop/${id}`);
   };
 
   const deleteBoard = async (
@@ -49,13 +49,9 @@ export const useBoards = () => {
     Promise.all(Array.from(indexes, getRandomBackgroundURL)).then(setImages);
   }, []);
 
-  const onClick = (index: number) => {
-    setSelectedIndex(index);
-  };
-
   return {
+    images,
     value,
-    onClick,
     selectedIndex,
     changeInputValue,
     setSelectedIndex,
@@ -63,6 +59,5 @@ export const useBoards = () => {
     createBoard,
     redirect,
     deleteBoard,
-    images,
   };
 };
