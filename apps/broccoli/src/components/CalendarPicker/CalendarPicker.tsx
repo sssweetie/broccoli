@@ -6,8 +6,8 @@ import { useModal } from '../../hooks/useModal';
 import { DATE_FORMAT, sx } from './constants';
 
 interface CalendarPickerProps {
-  changeSubtaskDate: (date: Date) => void;
   date: Moment;
+  changeSubtaskDate: (date: Date) => void;
 }
 
 export const CalendarPicker: FC<CalendarPickerProps> = ({

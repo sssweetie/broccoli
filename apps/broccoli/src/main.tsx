@@ -6,9 +6,8 @@ import { StrictMode } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RootLayout } from './components/RootLayout';
 import { ContentLayout } from './features/ContentLayout';
-import { ApplicationLayout } from './components/ApplicationLayout';
 import { PageNotFound } from './components/PageNotFound';
-import { Hero } from './components/Hero';
+import { Hero } from './features/ApplicationLayout/components/Navigation/components/Hero';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Boards } from './features/Boards';
@@ -16,6 +15,7 @@ import { Calendar } from './features/Calendar/Calendar';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { Auth } from './components/Auth';
+import { ApplicationLayout } from './features/ApplicationLayout';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

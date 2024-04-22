@@ -2,12 +2,12 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import { BurgerMenu } from '../BurgerMenu/BurgerMenu';
-import { Logo } from '../Logo';
-import { Settings } from '../Settings';
-import { Links } from '../Links';
 import { useNavigate } from 'react-router-dom';
-import { SX } from '../../constants/Navigation';
+import { BurgerMenu } from 'apps/broccoli/src/components/BurgerMenu/BurgerMenu';
+import { Logo } from 'apps/broccoli/src/features/ApplicationLayout/components/Navigation/components/Logo';
+import { Links } from 'apps/broccoli/src/features/ApplicationLayout/components/Navigation/components/Links';
+import { Settings } from 'apps/broccoli/src/features/ApplicationLayout/components/Navigation/components/Settings';
+import * as STYLE from './constants';
 
 const pages = [
   {
@@ -47,20 +47,18 @@ export const Navigation: React.FC = () => {
     <AppBar
       position="static"
       className="app-theme navbar"
-      sx={{
-        backgroundColor: '#2D3748',
-      }}
+      sx={STYLE.BackgroundColor}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Logo sx={SX.Common} />
+          <Logo sx={STYLE.Common} />
           <BurgerMenu
             openMenu={openNavMenu}
             closeMenu={closeNavMenu}
             anchorEl={anchorElNav}
             pages={pages}
           />
-          <Logo sx={SX.Small} />
+          <Logo sx={STYLE.Small} />
           <Links closeMenu={closeNavMenu} pages={pages} />
           <Settings
             openMenu={openUserMenu}

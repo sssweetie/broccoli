@@ -21,7 +21,8 @@ export const Settings: React.FC<Omit<MenuProps, 'pages'>> = ({
   const { signOut } = useClerk();
   const navigate = useNavigate();
 
-  const onClick = () => signOut(() => navigate('/sign-in'));
+  const callBack = () => navigate('/sign-in');
+  const onClick = () => signOut(callBack);
 
   return (
     <Box sx={{ flexGrow: 0 }}>

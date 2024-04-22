@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
-import { LinkItemIcon } from '../ApplicationLayout';
+import { LinkItemIcon } from '../Content/Content';
 
 interface LinkItemProps {
   isOpen: boolean;
