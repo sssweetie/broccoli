@@ -1,15 +1,15 @@
-import { DraggableProvided, Droppable } from '@hello-pangea/dnd';
+import { DraggableProvided } from '@hello-pangea/dnd';
 import { Table as TableType } from 'apps/libs/types/src';
 import { UseMutateFunction } from '@tanstack/react-query';
-import { DropdownMenu } from '../../components/DropdownMenu';
-import { DeleteTableModal } from '../ContentLayout/components/DeleteTableModal';
+import { DeleteTableModal } from './components/DeleteTableModal';
 import { FormEvent } from 'react';
 import { useTask } from '../../hooks/useTask';
-import { Tasks } from '../Tasks';
 import { MenuItem } from '@mui/material';
 import { useModal } from '../../hooks/useModal';
 import { AddFormLayout } from '../../components/AddFormLayout';
 import { Provided } from '../../components/Provided/Provided';
+import { DroppableArea } from './components/DroppableArea';
+import { Header } from './components/Header';
 interface TableProps {
   provided: DraggableProvided;
   table: TableType;
@@ -43,27 +43,13 @@ export const Table: React.FC<TableProps> = ({
 
   return (
     <Provided className="table" provided={provided}>
-      <section className="table__header">
-        <h3 className="table__title">{table.title}</h3>
-        <DropdownMenu items={items} />
-      </section>
+      <Header items={items} title={table.title} />
 
-      <Droppable droppableId={table._id} type="TASK">
-        {(provided) => (
-          <div
-            className="table__tasks"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            <Tasks
-              table={table}
-              isDragDisabled={isDragDisabled}
-              deleteTable={deleteTable}
-            />
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <DroppableArea
+        isDragDisabled={isDragDisabled}
+        table={table}
+        deleteTable={deleteTable}
+      />
 
       <AddFormLayout
         mutateEntity={mutateTask}
